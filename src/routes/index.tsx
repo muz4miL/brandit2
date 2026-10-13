@@ -5,14 +5,13 @@ import { Hero } from "@/components/site/Hero";
 import { LogoMarquee } from "@/components/site/LogoMarquee";
 import { BrandIntro } from "@/components/site/BrandIntro";
 import { ServiceCards } from "@/components/site/ServiceCards";
-import { AboutPanel } from "@/components/site/AboutPanel";
-import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 import TrustedBy from "@/components/TrustedBy";
 import CreativeShowcase from "@/components/CreativeShowcase";
 import StudioSection from "@/components/StudioSection";
 import WhoWeAre from "@/components/WhoWeAre";
 import FAQ from "@/components/FAQ";
+import ReadyToScale from "@/components/ReadyToScale";
 import { serviceOptions, type Category } from "@/content/site";
 
 export const Route = createFileRoute("/")({
@@ -63,10 +62,7 @@ function Index() {
         <StudioSection />
         <WhoWeAre />
         <FAQ />
-        <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-4 px-3 md:gap-6 md:px-6">
-          <AboutPanel />
-          <Contact service={service} setService={setService} />
-        </div>
+        <ReadyToScale />
       </main>
       <Footer />
     </>
