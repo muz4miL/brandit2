@@ -20,64 +20,36 @@ interface PhoneCardProps {
   videoSrc: string;
   index: number;
   isDuplicate?: boolean;
+  isSectionNear: boolean;
 }
 
-function PhoneCard({ videoSrc, index, isDuplicate }: PhoneCardProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+function PhoneCard({ videoSrc, index, isDuplicate, isSectionNear }: PhoneCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [shouldMountVideo, setShouldMountVideo] = useState(false);
 
   useEffect(() => {
-    // Check if desktop or mobile
-    const isMobile = window.innerWidth < 768;
-    if (!isMobile) {
-      setShouldMountVideo(true);
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isSectionNear) {
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!prefersReduced) {
+        video.muted = true;
+        video.play().catch(() => {});
+      }
+    } else {
+      video.pause();
     }
-
-    const container = containerRef.current;
-    if (!container) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setShouldMountVideo(true);
-            const video = videoRef.current;
-            if (video) {
-              const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-              if (!prefersReduced) {
-                video.muted = true;
-                video.play().catch(() => {});
-              }
-            }
-          } else {
-            const video = videoRef.current;
-            if (video) {
-              video.pause();
-            }
-          }
-        });
-      },
-      { rootMargin: "200px" },
-    );
-
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, []);
+  }, [isSectionNear]);
 
   const handleLoadedMetadata = () => {
     const video = videoRef.current;
     if (video && video.duration) {
-      // Stagger start times so videos don't play in sync
       video.currentTime = (index * 2.1 + (isDuplicate ? 1.4 : 0)) % video.duration;
     }
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="relative h-[407px] w-[210px] shrink-0 select-none sm:h-[504px] sm:w-[260px] md:h-[600px] md:w-[310px]"
-    >
+    <div className="relative h-[407px] w-[210px] shrink-0 select-none sm:h-[504px] sm:w-[260px] md:h-[600px] md:w-[310px]">
       {/* Left side volume buttons */}
       <div className="absolute -left-[3px] top-[100px] h-[28px] w-[3px] rounded-l-sm bg-gradient-to-b from-[#e8e8ea] via-[#c8c8d0] to-[#8a8a90] sm:top-[115px] sm:h-[32px] md:top-[130px] md:h-[38px]" />
       <div className="absolute -left-[3px] top-[136px] h-[28px] w-[3px] rounded-l-sm bg-gradient-to-b from-[#e8e8ea] via-[#c8c8d0] to-[#8a8a90] sm:top-[156px] sm:h-[32px] md:top-[178px] md:h-[38px]" />
@@ -97,24 +69,20 @@ function PhoneCard({ videoSrc, index, isDuplicate }: PhoneCardProps) {
               <div className="h-[6px] w-[6px] rounded-full bg-[#0d1b2a] shadow-[inset_0_0_2px_#415a77] ring-1 ring-[#1b263b]/70 md:h-[8px] md:w-[8px]" />
             </div>
 
-            {/* Video element or placeholder */}
-            {shouldMountVideo ? (
-              <video
-                ref={videoRef}
-                src={`${videoSrc}#t=0.1`}
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                disablePictureInPicture
-                controls={false}
-                draggable={false}
-                onLoadedMetadata={handleLoadedMetadata}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="h-full w-full bg-[#121214]" />
-            )}
+            {/* Video element */}
+            <video
+              ref={videoRef}
+              src={`${videoSrc}#t=0.1`}
+              muted
+              loop
+              playsInline
+              preload={isSectionNear ? "metadata" : "none"}
+              disablePictureInPicture
+              controls={false}
+              draggable={false}
+              onLoadedMetadata={handleLoadedMetadata}
+              className="h-full w-full object-cover"
+            />
           </div>
         </div>
       </div>
@@ -132,13 +100,29 @@ const TABS: { id: TabKey; label: string; active?: boolean }[] = [
 export default function CreativeShowcase() {
   const [activeTab, setActiveTab] = useState<TabKey>("ads");
   const [tooltipTab, setTooltipTab] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isSectionNear, setIsSectionNear] = useState(false);
 
-  // Set 1 has 10 phones (repeat the 5 videos twice) to ensure full coverage even on ultra-wide screens
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsSectionNear(Boolean(entry?.isIntersecting));
+      },
+      { rootMargin: "400px" },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const activeVideos = SHOWCASE_DATA[activeTab] || SHOWCASE_DATA.ads;
-  const set1Videos = [...activeVideos, ...activeVideos];
 
   return (
     <section
+      ref={sectionRef}
       id="creative"
       aria-label="Our work"
       className="relative w-full overflow-x-hidden bg-[#000000] pt-16 pb-16 md:pt-24 md:pb-20 select-none"
@@ -221,8 +205,13 @@ export default function CreativeShowcase() {
         <div className="showcase-track flex w-max will-change-transform">
           {/* Set 1: primary accessible phones */}
           <div className="flex shrink-0 items-center gap-8 pr-8 md:gap-12 md:pr-12">
-            {set1Videos.map((videoSrc, idx) => (
-              <PhoneCard key={`s1-${idx}`} videoSrc={videoSrc} index={idx} />
+            {activeVideos.map((videoSrc, idx) => (
+              <PhoneCard
+                key={`s1-${idx}`}
+                videoSrc={videoSrc}
+                index={idx}
+                isSectionNear={isSectionNear}
+              />
             ))}
           </div>
 
@@ -231,8 +220,14 @@ export default function CreativeShowcase() {
             className="flex shrink-0 items-center gap-8 pr-8 md:gap-12 md:pr-12"
             aria-hidden="true"
           >
-            {set1Videos.map((videoSrc, idx) => (
-              <PhoneCard key={`s2-${idx}`} videoSrc={videoSrc} index={idx} isDuplicate />
+            {activeVideos.map((videoSrc, idx) => (
+              <PhoneCard
+                key={`s2-${idx}`}
+                videoSrc={videoSrc}
+                index={idx}
+                isDuplicate
+                isSectionNear={isSectionNear}
+              />
             ))}
           </div>
         </div>
