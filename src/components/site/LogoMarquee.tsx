@@ -43,7 +43,7 @@ export function LogoMarquee({
   return (
     <section
       aria-label="Media coverage and featured brand logos"
-      className="relative w-full overflow-hidden bg-[#09090D] pt-20 pb-20 md:pt-[86px] md:pb-[82px] select-none"
+      className="relative w-full overflow-hidden bg-[#09090D] pt-8 pb-12 md:pt-[86px] md:pb-[82px] select-none"
     >
       <div className="mx-auto flex max-w-[1440px] flex-col items-center px-4">
         {/* Label and accessible pause/resume control */}

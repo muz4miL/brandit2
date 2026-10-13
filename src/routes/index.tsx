@@ -51,18 +51,36 @@ function Index() {
     <>
       <Header onSelectService={goWork} />
       <main className="flex flex-col gap-4 pb-4 md:gap-6">
-        <div className="mx-auto w-full max-w-[1440px] px-3 md:px-6">
+        <div className="order-1 mx-auto w-full max-w-[1440px] px-3 md:px-6">
           <Hero />
         </div>
-        <LogoMarquee />
-        <BrandIntro />
-        <ServiceCards onSelect={goWork} />
-        <TrustedBy />
-        <CreativeShowcase />
-        <StudioSection />
-        <WhoWeAre />
-        <FAQ />
-        <ReadyToScale />
+        <div className="order-3 md:order-2 w-full">
+          <LogoMarquee />
+        </div>
+        <div className="order-2 md:order-3 w-full">
+          <BrandIntro />
+        </div>
+        <div className="order-4 w-full">
+          <ServiceCards onSelect={goWork} />
+        </div>
+        <div className="order-5 w-full">
+          <TrustedBy />
+        </div>
+        <div className="order-6 w-full">
+          <CreativeShowcase />
+        </div>
+        <div className="order-7 w-full">
+          <StudioSection />
+        </div>
+        <div className="order-8 w-full">
+          <WhoWeAre />
+        </div>
+        <div className="order-9 w-full">
+          <FAQ />
+        </div>
+        <div className="order-10 w-full">
+          <ReadyToScale />
+        </div>
       </main>
       <Footer />
     </>

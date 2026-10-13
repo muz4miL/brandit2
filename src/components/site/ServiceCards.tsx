@@ -118,35 +118,35 @@ export function ServiceCards({ onSelect }: { onSelect: (c: Category) => void }) 
     <section
       id="services"
       aria-label="Our Services"
-      className="relative w-full overflow-hidden bg-[#000000] pt-20 sm:pt-24 pb-16 sm:pb-20 select-none"
+      className="relative w-full overflow-hidden bg-[#000000] pt-12 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 select-none"
     >
       {/* 1. Centred Section Introduction */}
-      <div className="mx-auto flex max-w-[1040px] flex-col items-center px-6 text-center">
-        {/* Restrained wide capsule label */}
-        <div className="flex h-[46px] w-[240px] sm:h-[52px] sm:w-[320px] items-center justify-center rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md">
+      <div className="mx-auto flex max-w-[1040px] flex-col items-center px-4 sm:px-6 text-center">
+        {/* Restrained wide capsule label (hidden on small mobile like Defiant) */}
+        <div className="hidden sm:flex h-[46px] w-[240px] sm:h-[52px] sm:w-[320px] items-center justify-center rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md">
           <span className="font-display text-[11px] sm:text-[12px] font-semibold tracking-[0.16em] text-[#CECED2] uppercase">
             OUR SERVICES
           </span>
         </div>
 
         {/* Main Heading: We Mastered / The Art & Science of Scale */}
-        <h2 className="mt-10 sm:mt-11 select-none text-center">
-          <span className="block font-display text-[clamp(48px,5.6vw,96px)] font-extrabold leading-[0.96] tracking-[-0.05em] text-[#D0D0D0]">
+        <h2 className="mt-2 sm:mt-10 lg:mt-11 select-none text-center">
+          <span className="block font-display text-[32px] sm:text-[44px] lg:text-[clamp(48px,5.6vw,96px)] font-bold lg:font-extrabold leading-[0.98] lg:leading-[0.96] tracking-[-0.045em] text-[#D0D0D0]">
             We Mastered
           </span>
-          <span className="block font-serif text-[clamp(50px,5.8vw,100px)] font-normal italic leading-[0.96] tracking-[-0.02em] text-[#D0D0D0] mt-1">
+          <span className="block font-serif text-[34px] sm:text-[46px] lg:text-[clamp(50px,5.8vw,100px)] font-normal italic leading-[0.98] lg:leading-[0.96] tracking-[-0.02em] text-[#D0D0D0] mt-0.5 sm:mt-1">
             The Art & Science of Scale
           </span>
         </h2>
 
         {/* Supporting Copy */}
-        <p className="mt-8 sm:mt-10 max-w-[560px] text-center text-[17px] sm:text-[21px] font-normal leading-[1.4] text-[#A0A0AA]">
+        <p className="mt-4 sm:mt-8 lg:mt-10 max-w-[560px] text-center text-[15px] sm:text-[18px] lg:text-[21px] font-normal leading-[1.4] text-[#A0A0AA]">
           Brand identities, social content and ad campaigns. Built to work together.
         </p>
       </div>
 
       {/* 2. Horizontal Carousel Geometry (4:5 Portrait Cards with partially visible next card) */}
-      <div className="relative mt-14 sm:mt-20 w-full overflow-hidden">
+      <div className="relative mt-8 sm:mt-16 lg:mt-20 w-full overflow-hidden">
         <div
           ref={trackRef}
           onScroll={updateActiveIndex}
@@ -154,9 +154,9 @@ export function ServiceCards({ onSelect }: { onSelect: (c: Category) => void }) 
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUpOrLeave}
           onMouseLeave={handleMouseUpOrLeave}
-          className="flex snap-x snap-mandatory gap-5 sm:gap-6 overflow-x-auto [scrollbar-width:none] pl-[5vw] pr-[12vw] sm:pl-[6vw] sm:pr-[10vw] cursor-grab active:cursor-grabbing pb-2"
+          className="flex snap-x snap-mandatory gap-4 sm:gap-6 overflow-x-auto [scrollbar-width:none] pl-5 pr-10 sm:pl-[6vw] sm:pr-[10vw] cursor-grab active:cursor-grabbing pb-2"
         >
-          {servicesData.map((s, index) => (
+          {servicesData.map((s) => (
             <button
               key={s.id}
               type="button"
@@ -164,7 +164,7 @@ export function ServiceCards({ onSelect }: { onSelect: (c: Category) => void }) 
                 if (hasMoved.current) return;
                 onSelect(s.category);
               }}
-              className="group relative shrink-0 snap-start overflow-hidden rounded-[26px] sm:rounded-[34px] bg-[#141418] text-left transition-transform duration-300 hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-primary aspect-[4/5] w-[82vw] sm:w-[340px] md:w-[380px] lg:w-[420px] xl:w-[440px]"
+              className="group relative shrink-0 snap-start overflow-hidden rounded-[24px] sm:rounded-[34px] bg-[#141418] text-left transition-transform duration-300 hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-primary aspect-[4/5] w-[80vw] max-w-[340px] sm:w-[340px] md:w-[380px] lg:w-[420px] xl:w-[440px]"
             >
               {/* Full-colour bright photographic image */}
               <img
@@ -178,18 +178,18 @@ export function ServiceCards({ onSelect }: { onSelect: (c: Category) => void }) 
               <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/60 via-black/20 to-transparent" />
 
               {/* Card Title placed absolutely at TOP LEFT */}
-              <div className="relative z-10 p-6 sm:p-8 flex flex-col">
-                <span className="font-display text-[32px] sm:text-[40px] font-extrabold leading-[0.92] tracking-tight text-white drop-shadow-md">
+              <div className="relative z-10 p-5 sm:p-7 lg:p-8 flex flex-col">
+                <span className="font-display text-[26px] sm:text-[32px] lg:text-[40px] font-extrabold leading-[0.92] tracking-tight text-white drop-shadow-md">
                   {s.titleSans}
                 </span>
-                <span className="font-serif text-[34px] sm:text-[42px] font-normal italic leading-[0.92] tracking-normal text-white drop-shadow-md mt-0.5">
+                <span className="font-serif text-[28px] sm:text-[34px] lg:text-[42px] font-normal italic leading-[0.92] tracking-normal text-white drop-shadow-md mt-0.5">
                   {s.titleSerif}
                 </span>
               </div>
 
               {/* Restrained circular dark arrow control placed at BOTTOM RIGHT */}
-              <div className="absolute bottom-6 right-6 sm:bottom-7 sm:right-7 z-10">
-                <span className="grid h-[44px] w-[44px] place-items-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-all duration-200 group-hover:bg-black/90 group-hover:scale-105">
+              <div className="absolute bottom-5 right-5 sm:bottom-7 sm:right-7 z-10">
+                <span className="grid h-10 w-10 sm:h-[44px] sm:w-[44px] place-items-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-all duration-200 group-hover:bg-black/90 group-hover:scale-105">
                   <ArrowRight size={18} className="stroke-[2.5]" />
                 </span>
               </div>
@@ -199,20 +199,20 @@ export function ServiceCards({ onSelect }: { onSelect: (c: Category) => void }) 
       </div>
 
       {/* 3. Small Pagination Dots Centred Beneath Carousel */}
-      <div className="mt-10 sm:mt-12 flex items-center justify-center gap-2.5">
+      <div className="mt-7 sm:mt-10 lg:mt-12 flex items-center justify-center gap-2">
         {servicesData.map((_, i) => (
           <button
             key={i}
             type="button"
             onClick={() => scrollToIndex(i)}
             aria-label={`Go to slide ${i + 1}`}
-            className="p-2 -m-2 flex items-center justify-center focus-visible:outline-2 focus-visible:outline-primary rounded-full"
+            className="p-1.5 -m-1.5 flex items-center justify-center focus-visible:outline-2 focus-visible:outline-primary rounded-full"
           >
             <span
               className={`block transition-all duration-300 ${
                 activeIndex === i
-                  ? "h-2 w-7 rounded-full bg-white"
-                  : "h-2 w-2 rounded-full bg-white/25 hover:bg-white/45"
+                  ? "h-1.5 w-6 sm:h-2 sm:w-7 rounded-full bg-white"
+                  : "h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-white/35 hover:bg-white/55"
               }`}
             />
           </button>

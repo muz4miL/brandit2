@@ -219,7 +219,39 @@ export function Header({ onSelectService }: HeaderProps) {
           : "border-b border-transparent bg-[#08080B]",
       )}
     >
-      <div className="mx-auto grid h-full w-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center px-[clamp(24px,3vw,56px)]">
+      {/* Mobile Top Bar (< 920px): Logo pinned LEFT, Hamburger pinned FAR RIGHT */}
+      <div className="flex h-full w-full items-center justify-between px-5 min-[920px]:hidden">
+        <a
+          href="#top"
+          aria-label="the brandit. home"
+          className="group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4"
+        >
+          <Wordmark className="text-[26px]" />
+        </a>
+
+        <button
+          ref={mobileToggleRef}
+          type="button"
+          className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] text-white transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-primary"
+          aria-expanded={isMobileOpen}
+          aria-controls="mobile-navigation-drawer"
+          aria-label={isMobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          onClick={() => setIsMobileOpen((o) => !o)}
+        >
+          {isMobileOpen ? (
+            <X size={24} className="stroke-[2.2] text-white" />
+          ) : (
+            <div className="flex flex-col gap-[5px] w-[22px]">
+              <span className="block h-[2px] w-full bg-white rounded-full" />
+              <span className="block h-[2px] w-full bg-white rounded-full" />
+              <span className="block h-[2px] w-full bg-white rounded-full" />
+            </div>
+          )}
+        </button>
+      </div>
+
+      {/* Desktop Top Bar (>= 920px) — 100% UNCHANGED */}
+      <div className="hidden h-full w-full max-w-[1440px] mx-auto min-[920px]:grid grid-cols-[1fr_auto_1fr] items-center px-[clamp(24px,3vw,56px)]">
         {/* Left: Brand It Logo */}
         <div className="flex items-center justify-self-start">
           <a
@@ -227,12 +259,12 @@ export function Header({ onSelectService }: HeaderProps) {
             aria-label="the brandit. home"
             className="group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4"
           >
-            <Wordmark className="text-[26px] min-[920px]:text-[32px]" />
+            <Wordmark className="text-[32px]" />
           </a>
         </div>
 
         {/* Centre: Navigation Capsule */}
-        <div className="hidden items-center justify-self-center min-[920px]:flex">
+        <div className="flex items-center justify-self-center">
           <nav
             aria-label="Main navigation"
             className="relative inline-flex h-[66px] items-center gap-[8px] rounded-full bg-[#0D0D10] p-[9px] shadow-lg shadow-black/40"
@@ -297,38 +329,15 @@ export function Header({ onSelectService }: HeaderProps) {
           </nav>
         </div>
 
-        {/* Right: Main CTA & Mobile Toggle */}
+        {/* Right: Main CTA */}
         <div className="flex items-center gap-3 justify-self-end">
-          {/* Desktop Main CTA */}
           <a
             href="#contact"
-            className="hidden h-[62px] min-w-[195px] items-center justify-center gap-2.5 rounded-full border-[2.5px] border-[#b8c200] bg-[#F3FF00] px-7 text-[16px] font-semibold text-[#0D0D10] select-none transition-all duration-150 hover:brightness-105 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-3 min-[920px]:inline-flex"
+            className="inline-flex h-[62px] min-w-[195px] items-center justify-center gap-2.5 rounded-full border-[2.5px] border-[#b8c200] bg-[#F3FF00] px-7 text-[16px] font-semibold text-[#0D0D10] select-none transition-all duration-150 hover:brightness-105 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-3"
           >
             <span>Let’s talk</span>
             <ArrowUpRight size={18} className="stroke-[2.5]" aria-hidden="true" />
           </a>
-
-          {/* Compact CTA on intermediate screens */}
-          <a
-            href="#contact"
-            className="hidden h-[42px] items-center gap-1.5 rounded-full border-2 border-[#b8c200] bg-[#F3FF00] px-4 text-sm font-semibold text-[#0D0D10] transition-transform hover:brightness-105 min-[480px]:inline-flex min-[920px]:hidden"
-          >
-            <span>Let’s talk</span>
-            <ArrowUpRight size={15} className="stroke-[2.5]" aria-hidden="true" />
-          </a>
-
-          {/* Mobile Menu Toggle Button */}
-          <button
-            ref={mobileToggleRef}
-            type="button"
-            className="grid h-[44px] w-[44px] place-items-center rounded-full border border-white/10 bg-[#1B1B20] text-[#F5F5F5] transition-colors hover:bg-[#F3FF00] hover:text-[#0D0D10] focus-visible:outline-2 focus-visible:outline-primary min-[920px]:hidden"
-            aria-expanded={isMobileOpen}
-            aria-controls="mobile-navigation-drawer"
-            aria-label={isMobileOpen ? "Close navigation menu" : "Open navigation menu"}
-            onClick={() => setIsMobileOpen((o) => !o)}
-          >
-            {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
         </div>
       </div>
 
