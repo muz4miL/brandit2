@@ -1,222 +1,164 @@
-import { useRef, useState, useEffect } from "react";
-import { ArrowRight } from "lucide-react";
-import { type Category } from "@/content/site";
-
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import identityImg from "@/assets/service-identity.jpg";
 import socialImg from "@/assets/service-social.jpg";
 import adsImg from "@/assets/service-ads.jpg";
 import packagesImg from "@/assets/service-packages.jpg";
+import skinImg from "@/assets/work-package-skin.jpg";
+import pulseImg from "@/assets/work-identity-pulse.jpg";
 
-interface ServiceItem {
+export interface ServiceData {
   id: string;
-  titleSans: string;
-  titleSerif: string;
-  category: Category;
+  slug: string;
+  title: string;
+  body: string;
+  visibleTags: string[];
   image: string;
-  alt: string;
 }
 
-const servicesData: ServiceItem[] = [
+export const servicesList: ServiceData[] = [
   {
-    id: "identity",
-    titleSans: "Brand",
-    titleSerif: "Identity",
-    category: "identity",
+    id: "strategy-growth-systems",
+    slug: "strategy-growth-systems",
+    title: "Strategy & Growth Systems",
+    body: "The operating system behind everything else. We map your content architecture, build the SOPs, align ad spend to real revenue priorities, and report on what actually moved.",
+    visibleTags: ["Marketing Strategy", "Growth Systems", "SOPs & Workflows", "Reporting"],
     image: identityImg,
-    alt: "Brand identity design, coffee packaging and stationery",
   },
   {
-    id: "social",
-    titleSans: "Social",
-    titleSerif: "Content",
-    category: "social",
-    image: socialImg,
-    alt: "Social media content creation and creator recording demo",
-  },
-  {
-    id: "ads",
-    titleSans: "Ad",
-    titleSerif: "Campaigns",
-    category: "ads",
+    id: "paid-advertising",
+    slug: "paid-advertising",
+    title: "Paid Advertising",
+    body: "Campaigns built around your sales reality, not vanity metrics. We structure spend so your budget goes to what converts, then keep testing until it gets cheaper.",
+    visibleTags: ["Meta Ads", "Google Ads", "TikTok Ads", "Performance Creative"],
     image: adsImg,
-    alt: "Performance ad creative showcase on smartphone",
   },
   {
-    id: "packages",
-    titleSans: "Complete",
-    titleSerif: "Packages",
-    category: "packages",
+    id: "content-production",
+    slug: "content-production",
+    title: "Content Production",
+    body: "A full in-house production team — videographers, photographers, editors. Cinematic films, scroll-stopping UGC, and shoot days run to SOPs so nothing is wasted.",
+    visibleTags: ["Video Production", "Photography", "UGC & Reels", "Podcast Production"],
+    image: socialImg,
+  },
+  {
+    id: "branding-design",
+    slug: "branding-design",
+    title: "Branding & Design",
+    body: "Look like the leader in your category. Complete identity systems, daily creative, and founder brands built for authority.",
+    visibleTags: ["Brand Identity", "Graphic Design", "Personal Branding", "Ad Creative"],
     image: packagesImg,
-    alt: "Complete brand packaging and launch suite",
+  },
+  {
+    id: "web-stores-automation",
+    slug: "web-stores-automation",
+    title: "Web, Stores & Automation",
+    body: "Where traffic becomes revenue. Fast websites, conversion-built landing pages, Shopify stores that sell, and AI automation that handles the follow-up.",
+    visibleTags: ["Website Design", "Landing Pages", "Shopify Stores", "AI Automation"],
+    image: skinImg,
+  },
+  {
+    id: "influencer-collab-marketing",
+    slug: "influencer-collab-marketing",
+    title: "Influencer & Collab Marketing",
+    body: "Borrow the audiences you haven’t built yet. We source the right creators, run the campaigns, and structure brand collaborations that put you in front of a warm market.",
+    visibleTags: ["Influencer Campaigns", "Creator Sourcing", "Brand Collaborations", "Seeding & Gifting"],
+    image: pulseImg,
   },
 ];
 
-export function ServiceCards({ onSelect }: { onSelect: (c: Category) => void }) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeftStart = useRef(0);
-  const hasMoved = useRef(false);
-
-  // Update active pagination indicator based on scroll position
-  const updateActiveIndex = () => {
-    if (!trackRef.current) return;
-    const { scrollLeft } = trackRef.current;
-    const cards = trackRef.current.children;
-    if (cards.length === 0) return;
-
-    let closest = 0;
-    let minDistance = Infinity;
-
-    for (let i = 0; i < cards.length; i++) {
-      const card = cards[i] as HTMLElement;
-      const cardLeft = card.offsetLeft - trackRef.current.offsetLeft;
-      const diff = Math.abs(cardLeft - scrollLeft);
-      if (diff < minDistance) {
-        minDistance = diff;
-        closest = i;
-      }
-    }
-    setActiveIndex(closest);
-  };
-
-  const scrollToIndex = (index: number) => {
-    if (!trackRef.current) return;
-    const cards = trackRef.current.children;
-    if (cards[index]) {
-      const card = cards[index] as HTMLElement;
-      const targetLeft = card.offsetLeft - trackRef.current.offsetLeft;
-      trackRef.current.scrollTo({ left: targetLeft, behavior: "smooth" });
-    }
-  };
-
-  // Mouse dragging support
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!trackRef.current) return;
-    isDragging.current = true;
-    hasMoved.current = false;
-    startX.current = e.pageX - trackRef.current.offsetLeft;
-    scrollLeftStart.current = trackRef.current.scrollLeft;
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current || !trackRef.current) return;
-    const x = e.pageX - trackRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.4;
-    if (Math.abs(walk) > 6) {
-      hasMoved.current = true;
-    }
-    trackRef.current.scrollLeft = scrollLeftStart.current - walk;
-  };
-
-  const handleMouseUpOrLeave = () => {
-    isDragging.current = false;
-  };
-
+export function ServiceCards({ onSelect }: { onSelect?: (slug: string) => void }) {
   return (
     <section
       id="services"
       aria-label="Our Services"
-      className="relative w-full overflow-hidden bg-[#000000] pt-12 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 select-none"
+      className="relative w-full overflow-hidden bg-[#FAFAFA] pt-12 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 select-none border-t border-b border-black/[0.06]"
     >
       {/* 1. Centred Section Introduction */}
       <div className="mx-auto flex max-w-[1040px] flex-col items-center px-4 sm:px-6 text-center">
-        {/* Restrained wide capsule label (hidden on small mobile like Defiant) */}
-        <div className="hidden sm:flex h-[46px] w-[240px] sm:h-[52px] sm:w-[320px] items-center justify-center rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md">
-          <span className="font-display text-[11px] sm:text-[12px] font-semibold tracking-[0.16em] text-[#CECED2] uppercase">
-            OUR SERVICES
+        {/* Eyebrow label */}
+        <div className="flex h-[40px] items-center justify-center rounded-full border border-black/10 bg-black/[0.04] px-5">
+          <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#3F3F46] uppercase">
+            What We Do
           </span>
         </div>
 
-        {/* Main Heading: We Mastered / The Art & Science of Scale */}
-        <h2 className="mt-2 sm:mt-10 lg:mt-11 select-none text-center">
-          <span className="block font-display text-[32px] sm:text-[44px] lg:text-[clamp(48px,5.6vw,96px)] font-bold lg:font-extrabold leading-[0.98] lg:leading-[0.96] tracking-[-0.045em] text-[#D0D0D0]">
-            We Mastered
-          </span>
-          <span className="block font-serif text-[34px] sm:text-[46px] lg:text-[clamp(50px,5.8vw,100px)] font-normal italic leading-[0.98] lg:leading-[0.96] tracking-[-0.02em] text-[#D0D0D0] mt-0.5 sm:mt-1">
+        {/* Main Heading: The Art & Science of Scale */}
+        <h2 className="mt-4 sm:mt-6 text-center">
+          <span className="block font-display text-[32px] sm:text-[44px] lg:text-[clamp(44px,5.2vw,72px)] font-bold lg:font-extrabold leading-[1] tracking-[-0.045em] text-[#09090B]">
             The Art & Science of Scale
           </span>
         </h2>
 
-        {/* Supporting Copy */}
-        <p className="mt-4 sm:mt-8 lg:mt-10 max-w-[560px] text-center text-[15px] sm:text-[18px] lg:text-[21px] font-normal leading-[1.4] text-[#A0A0AA]">
-          Brand identities, social content and ad campaigns. Built to work together.
+        {/* Sub-heading */}
+        <p className="mt-3 sm:mt-4 max-w-[620px] text-center text-[15px] sm:text-[18px] lg:text-[20px] font-normal leading-[1.4] text-[#52525B]">
+          Strategy, creative, media, and technology — under one roof.
         </p>
       </div>
 
-      {/* 2. Horizontal Carousel Geometry (4:5 Portrait Cards with partially visible next card) */}
-      <div className="relative mt-8 sm:mt-16 lg:mt-20 w-full overflow-hidden">
-        <div
-          ref={trackRef}
-          onScroll={updateActiveIndex}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUpOrLeave}
-          onMouseLeave={handleMouseUpOrLeave}
-          className="flex snap-x snap-mandatory gap-4 sm:gap-6 overflow-x-auto [scrollbar-width:none] pl-5 pr-10 sm:pl-[6vw] sm:pr-[10vw] cursor-grab active:cursor-grabbing pb-2"
-        >
-          {servicesData.map((s) => (
-            <button
+      {/* 2. Responsive Grid: 3 columns on desktop, 2 columns on tablet, 1 column on mobile */}
+      <div className="mx-auto mt-10 sm:mt-14 lg:mt-16 max-w-[1440px] px-4 sm:px-6 lg:px-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8">
+          {servicesList.map((s) => (
+            <a
               key={s.id}
-              type="button"
-              onClick={() => {
-                if (hasMoved.current) return;
-                onSelect(s.category);
+              href={`/services#${s.slug}`}
+              onClick={(e) => {
+                if (onSelect) {
+                  e.preventDefault();
+                  onSelect(s.slug);
+                }
               }}
-              className="group relative shrink-0 snap-start overflow-hidden rounded-[24px] sm:rounded-[34px] bg-[#141418] text-left transition-transform duration-300 hover:scale-[1.01] focus-visible:outline-2 focus-visible:outline-primary aspect-[4/5] w-[80vw] max-w-[340px] sm:w-[340px] md:w-[380px] lg:w-[420px] xl:w-[440px]"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-[24px] sm:rounded-[28px] border border-black/[0.08] bg-white p-5 sm:p-6 transition-all duration-300 hover:border-black/30 hover:shadow-xl hover:-translate-y-1"
             >
-              {/* Full-colour bright photographic image */}
-              <img
-                src={s.image}
-                alt={s.alt}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-106"
-              />
-
-              {/* Subtle top-left local gradient for optimal typography readability */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/60 via-black/20 to-transparent" />
-
-              {/* Card Title placed absolutely at TOP LEFT */}
-              <div className="relative z-10 p-5 sm:p-7 lg:p-8 flex flex-col">
-                <span className="font-display text-[26px] sm:text-[32px] lg:text-[40px] font-extrabold leading-[0.92] tracking-tight text-white drop-shadow-md">
-                  {s.titleSans}
-                </span>
-                <span className="font-serif text-[28px] sm:text-[34px] lg:text-[42px] font-normal italic leading-[0.92] tracking-normal text-white drop-shadow-md mt-0.5">
-                  {s.titleSerif}
+              {/* Media Thumbnail */}
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-neutral-100">
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                <span className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-white text-black shadow-md transition-transform duration-200 group-hover:scale-110">
+                  <ArrowUpRight size={17} className="stroke-[2.5]" />
                 </span>
               </div>
 
-              {/* Restrained circular dark arrow control placed at BOTTOM RIGHT */}
-              <div className="absolute bottom-5 right-5 sm:bottom-7 sm:right-7 z-10">
-                <span className="grid h-10 w-10 sm:h-[44px] sm:w-[44px] place-items-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-all duration-200 group-hover:bg-black/90 group-hover:scale-105">
-                  <ArrowRight size={18} className="stroke-[2.5]" />
-                </span>
+              {/* Title & Body */}
+              <div className="mt-5 flex-1">
+                <h3 className="font-display text-[20px] sm:text-[22px] font-bold tracking-tight text-[#09090B]">
+                  {s.title}
+                </h3>
+                <p className="mt-2.5 text-[14px] sm:text-[15px] leading-relaxed text-[#52525B]">
+                  {s.body}
+                </p>
               </div>
-            </button>
+
+              {/* Visible Tag Row (Visible text, NOT tooltips or hover-only) */}
+              <div className="mt-5 pt-4 border-t border-black/[0.06] flex flex-wrap gap-1.5">
+                {s.visibleTags.map((tag, idx) => (
+                  <span
+                    key={idx}
+                    className="rounded-full bg-[#F4F4F6] border border-black/[0.06] px-3 py-1 text-[11.5px] font-medium text-[#3F3F46]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </a>
           ))}
         </div>
-      </div>
 
-      {/* 3. Small Pagination Dots Centred Beneath Carousel */}
-      <div className="mt-7 sm:mt-10 lg:mt-12 flex items-center justify-center gap-2">
-        {servicesData.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => scrollToIndex(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className="p-1.5 -m-1.5 flex items-center justify-center focus-visible:outline-2 focus-visible:outline-primary rounded-full"
+        {/* Section CTA from brief */}
+        <div className="mt-12 sm:mt-16 flex justify-center">
+          <a
+            href="/contact"
+            className="group inline-flex items-center gap-2.5 rounded-full border border-black/15 bg-white px-7 py-3.5 text-[15px] sm:text-[16px] font-semibold text-[#09090B] shadow-sm transition-all duration-200 hover:border-black hover:bg-black hover:text-white"
           >
-            <span
-              className={`block transition-all duration-300 ${
-                activeIndex === i
-                  ? "h-1.5 w-6 sm:h-2 sm:w-7 rounded-full bg-white"
-                  : "h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-white/35 hover:bg-white/55"
-              }`}
-            />
-          </button>
-        ))}
+            <span>Not sure what you need? Book a call and we’ll map it</span>
+            <ArrowRight size={17} className="stroke-[2.5] transition-transform duration-200 group-hover:translate-x-1" />
+          </a>
+        </div>
       </div>
     </section>
   );

@@ -1,88 +1,85 @@
-import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { LogoMarquee } from "@/components/site/LogoMarquee";
-import { BrandIntro } from "@/components/site/BrandIntro";
 import { ServiceCards } from "@/components/site/ServiceCards";
-import { Footer } from "@/components/site/Footer";
-import TrustedBy from "@/components/TrustedBy";
-import CreativeShowcase from "@/components/CreativeShowcase";
-import StudioSection from "@/components/StudioSection";
-import WhoWeAre from "@/components/WhoWeAre";
+import { OurWorkSection } from "@/components/site/OurWorkSection";
+import { WhoItsFor } from "@/components/site/WhoItsFor";
+import { WhyBrandit } from "@/components/site/WhyBrandit";
+import { AboutCEO } from "@/components/site/AboutCEO";
+import { TestimonialsSection } from "@/components/site/TestimonialsSection";
 import FAQ from "@/components/FAQ";
 import ReadyToScale from "@/components/ReadyToScale";
-import { serviceOptions, type Category } from "@/content/site";
+import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Brand It — Brand identity, social content & advertising" },
+      { title: "brandit. — Marketing Agency | Ads, Content, Branding & Web" },
       {
         name: "description",
         content:
-          "Brand It builds brands: logos and identity, social content, ad creative and campaigns.",
+          "Full-service marketing agency. Meta, Google & TikTok ads, video and photography production, branding, websites, Shopify and AI automation. UAE-forged, delivered worldwide.",
       },
-      { property: "og:title", content: "Brand It — We Build Brands." },
-      { property: "og:description", content: "Brand identity, social content and advertising." },
+      {
+        property: "og:title",
+        content: "brandit. — Marketing Agency | Ads, Content, Branding & Web",
+      },
+      {
+        property: "og:description",
+        content:
+          "Full-service marketing agency. Meta, Google & TikTok ads, video and photography production, branding, websites, Shopify and AI automation. UAE-forged, delivered worldwide.",
+      },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
 });
 
-const catToService: Record<Category, string> = {
-  identity: serviceOptions[0] ?? "Brand identity",
-  social: serviceOptions[1] ?? "Social media design",
-  ads: serviceOptions[2] ?? "Ad creative & campaigns",
-  packages: serviceOptions[3] ?? "Complete brand package",
-};
-
 function Index() {
-  const [service, setService] = useState(serviceOptions[0] ?? "Brand identity");
-
-  const goWork = (c: Category) => {
-    setService(catToService[c]);
-    document.getElementById("contact")?.scrollIntoView();
-  };
-
   return (
-    <>
-      <Header onSelectService={goWork} />
-      <main className="flex flex-col gap-4 pb-4 md:gap-6">
-        <div className="order-1 mx-auto w-full max-w-[1440px] px-3 md:px-6">
+    <div className="min-h-screen bg-[#FAFAFA] text-[#09090B]">
+      {/* Navigation */}
+      <Header />
+
+      <main className="flex flex-col">
+        {/* Section 1 — Hero */}
+        <div className="mx-auto w-full max-w-[1440px] px-3 sm:px-4 md:px-6 pt-2 pb-4">
           <Hero />
         </div>
-        <div className="order-3 md:order-2 w-full">
-          <LogoMarquee />
-        </div>
-        <div className="order-2 md:order-3 w-full">
-          <BrandIntro />
-        </div>
-        <div className="order-4 w-full">
-          <ServiceCards onSelect={goWork} />
-        </div>
-        <div className="order-5 w-full">
-          <TrustedBy />
-        </div>
-        <div className="order-6 w-full">
-          <CreativeShowcase />
-        </div>
-        <div className="order-7 w-full">
-          <StudioSection />
-        </div>
-        <div className="order-8 w-full">
-          <WhoWeAre />
-        </div>
-        <div className="order-9 w-full">
-          <FAQ />
-        </div>
-        <div className="order-10 w-full">
-          <ReadyToScale />
-        </div>
+
+        {/* Section 2 — Trust Strip */}
+        <LogoMarquee />
+
+        {/* Section 3 — Services (6-service 3/2/1 grid with visible tags) */}
+        <ServiceCards />
+
+        {/* Section 4 — Our Work (10 supplied portfolio cards with 16:9 media, no View Project buttons) */}
+        <OurWorkSection />
+
+        {/* Section 5 — Who It’s For */}
+        <WhoItsFor />
+
+        {/* Section 6 — Why brandit. */}
+        <WhyBrandit />
+
+        {/* Section 7 — About the CEO (Umar Farooq) */}
+        <AboutCEO />
+
+        {/* Section 8 — Testimonials (3 structured cards) */}
+        <TestimonialsSection />
+
+        {/* Section 9 — FAQ (Initially collapsed) */}
+        <FAQ />
+
+        {/* Section 10 — Final CTA */}
+        <ReadyToScale />
       </main>
+
+      {/* Footer (No navigation links) */}
       <Footer />
-    </>
+    </div>
   );
 }

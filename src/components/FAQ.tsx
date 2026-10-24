@@ -1,67 +1,53 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import { Plus } from "lucide-react";
 
-// TODO: replace with real answers
-export const FAQS: { q: string; a: string }[] = [
-  // Left Column (1-5)
+export const BRIEF_FAQS = [
   {
-    q: "What type of brands do you work best with?",
-    a: "We work best with ambitious direct-to-consumer and high-growth brands that already have validated product-market fit and are looking to scale profitably. Whether you're scaling to $1M/month or heading towards $100M+ in valuation, our creative systems are built to accelerate your performance.",
+    q: "Where are you based — do you work internationally?",
+    a: "brandit. was built in the UAE, one of the most competitive markets in the world, and we deliver to clients across industries and borders. Wherever your business is, you get that standard.",
   },
   {
-    q: "What makes Brand It different from other agencies?",
-    a: "Unlike traditional agencies that separate creative and performance, Brand It combines state-of-the-art production studios, high-velocity creative testing, and paid media strategy under one roof. We operate like an agile in-house team rather than an external vendor.",
+    q: "Are you an agency or a freelancer?",
+    a: "A full agency. You work directly with our founder as senior strategist, and a trained specialist team executes under his systems. Senior thinking, full capacity, one point of contact.",
   },
   {
-    q: "How much creative volume do you produce?",
-    a: "We produce between 20 to 50+ unique creative assets, video variations, and design concepts every single month depending on your tier. This volume ensures continuous testing and prevents ad fatigue across Meta, TikTok, and Google.",
+    q: "What makes you different?",
+    a: "Systems. Most teams make content. We build the operating system around it — architecture, SOPs, quality gates, and ad spend aligned to real revenue — proven inside the UAE’s largest brokerage.",
+  },
+  {
+    q: "Can you handle everything, or just one service?",
+    a: "Either. Some clients take ads only, or a Shopify build only. Others hand us the whole growth engine — strategy, video, photography, design, media buying, website, and automation. Both work.",
+  },
+  {
+    q: "Do you build websites and online stores too?",
+    a: "Yes. Websites, conversion-built landing pages, and Shopify stores. We also set up AI automation for lead follow-up, booking, and reporting, so leads don’t go cold while you’re busy.",
+  },
+  {
+    q: "How does influencer marketing work with you?",
+    a: "We source creators who genuinely match your audience, negotiate and manage the campaign, and fold the resulting content back into your paid ads — so one collaboration works twice.",
   },
   {
     q: "How soon will I see results?",
-    a: "Most brand partners see significant performance improvements and winning creative hooks within the first 14 to 30 days of launch. Rapid creative deployment and weekly iterative testing allow us to find scale quickly.",
+    a: "Brand lift shows in the first month. Paid campaigns typically show early traction in 30–60 days as testing finds winners. Compounding growth comes from the system running month over month.",
   },
   {
-    q: "How does Brand It track success?",
-    a: "We track primary business metrics that actually matter: blended MER, first-party ROAS, CAC, and net profit scale. We align our creative optimization directly with your P&L rather than vanity platform metrics.",
-  },
-  // Right Column (6-10)
-  {
-    q: "What does “Growth Partner” actually mean?",
-    a: "Being a growth partner means we take full ownership of your creative strategy, visual identity, and performance outcomes. We plug directly into your Slack, roadmap alongside your founders, and share skin in the game for your long-term success.",
-  },
-  {
-    q: "What if we already have an in-house team?",
-    a: "We complement and empower existing in-house teams seamlessly. We can handle high-volume ad production, specialized studio shoots, or rapid concept testing while your internal designers focus on core brand initiatives.",
-  },
-  {
-    q: "What’s the minimum investment to work with us?",
-    a: "Our partnerships typically start at $5,000 to $10,000/month for comprehensive creative and performance production. We customize each engagement based on your monthly ad spend and required asset volume.",
-  },
-  {
-    q: "How does onboarding work?",
-    a: "Onboarding takes less than 7 days. We conduct an in-depth brand audit, integrate into your analytics and creative library, align on sprint goals, and deliver your first batch of production-ready assets within week one.",
-  },
-  {
-    q: "What results have you achieved for other brands?",
-    a: "We have helped generate over $150M+ in tracked client revenue, lowered blended CAC by an average of 34%, and scaled multiple brands from six figures to eight figures in valuation.",
+    q: "What does it cost?",
+    a: "Structured by scope — content only, ads only, a website build, or a full growth system. Share your goal on a call and we’ll send a clear plan and price.",
   },
 ];
 
 export default function FAQ() {
+  // All accordion items collapsed on initial page load as required by brief
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const baseId = useId();
 
   const toggleItem = (idx: number) => {
     setOpenIndex((prev) => (prev === idx ? null : idx));
   };
 
-  const leftColumnFaqs = FAQS.slice(0, 5);
-  const rightColumnFaqs = FAQS.slice(5, 10);
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: FAQS.map((faq) => ({
+    mainEntity: BRIEF_FAQS.map((faq) => ({
       "@type": "Question",
       name: faq.q,
       acceptedAnswer: {
@@ -74,154 +60,56 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      aria-label="Frequently asked questions"
-      className="relative w-full overflow-x-hidden bg-[#000000] pt-[72px] pb-20 md:pt-[120px] md:pb-[140px] select-none"
+      aria-label="Frequently Asked Questions"
+      className="relative w-full overflow-hidden bg-[#FAFAFA] pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 border-t border-b border-black/[0.06] select-none"
     >
-      {/* FAQPage JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Heading Block */}
-      <div className="mx-auto flex max-w-[1440px] flex-col items-center px-4 text-center">
-        <h2 className="flex flex-wrap items-center justify-center text-center font-display text-[clamp(40px,6.2vw,104px)] font-bold tracking-[-0.04em] text-[#d4d4d4] leading-none">
-          <span>Frequently Asked&nbsp;</span>
-          <span className="font-serif font-normal italic tracking-[-0.03em] text-[#e5e5e5]">
-            Questions
-          </span>
-        </h2>
-      </div>
+      <div className="mx-auto max-w-[1040px] px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="font-display text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold leading-[1.02] tracking-tight text-[#09090B]">
+            Frequently Asked Questions
+          </h2>
+        </div>
 
-      {/* Full-width 1px divider line edge to edge of viewport */}
-      <div className="mt-14 w-full border-t border-white/[0.08] md:mt-[72px]" />
-
-      {/* Accordion Layout: 2 independent flex columns on desktop */}
-      <div className="mx-auto mt-16 max-w-[1180px] px-5 min-[900px]:mt-[100px] min-[900px]:px-10">
-        <div className="grid grid-cols-1 items-start gap-0 min-[900px]:grid-cols-2 min-[900px]:gap-[90px]">
-          {/* Left Column (Items 1-5) */}
-          <div className="flex w-full flex-col items-start">
-            {leftColumnFaqs.map((faq, index) => {
-              const actualIdx = index;
-              const isOpen = openIndex === actualIdx;
-              const questionId = `${baseId}-q-${actualIdx}`;
-              const answerId = `${baseId}-a-${actualIdx}`;
-
-              return (
-                <div key={actualIdx} className="w-full">
-                  <h3 className="w-full">
-                    <button
-                      type="button"
-                      id={questionId}
-                      aria-expanded={isOpen}
-                      aria-controls={answerId}
-                      onClick={() => toggleItem(actualIdx)}
-                      className="group flex min-h-[76px] w-full cursor-pointer items-center justify-between py-6 text-left transition-colors duration-250 focus-visible:rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:outline-offset-4"
-                    >
-                      <span
-                        className={`font-sans text-[18px] leading-[1.3] tracking-[-0.01em] transition-colors duration-250 min-[900px]:text-[20px] xl:text-[22px] ${
-                          isOpen
-                            ? "font-medium text-white"
-                            : "text-white/85 group-hover:font-medium group-hover:text-white"
-                        }`}
-                      >
-                        {faq.q}
-                      </span>
-                      <Plus
-                        className={`ml-4 h-[22px] w-[22px] shrink-0 text-white transition-transform duration-300 ${
-                          isOpen ? "rotate-45" : "rotate-0"
-                        }`}
-                        strokeWidth={2.5}
-                        aria-hidden="true"
-                      />
-                    </button>
-                  </h3>
-
-                  {/* Expandable answer panel */}
-                  <div
-                    id={answerId}
-                    role="region"
-                    aria-labelledby={questionId}
-                    className={`grid transition-[grid-template-rows] duration-350 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none ${
-                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        {/* Accordion list */}
+        <div className="mt-10 sm:mt-12 space-y-3">
+          {BRIEF_FAQS.map((faq, idx) => {
+            const isOpen = openIndex === idx;
+            return (
+              <div
+                key={idx}
+                className="overflow-hidden rounded-2xl border border-black/[0.08] bg-white transition-colors duration-150"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleItem(idx)}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between p-5 sm:p-6 text-left transition-colors hover:bg-neutral-50"
+                >
+                  <span className="font-display text-[17px] sm:text-[18px] font-bold text-[#09090B] pr-4">
+                    {faq.q}
+                  </span>
+                  <span
+                    className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border border-black/10 bg-[#FAFAFA] text-[#09090B] transition-transform duration-200 ${
+                      isOpen ? "rotate-45" : ""
                     }`}
                   >
-                    <div className="overflow-hidden">
-                      <p
-                        className={`max-w-[90%] pb-6 pr-12 font-sans text-[16px] leading-[1.6] text-white/65 transition-opacity duration-300 md:text-[18px] ${
-                          isOpen ? "opacity-100" : "opacity-0"
-                        }`}
-                      >
-                        {faq.a}
-                      </p>
-                    </div>
+                    <Plus size={16} className="stroke-[2.5]" />
+                  </span>
+                </button>
+
+                {isOpen && (
+                  <div className="px-5 sm:px-6 pb-6 pt-1 text-[15px] sm:text-[16px] leading-relaxed text-[#52525B] border-t border-black/[0.04]">
+                    {faq.a}
                   </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Right Column (Items 6-10) */}
-          <div className="flex w-full flex-col items-start">
-            {rightColumnFaqs.map((faq, index) => {
-              const actualIdx = index + 5;
-              const isOpen = openIndex === actualIdx;
-              const questionId = `${baseId}-q-${actualIdx}`;
-              const answerId = `${baseId}-a-${actualIdx}`;
-
-              return (
-                <div key={actualIdx} className="w-full">
-                  <h3 className="w-full">
-                    <button
-                      type="button"
-                      id={questionId}
-                      aria-expanded={isOpen}
-                      aria-controls={answerId}
-                      onClick={() => toggleItem(actualIdx)}
-                      className="group flex min-h-[76px] w-full cursor-pointer items-center justify-between py-6 text-left transition-colors duration-250 focus-visible:rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50 focus-visible:outline-offset-4"
-                    >
-                      <span
-                        className={`font-sans text-[18px] leading-[1.3] tracking-[-0.01em] transition-colors duration-250 min-[900px]:text-[20px] xl:text-[22px] ${
-                          isOpen
-                            ? "font-medium text-white"
-                            : "text-white/85 group-hover:font-medium group-hover:text-white"
-                        }`}
-                      >
-                        {faq.q}
-                      </span>
-                      <Plus
-                        className={`ml-4 h-[22px] w-[22px] shrink-0 text-white transition-transform duration-300 ${
-                          isOpen ? "rotate-45" : "rotate-0"
-                        }`}
-                        strokeWidth={2.5}
-                        aria-hidden="true"
-                      />
-                    </button>
-                  </h3>
-
-                  {/* Expandable answer panel */}
-                  <div
-                    id={answerId}
-                    role="region"
-                    aria-labelledby={questionId}
-                    className={`grid transition-[grid-template-rows] duration-350 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none ${
-                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      <p
-                        className={`max-w-[90%] pb-6 pr-12 font-sans text-[16px] leading-[1.6] text-white/65 transition-opacity duration-300 md:text-[18px] ${
-                          isOpen ? "opacity-100" : "opacity-0"
-                        }`}
-                      >
-                        {faq.a}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

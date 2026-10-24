@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as CareersRouteImport } from './routes/careers'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as OurWorkRouteImport } from './routes/our-work'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as StudioRouteImport } from './routes/studio'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as CaseStudiesIndexRouteImport } from './routes/case-studies/index'
+import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurWorkRoute = OurWorkRouteImport.update({
+  id: '/our-work',
+  path: '/our-work',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudioRoute = StudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudiesIndexRoute = CaseStudiesIndexRouteImport.update({
+  id: '/case-studies/',
+  path: '/case-studies/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudiesSlugRoute = CaseStudiesSlugRouteImport.update({
+  id: '/case-studies/$slug',
+  path: '/case-studies/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/our-work': typeof OurWorkRoute
+  '/services': typeof ServicesRoute
+  '/studio': typeof StudioRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/case-studies/': typeof CaseStudiesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/our-work': typeof OurWorkRoute
+  '/services': typeof ServicesRoute
+  '/studio': typeof StudioRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/admin': typeof AdminIndexRoute
+  '/case-studies': typeof CaseStudiesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/our-work': typeof OurWorkRoute
+  '/services': typeof ServicesRoute
+  '/studio': typeof StudioRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/case-studies/': typeof CaseStudiesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/contact'
+    | '/our-work'
+    | '/services'
+    | '/studio'
+    | '/admin/login'
+    | '/case-studies/$slug'
+    | '/admin/'
+    | '/case-studies/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/contact'
+    | '/our-work'
+    | '/services'
+    | '/studio'
+    | '/admin/login'
+    | '/case-studies/$slug'
+    | '/admin'
+    | '/case-studies'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/careers'
+    | '/contact'
+    | '/our-work'
+    | '/services'
+    | '/studio'
+    | '/admin/login'
+    | '/case-studies/$slug'
+    | '/admin/'
+    | '/case-studies/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CareersRoute: typeof CareersRoute
+  ContactRoute: typeof ContactRoute
+  OurWorkRoute: typeof OurWorkRoute
+  ServicesRoute: typeof ServicesRoute
+  StudioRoute: typeof StudioRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  CaseStudiesSlugRoute: typeof CaseStudiesSlugRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  CaseStudiesIndexRoute: typeof CaseStudiesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +182,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-work': {
+      id: '/our-work'
+      path: '/our-work'
+      fullPath: '/our-work'
+      preLoaderRoute: typeof OurWorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/studio': {
+      id: '/studio'
+      path: '/studio'
+      fullPath: '/studio'
+      preLoaderRoute: typeof StudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-studies/': {
+      id: '/case-studies/'
+      path: '/case-studies'
+      fullPath: '/case-studies/'
+      preLoaderRoute: typeof CaseStudiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-studies/$slug': {
+      id: '/case-studies/$slug'
+      path: '/case-studies/$slug'
+      fullPath: '/case-studies/$slug'
+      preLoaderRoute: typeof CaseStudiesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CareersRoute: CareersRoute,
+  ContactRoute: ContactRoute,
+  OurWorkRoute: OurWorkRoute,
+  ServicesRoute: ServicesRoute,
+  StudioRoute: StudioRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  CaseStudiesSlugRoute: CaseStudiesSlugRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  CaseStudiesIndexRoute: CaseStudiesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

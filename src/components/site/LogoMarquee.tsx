@@ -8,14 +8,13 @@ interface LogoMarqueeProps {
 }
 
 export function LogoMarquee({
-  label = "AS FEATURED IN",
+  label = "Trusted by 100+ brands across industries and borders",
   speedPixelsPerSecond = 40,
 }: LogoMarqueeProps) {
   const [isPaused, setIsPaused] = useState(false);
   const [duration, setDuration] = useState(58);
   const groupRef = useRef<HTMLDivElement>(null);
 
-  // Measure rendered group width to calculate exact animation duration at target pixels per second
   useEffect(() => {
     const measureWidth = () => {
       if (groupRef.current) {
@@ -28,27 +27,27 @@ export function LogoMarquee({
     };
 
     measureWidth();
-
-    const resizeObserver = new ResizeObserver(() => {
-      measureWidth();
-    });
-
-    if (groupRef.current) {
-      resizeObserver.observe(groupRef.current);
-    }
-
+    const resizeObserver = new ResizeObserver(() => measureWidth());
+    if (groupRef.current) resizeObserver.observe(groupRef.current);
     return () => resizeObserver.disconnect();
   }, [speedPixelsPerSecond]);
 
+  const brands = [
+    "fäm Properties",
+    "DXB Interact",
+    "fäm Luxe",
+    "Louis Aesthetic",
+  ];
+
   return (
     <section
-      aria-label="Media coverage and featured brand logos"
-      className="relative w-full overflow-hidden bg-[#09090D] pt-8 pb-12 md:pt-[86px] md:pb-[82px] select-none"
+      aria-label="Trusted by 100+ brands across industries and borders"
+      className="relative w-full overflow-hidden bg-white py-10 sm:py-14 select-none border-b border-black/[0.06]"
     >
       <div className="mx-auto flex max-w-[1440px] flex-col items-center px-4">
-        {/* Label and accessible pause/resume control */}
+        {/* Heading and accessible pause/resume control */}
         <div className="flex items-center justify-center gap-3">
-          <h2 className="text-center font-display text-[13px] sm:text-[14px] md:text-[15px] font-semibold tracking-[0.2em] text-[#CECED2] uppercase">
+          <h2 className="text-center font-display text-[13px] sm:text-[14px] md:text-[15px] font-semibold tracking-[0.16em] text-[#71717A] uppercase">
             {label}
           </h2>
 
@@ -56,7 +55,7 @@ export function LogoMarquee({
             type="button"
             onClick={() => setIsPaused((p) => !p)}
             aria-label={isPaused ? "Resume logo marquee animation" : "Pause logo marquee animation"}
-            className="grid h-6 w-6 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-[#A0A0AA] transition-colors hover:border-[#F3FF00]/40 hover:text-white focus-visible:outline-2 focus-visible:outline-primary"
+            className="grid h-6 w-6 place-items-center rounded-full border border-black/10 bg-black/[0.04] text-[#71717A] transition-colors hover:border-black hover:text-black focus-visible:outline-2 focus-visible:outline-black"
             title={isPaused ? "Resume marquee" : "Pause marquee"}
           >
             {isPaused ? (
@@ -69,7 +68,7 @@ export function LogoMarquee({
       </div>
 
       {/* Overflow-clipped horizontal marquee track */}
-      <div className="relative mt-9 md:mt-10 w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)] focus-within:[&_.marquee-track]:[animation-play-state:paused] hover:[&_.marquee-track]:[animation-play-state:paused]">
+      <div className="relative mt-7 sm:mt-9 w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)] focus-within:[&_.marquee-track]:[animation-play-state:paused] hover:[&_.marquee-track]:[animation-play-state:paused]">
         <div
           className="marquee-track flex w-max will-change-transform"
           style={{
@@ -77,37 +76,30 @@ export function LogoMarquee({
             animationPlayState: isPaused ? "paused" : "running",
           }}
         >
-          {/* Group 1: Primary accessible group (rendered twice for seamless width >= viewport) */}
-          <div ref={groupRef} className="flex shrink-0 items-center" aria-hidden="false">
-            <img
-              src={logosSequence}
-              alt="Featured publication and brand logos sequence"
-              className="h-[30px] sm:h-[34px] md:h-[42px] w-auto shrink-0 max-w-none opacity-80"
-              loading="eager"
-            />
-            <img
-              src={logosSequence}
-              alt=""
-              className="h-[30px] sm:h-[34px] md:h-[42px] w-auto shrink-0 max-w-none opacity-80"
-              loading="eager"
-            />
-          </div>
-
-          {/* Group 2: Identical duplicate group for 100% seamless infinite loop */}
-          <div className="flex shrink-0 items-center" aria-hidden="true">
-            <img
-              src={logosSequence}
-              alt=""
-              className="h-[30px] sm:h-[34px] md:h-[42px] w-auto shrink-0 max-w-none opacity-80"
-              loading="eager"
-            />
-            <img
-              src={logosSequence}
-              alt=""
-              className="h-[30px] sm:h-[34px] md:h-[42px] w-auto shrink-0 max-w-none opacity-80"
-              loading="eager"
-            />
-          </div>
+          {/* Repeat 4 times for smooth continuous scroll */}
+          {[0, 1, 2, 3].map((rep) => (
+            <div
+              key={rep}
+              ref={rep === 0 ? groupRef : undefined}
+              className="flex shrink-0 items-center gap-10 sm:gap-16 px-6 sm:px-8"
+              aria-hidden={rep > 0}
+            >
+              {brands.map((brand, bIdx) => (
+                <div
+                  key={bIdx}
+                  className="flex items-center gap-3 text-[18px] sm:text-[22px] font-bold text-[#09090B] tracking-tight opacity-75 hover:opacity-100 transition-opacity"
+                >
+                  <span className="font-display">{brand}</span>
+                  <span className="text-[#A1A1AA] text-sm">•</span>
+                </div>
+              ))}
+              <img
+                src={logosSequence}
+                alt="Partner and media logos"
+                className="h-[28px] sm:h-[34px] w-auto max-w-none opacity-60 grayscale hover:opacity-90 transition-opacity"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
