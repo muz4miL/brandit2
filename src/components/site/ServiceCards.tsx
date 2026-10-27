@@ -71,26 +71,26 @@ export function ServiceCards({ onSelect }: { onSelect?: (slug: string) => void }
     <section
       id="services"
       aria-label="Our Services"
-      className="relative w-full overflow-hidden bg-[#FAFAFA] pt-12 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 select-none border-t border-b border-black/[0.06]"
+      className="relative w-full overflow-hidden bg-[#000000] pt-12 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 select-none border-t border-b border-white/[0.08]"
     >
       {/* 1. Centred Section Introduction */}
       <div className="mx-auto flex max-w-[1040px] flex-col items-center px-4 sm:px-6 text-center">
         {/* Eyebrow label */}
-        <div className="flex h-[40px] items-center justify-center rounded-full border border-black/10 bg-black/[0.04] px-5">
-          <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#3F3F46] uppercase">
+        <div className="flex h-[40px] items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-5">
+          <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#A1A1AA] uppercase">
             What We Do
           </span>
         </div>
 
         {/* Main Heading: The Art & Science of Scale */}
         <h2 className="mt-4 sm:mt-6 text-center">
-          <span className="block font-display text-[32px] sm:text-[44px] lg:text-[clamp(44px,5.2vw,72px)] font-bold lg:font-extrabold leading-[1] tracking-[-0.045em] text-[#09090B]">
+          <span className="block font-display text-[32px] sm:text-[44px] lg:text-[clamp(44px,5.2vw,72px)] font-bold lg:font-extrabold leading-[1] tracking-[-0.045em] text-white">
             The Art & Science of Scale
           </span>
         </h2>
 
         {/* Sub-heading */}
-        <p className="mt-3 sm:mt-4 max-w-[620px] text-center text-[15px] sm:text-[18px] lg:text-[20px] font-normal leading-[1.4] text-[#52525B]">
+        <p className="mt-3 sm:mt-4 max-w-[620px] text-center text-[15px] sm:text-[18px] lg:text-[20px] font-normal leading-[1.4] text-[#A1A1AA]">
           Strategy, creative, media, and technology — under one roof.
         </p>
       </div>
@@ -108,38 +108,38 @@ export function ServiceCards({ onSelect }: { onSelect?: (slug: string) => void }
                   onSelect(s.slug);
                 }
               }}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-[24px] sm:rounded-[28px] border border-black/[0.08] bg-white p-5 sm:p-6 transition-all duration-300 hover:border-black/30 hover:shadow-xl hover:-translate-y-1"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-[24px] sm:rounded-[28px] border border-white/[0.08] bg-[#0F0F14] p-5 sm:p-6 transition-all duration-300 hover:border-[#1E6BFF]/50 hover:shadow-2xl hover:shadow-blue-950/20 hover:-translate-y-1"
             >
               {/* Media Thumbnail */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-neutral-100">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-neutral-900">
                 <img
                   src={s.image}
                   alt={s.title}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                <span className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-white text-black shadow-md transition-transform duration-200 group-hover:scale-110">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <span className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-all duration-200 group-hover:bg-[#1E6BFF] group-hover:scale-110">
                   <ArrowUpRight size={17} className="stroke-[2.5]" />
                 </span>
               </div>
 
               {/* Title & Body */}
               <div className="mt-5 flex-1">
-                <h3 className="font-display text-[20px] sm:text-[22px] font-bold tracking-tight text-[#09090B]">
+                <h3 className="font-display text-[20px] sm:text-[22px] font-bold tracking-tight text-white">
                   {s.title}
                 </h3>
-                <p className="mt-2.5 text-[14px] sm:text-[15px] leading-relaxed text-[#52525B]">
+                <p className="mt-2.5 text-[14px] sm:text-[15px] leading-relaxed text-[#A1A1AA]">
                   {s.body}
                 </p>
               </div>
 
               {/* Visible Tag Row (Visible text, NOT tooltips or hover-only) */}
-              <div className="mt-5 pt-4 border-t border-black/[0.06] flex flex-wrap gap-1.5">
+              <div className="mt-5 pt-4 border-t border-white/[0.08] flex flex-wrap gap-1.5">
                 {s.visibleTags.map((tag, idx) => (
                   <span
                     key={idx}
-                    className="rounded-full bg-[#F4F4F6] border border-black/[0.06] px-3 py-1 text-[11.5px] font-medium text-[#3F3F46]"
+                    className="rounded-full bg-white/[0.06] border border-white/[0.08] px-3 py-1 text-[11.5px] font-medium text-neutral-300"
                   >
                     {tag}
                   </span>
@@ -153,7 +153,7 @@ export function ServiceCards({ onSelect }: { onSelect?: (slug: string) => void }
         <div className="mt-12 sm:mt-16 flex justify-center">
           <a
             href="/contact"
-            className="group inline-flex items-center gap-2.5 rounded-full border border-black/15 bg-white px-7 py-3.5 text-[15px] sm:text-[16px] font-semibold text-[#09090B] shadow-sm transition-all duration-200 hover:border-black hover:bg-black hover:text-white"
+            className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] hover:bg-[#1E6BFF] hover:border-[#1E6BFF] px-7 py-3.5 text-[15px] sm:text-[16px] font-semibold text-white shadow-sm transition-all duration-200"
           >
             <span>Not sure what you need? Book a call and we’ll map it</span>
             <ArrowRight size={17} className="stroke-[2.5] transition-transform duration-200 group-hover:translate-x-1" />

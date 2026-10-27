@@ -40,7 +40,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-[#09090B]">
+    <div className="min-h-screen bg-[#000000] text-white selection:bg-[#1E6BFF] selection:text-white">
       {/* Navigation */}
       <Header />
 

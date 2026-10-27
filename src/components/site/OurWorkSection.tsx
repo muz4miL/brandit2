@@ -84,24 +84,24 @@ export function OurWorkSection() {
     <section
       id="work"
       aria-label="Our Work Portfolio"
-      className="relative w-full overflow-hidden bg-white pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 select-none"
+      className="relative w-full overflow-hidden bg-[#000000] pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 select-none"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center max-w-[800px] mx-auto">
-          <div className="flex h-[38px] items-center justify-center rounded-full border border-black/10 bg-black/[0.04] px-5">
-            <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#3F3F46] uppercase">
+          <div className="flex h-[38px] items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-5">
+            <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#A1A1AA] uppercase">
               Our Work
             </span>
           </div>
 
           <h2 className="mt-4 sm:mt-5">
-            <span className="block font-display text-[32px] sm:text-[44px] lg:text-[clamp(44px,5vw,68px)] font-bold lg:font-extrabold leading-[1] tracking-[-0.045em] text-[#09090B]">
+            <span className="block font-display text-[32px] sm:text-[44px] lg:text-[clamp(44px,5vw,68px)] font-bold lg:font-extrabold leading-[1] tracking-[-0.045em] text-white">
               Content that Converts
             </span>
           </h2>
 
-          <p className="mt-3 text-[16px] sm:text-[18px] lg:text-[20px] text-[#52525B]">
+          <p className="mt-3 text-[16px] sm:text-[18px] lg:text-[20px] text-[#A1A1AA]">
             Ten systems. Ten industries. One standard.
           </p>
         </div>
@@ -111,10 +111,10 @@ export function OurWorkSection() {
           {tenPortfolioCards.map((item, idx) => (
             <div
               key={idx}
-              className="group flex flex-col overflow-hidden rounded-[24px] border border-black/[0.08] bg-[#FAFAFA] p-4 transition-all duration-300 hover:border-black/25 hover:shadow-lg"
+              className="group flex flex-col overflow-hidden rounded-[24px] border border-white/[0.08] bg-[#0F0F14] p-4 transition-all duration-300 hover:border-[#1E6BFF]/50 hover:shadow-2xl"
             >
               {/* 16:9 Media Area */}
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-neutral-200">
+              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-neutral-900">
                 <img
                   src={item.image}
                   alt={item.alt}
@@ -125,10 +125,10 @@ export function OurWorkSection() {
 
               {/* Title & Outcome Line */}
               <div className="mt-4 px-1 pb-1">
-                <h3 className="font-display text-[19px] sm:text-[20px] font-bold tracking-tight text-[#09090B]">
+                <h3 className="font-display text-[19px] sm:text-[20px] font-bold tracking-tight text-white">
                   {item.title}
                 </h3>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-[#52525B]">
+                <p className="mt-1.5 text-[14px] leading-relaxed text-[#A1A1AA]">
                   {item.outcome}
                 </p>
               </div>

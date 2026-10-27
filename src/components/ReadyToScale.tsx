@@ -5,11 +5,11 @@ export default function ReadyToScale() {
     <section
       id="final-cta"
       aria-label="Ready to Grow"
-      className="relative w-full overflow-hidden bg-white pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 select-none"
+      className="relative w-full overflow-hidden bg-[#000000] pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 select-none"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
         {/* High-Contrast Architectural Shell Card */}
-        <div className="relative overflow-hidden rounded-[36px] sm:rounded-[44px] bg-[#09090B] px-6 py-16 sm:px-12 sm:py-20 lg:py-24 text-center text-white shadow-2xl">
+        <div className="relative overflow-hidden rounded-[36px] sm:rounded-[44px] bg-[#0A0A10] border border-white/[0.08] px-6 py-16 sm:px-12 sm:py-20 lg:py-24 text-center text-white shadow-2xl">
           <div className="mx-auto max-w-[760px] flex flex-col items-center">
             {/* Eyebrow */}
             <div className="inline-flex h-[36px] items-center justify-center rounded-full border border-white/15 bg-white/[0.08] px-4">
@@ -32,9 +32,9 @@ export default function ReadyToScale() {
             <div className="mt-9 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
               <a
                 href="/contact"
-                className="inline-flex h-[60px] items-center justify-center gap-2.5 rounded-full bg-white px-8 text-[16px] font-bold text-[#09090B] transition-all hover:bg-neutral-200 active:scale-[0.98]"
+                className="inline-flex h-[60px] items-center justify-center gap-2.5 rounded-full bg-[#1E6BFF] hover:bg-[#185DE8] px-8 text-[16px] font-bold text-white shadow-lg shadow-blue-600/35 transition-all hover:scale-105 active:scale-[0.98]"
               >
-                <span>Book a Discovery Call</span>
+                <span>Book a Growth Audit</span>
                 <ArrowUpRight size={18} className="stroke-[2.5]" />
               </a>
 

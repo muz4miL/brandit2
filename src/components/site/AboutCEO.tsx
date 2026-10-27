@@ -5,13 +5,13 @@ export function AboutCEO() {
   return (
     <section
       aria-label="About the Founder & CEO"
-      className="relative w-full overflow-hidden bg-[#FAFAFA] pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 border-t border-b border-black/[0.06] select-none"
+      className="relative w-full overflow-hidden bg-[#09090D] pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 border-t border-b border-white/[0.08] select-none"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Founder Photo & Social Badges */}
           <div className="lg:col-span-5 flex flex-col items-center sm:items-start">
-            <div className="relative aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[30px] border border-black/10 bg-neutral-200 shadow-md">
+            <div className="relative aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[30px] border border-white/10 bg-neutral-900 shadow-2xl">
               <img
                 src={founderPhoto}
                 alt="Umar Farooq — Founder & CEO of brandit."
@@ -21,10 +21,10 @@ export function AboutCEO() {
             </div>
 
             <div className="mt-6 flex flex-col items-center sm:items-start">
-              <h3 className="font-display text-[24px] font-bold text-[#09090B]">
+              <h3 className="font-display text-[24px] font-bold text-white">
                 Umar Farooq
               </h3>
-              <p className="text-[15px] font-medium text-[#71717A]">
+              <p className="text-[15px] font-medium text-[#A1A1AA]">
                 Founder & CEO
               </p>
 
@@ -35,7 +35,7 @@ export function AboutCEO() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Umar Farooq Instagram"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-white text-[#09090B] transition-colors hover:bg-black hover:text-white"
+                  className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-white transition-colors hover:bg-[#1E6BFF] hover:border-[#1E6BFF]"
                 >
                   <Instagram size={18} />
                 </a>
@@ -44,7 +44,7 @@ export function AboutCEO() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Umar Farooq LinkedIn"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-white text-[#09090B] transition-colors hover:bg-black hover:text-white"
+                  className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-white transition-colors hover:bg-[#1E6BFF] hover:border-[#1E6BFF]"
                 >
                   <Linkedin size={18} />
                 </a>
@@ -54,20 +54,20 @@ export function AboutCEO() {
 
           {/* Right Column: Heading & Approved Story Body Copy */}
           <div className="lg:col-span-7">
-            <div className="inline-flex h-[36px] items-center justify-center rounded-full border border-black/10 bg-black/[0.04] px-4">
-              <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#3F3F46] uppercase">
+            <div className="inline-flex h-[36px] items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-4">
+              <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#A1A1AA] uppercase">
                 About the CEO
               </span>
             </div>
 
-            <h2 className="mt-4 font-display text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold leading-[1.02] tracking-tight text-[#09090B]">
+            <h2 className="mt-4 font-display text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold leading-[1.02] tracking-tight text-white">
               The system behind{" "}
-              <span className="font-serif italic font-normal text-[#18181B]">
+              <span className="font-serif italic font-normal text-[#F4F4F5]">
                 brandit.
               </span>
             </h2>
 
-            <div className="mt-6 space-y-4 text-[16px] sm:text-[17px] leading-relaxed text-[#52525B]">
+            <div className="mt-6 space-y-4 text-[16px] sm:text-[17px] leading-relaxed text-[#A1A1AA]">
               <p>
                 I sharpened my craft inside the UAE — one of the most competitive marketing arenas on earth. I built the content system for the country’s largest real estate brokerage, turned a property data platform into a trusted authority, and grew a founder’s brand to six figures.
               </p>

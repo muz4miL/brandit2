@@ -61,7 +61,7 @@ export default function FAQ() {
     <section
       id="faq"
       aria-label="Frequently Asked Questions"
-      className="relative w-full overflow-hidden bg-[#FAFAFA] pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 border-t border-b border-black/[0.06] select-none"
+      className="relative w-full overflow-hidden bg-[#09090D] pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 border-t border-b border-white/[0.08] select-none"
     >
       <script
         type="application/ld+json"
@@ -70,7 +70,7 @@ export default function FAQ() {
 
       <div className="mx-auto max-w-[1040px] px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="font-display text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold leading-[1.02] tracking-tight text-[#09090B]">
+          <h2 className="font-display text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold leading-[1.02] tracking-tight text-white">
             Frequently Asked Questions
           </h2>
         </div>
@@ -82,20 +82,20 @@ export default function FAQ() {
             return (
               <div
                 key={idx}
-                className="overflow-hidden rounded-2xl border border-black/[0.08] bg-white transition-colors duration-150"
+                className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#121217] transition-colors duration-150"
               >
                 <button
                   type="button"
                   onClick={() => toggleItem(idx)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between p-5 sm:p-6 text-left transition-colors hover:bg-neutral-50"
+                  className="flex w-full items-center justify-between p-5 sm:p-6 text-left transition-colors hover:bg-white/[0.03]"
                 >
-                  <span className="font-display text-[17px] sm:text-[18px] font-bold text-[#09090B] pr-4">
+                  <span className="font-display text-[17px] sm:text-[18px] font-bold text-white pr-4">
                     {faq.q}
                   </span>
                   <span
-                    className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border border-black/10 bg-[#FAFAFA] text-[#09090B] transition-transform duration-200 ${
-                      isOpen ? "rotate-45" : ""
+                    className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-white transition-transform duration-200 ${
+                      isOpen ? "rotate-45 text-[#1E6BFF]" : ""
                     }`}
                   >
                     <Plus size={16} className="stroke-[2.5]" />
@@ -103,7 +103,7 @@ export default function FAQ() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-[15px] sm:text-[16px] leading-relaxed text-[#52525B] border-t border-black/[0.04]">
+                  <div className="px-5 sm:px-6 pb-6 pt-1 text-[15px] sm:text-[16px] leading-relaxed text-[#A1A1AA] border-t border-white/[0.06]">
                     {faq.a}
                   </div>
                 )}

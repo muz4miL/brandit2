@@ -205,8 +205,8 @@ export function Header({ onSelectService }: HeaderProps) {
         "sticky top-0 z-50 w-full transition-all duration-200",
         "h-[76px] min-[920px]:h-[100px]",
         isScrolled
-          ? "border-b border-black/[0.08] bg-white/85 backdrop-blur-[18px] is-scrolled shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
-          : "border-b border-transparent bg-[#FAFAFA]",
+          ? "border-b border-white/[0.08] bg-black/90 backdrop-blur-[18px] is-scrolled shadow-[0_4px_30px_rgba(0,0,0,0.7)]"
+          : "border-b border-transparent bg-black",
       )}
     >
       {/* Mobile Top Bar (< 920px): Logo pinned LEFT, Hamburger pinned FAR RIGHT */}
@@ -222,19 +222,19 @@ export function Header({ onSelectService }: HeaderProps) {
         <button
           ref={mobileToggleRef}
           type="button"
-          className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] text-black transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-primary"
+          className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] text-white transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-primary"
           aria-expanded={isMobileOpen}
           aria-controls="mobile-navigation-drawer"
           aria-label={isMobileOpen ? "Close navigation menu" : "Open navigation menu"}
           onClick={() => setIsMobileOpen((o) => !o)}
         >
           {isMobileOpen ? (
-            <X size={24} className="stroke-[2.2] text-black" />
+            <X size={24} className="stroke-[2.2] text-white" />
           ) : (
             <div className="flex flex-col gap-[5px] w-[22px]">
-              <span className="block h-[2px] w-full bg-black rounded-full" />
-              <span className="block h-[2px] w-full bg-black rounded-full" />
-              <span className="block h-[2px] w-full bg-black rounded-full" />
+              <span className="block h-[2px] w-full bg-white rounded-full" />
+              <span className="block h-[2px] w-full bg-white rounded-full" />
+              <span className="block h-[2px] w-full bg-white rounded-full" />
             </div>
           )}
         </button>
@@ -257,17 +257,17 @@ export function Header({ onSelectService }: HeaderProps) {
         <div className="flex items-center justify-self-center">
           <nav
             aria-label="Main navigation"
-            className="relative inline-flex h-[60px] items-center gap-[4px] sm:gap-[6px] rounded-full bg-[#EAEAEA] border border-black/[0.06] p-[6px] shadow-sm"
+            className="relative inline-flex h-[56px] items-center gap-[4px] sm:gap-[6px] rounded-full bg-[#0D0D12] border border-white/[0.08] p-[5px] shadow-lg shadow-black/40"
           >
             {/* 1. About */}
             <a
               href="/about"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2",
+                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
                 activeSection === "about"
-                  ? "bg-black font-semibold text-white shadow-sm"
-                  : "bg-transparent font-medium text-[#222226] hover:bg-black hover:font-semibold hover:text-white",
+                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
+                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
               )}
             >
               About
@@ -285,18 +285,18 @@ export function Header({ onSelectService }: HeaderProps) {
                 onClick={() => setIsServicesOpen((prev) => !prev)}
                 className={cn(
                   "flex h-[44px] items-center justify-center gap-1.5 rounded-full px-4 text-[15px] transition-colors duration-150",
-                  "focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2",
+                  "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
                   activeSection === "services" || isServicesOpen
-                    ? "bg-black font-semibold text-white shadow-sm"
-                    : "bg-transparent font-medium text-[#222226] hover:bg-black hover:font-semibold hover:text-white",
+                    ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
+                    : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
                 )}
               >
                 <span>Services</span>
                 <ChevronDown
                   size={15}
                   className={cn(
-                    "stroke-[2.5] transition-transform duration-200",
-                    isServicesOpen && "rotate-180",
+                    "stroke-[2.5] text-neutral-400 transition-transform duration-200",
+                    isServicesOpen && "rotate-180 text-white",
                   )}
                   aria-hidden="true"
                 />
@@ -308,10 +308,10 @@ export function Header({ onSelectService }: HeaderProps) {
               href="/our-work"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2",
+                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
                 activeSection === "work"
-                  ? "bg-black font-semibold text-white shadow-sm"
-                  : "bg-transparent font-medium text-[#222226] hover:bg-black hover:font-semibold hover:text-white",
+                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
+                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
               )}
             >
               Our Work
@@ -322,10 +322,10 @@ export function Header({ onSelectService }: HeaderProps) {
               href="/case-studies"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2",
+                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
                 activeSection === "case-studies"
-                  ? "bg-black font-semibold text-white shadow-sm"
-                  : "bg-transparent font-medium text-[#222226] hover:bg-black hover:font-semibold hover:text-white",
+                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
+                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
               )}
             >
               Case Studies
@@ -336,10 +336,10 @@ export function Header({ onSelectService }: HeaderProps) {
               href="/studio"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2",
+                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
                 activeSection === "studio"
-                  ? "bg-black font-semibold text-white shadow-sm"
-                  : "bg-transparent font-medium text-[#222226] hover:bg-black hover:font-semibold hover:text-white",
+                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
+                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
               )}
             >
               brandit. Studio
@@ -350,10 +350,10 @@ export function Header({ onSelectService }: HeaderProps) {
               href="/careers"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2",
+                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
                 activeSection === "careers"
-                  ? "bg-black font-semibold text-white shadow-sm"
-                  : "bg-transparent font-medium text-[#222226] hover:bg-black hover:font-semibold hover:text-white",
+                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
+                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
               )}
             >
               Careers
@@ -361,12 +361,15 @@ export function Header({ onSelectService }: HeaderProps) {
           </nav>
         </div>
 
-        {/* Right: Contact button labelled "Get Started →" */}
+        {/* Right: Contact button matching inspiration styling with vibrant blue pill */}
         <div className="flex items-center gap-3 justify-self-end">
           <a
             href="/contact"
-            className="inline-flex h-[56px] min-w-[175px] items-center justify-center gap-2 rounded-full border-2 border-black bg-black px-6 text-[15px] font-semibold text-white select-none transition-all duration-150 hover:bg-neutral-800 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-3"
+            className="inline-flex h-[52px] min-w-[170px] items-center justify-center gap-2.5 rounded-full bg-[#1E6BFF] hover:bg-[#185DE8] px-6 text-[15px] font-semibold text-white select-none transition-all duration-150 shadow-lg shadow-blue-600/30 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-3"
           >
+            <div className="grid h-6 w-6 place-items-center rounded-md bg-white/20 text-white font-bold text-xs leading-none">
+              b.
+            </div>
             <span>Get Started</span>
             <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />
           </a>
@@ -382,7 +385,7 @@ export function Header({ onSelectService }: HeaderProps) {
           aria-label="Services Overview"
           className="absolute left-0 right-0 top-full pt-2 px-[clamp(24px,3vw,56px)] z-50 animate-in fade-in slide-in-from-top-3 duration-200"
         >
-          <div className="mx-auto max-w-[1440px] rounded-[28px] border border-black/10 bg-white p-5 lg:p-6 shadow-[0_20px_70px_rgba(0,0,0,0.12)]">
+          <div className="mx-auto max-w-[1440px] rounded-[28px] border border-white/[0.1] bg-[#0D0D12]/95 backdrop-blur-2xl p-5 lg:p-6 shadow-[0_24px_80px_rgba(0,0,0,0.9)] text-white">
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_340px] xl:grid-cols-[1fr_380px]">
               {/* Left: 6 Service Cards Grid (3 cols x 2 rows) matching the 6 brief services */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -391,28 +394,28 @@ export function Header({ onSelectService }: HeaderProps) {
                     key={item.id}
                     href={`/services#${item.slug}`}
                     onClick={() => setIsServicesOpen(false)}
-                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-black/[0.08] bg-[#F7F7F8] p-4 text-left transition-all duration-200 hover:border-black/30 hover:bg-[#EFEFF2] focus-visible:outline-2 focus-visible:outline-primary min-h-[145px]"
+                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/[0.08] bg-[#14141A] p-4 text-left transition-all duration-200 hover:border-[#1E6BFF]/50 hover:bg-[#1A1A22] focus-visible:outline-2 focus-visible:outline-primary min-h-[145px]"
                   >
                     <div>
                       <div className="flex items-center justify-between">
-                        <span className="font-display text-[17px] font-bold tracking-tight text-[#09090B]">
+                        <span className="font-display text-[17px] font-bold tracking-tight text-white">
                           {item.title}
                         </span>
-                        <span className="grid h-7 w-7 place-items-center rounded-full bg-black/5 text-[#09090B] transition-all group-hover:bg-black group-hover:text-white">
+                        <span className="grid h-7 w-7 place-items-center rounded-full bg-white/10 text-white transition-all group-hover:bg-[#1E6BFF]">
                           <ArrowUpRight size={14} className="stroke-[2.5]" />
                         </span>
                       </div>
-                      <p className="mt-1 text-[13px] leading-relaxed text-[#52525B] line-clamp-2">
+                      <p className="mt-1 text-[13px] leading-relaxed text-[#A1A1AA] line-clamp-2">
                         {item.description}
                       </p>
                     </div>
 
                     {/* Visible Tag Row as specified in brief */}
-                    <div className="mt-3 flex flex-wrap gap-1.5 pt-2 border-t border-black/[0.06]">
+                    <div className="mt-3 flex flex-wrap gap-1.5 pt-2 border-t border-white/[0.08]">
                       {item.visibleTags.slice(0, 3).map((tag, idx) => (
                         <span
                           key={idx}
-                          className="rounded-md bg-white border border-black/[0.08] px-2 py-0.5 text-[10.5px] font-medium text-[#3F3F46]"
+                          className="rounded-md bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 text-[10.5px] font-medium text-neutral-300"
                         >
                           {tag}
                         </span>
@@ -511,22 +514,22 @@ export function Header({ onSelectService }: HeaderProps) {
         <nav
           id="mobile-navigation-drawer"
           aria-label="Mobile navigation"
-          className="mx-3 mt-2 flex flex-col gap-2 rounded-3xl border border-black/10 bg-white p-3.5 shadow-2xl backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 duration-150 min-[920px]:hidden"
+          className="mx-3 mt-2 flex flex-col gap-2 rounded-3xl border border-white/[0.1] bg-[#0D0D12] p-3.5 shadow-2xl backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 duration-150 min-[920px]:hidden text-white"
         >
           {/* About */}
           <a
             href="#about"
             onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#F4F4F6] px-4 text-[15px] font-medium text-[#09090B] transition-colors hover:bg-black hover:font-semibold hover:text-white"
+            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
           >
             About
           </a>
 
           {/* Services Accordion with rich previews */}
-          <div className="flex flex-col rounded-2xl bg-[#F4F4F6] overflow-hidden">
+          <div className="flex flex-col rounded-2xl bg-[#16161D] overflow-hidden">
             <button
               type="button"
-              className="flex min-h-[46px] w-full items-center justify-between px-4 text-[15px] font-medium text-[#09090B] transition-colors hover:text-black"
+              className="flex min-h-[46px] w-full items-center justify-between px-4 text-[15px] font-medium text-white transition-colors hover:text-[#1E6BFF]"
               aria-expanded={isMobileServicesOpen}
               onClick={() => setIsMobileServicesOpen((prev) => !prev)}
             >
@@ -534,26 +537,26 @@ export function Header({ onSelectService }: HeaderProps) {
               <ChevronDown
                 size={16}
                 className={cn(
-                  "stroke-[2.5] transition-transform duration-200",
-                  isMobileServicesOpen && "rotate-180",
+                  "stroke-[2.5] text-neutral-400 transition-transform duration-200",
+                  isMobileServicesOpen && "rotate-180 text-white",
                 )}
                 aria-hidden="true"
               />
             </button>
             {isMobileServicesOpen && (
-              <div className="grid grid-cols-1 gap-1.5 border-t border-black/[0.08] bg-[#EEEEF0] p-2.5">
+              <div className="grid grid-cols-1 gap-1.5 border-t border-white/[0.08] bg-[#121217] p-2.5">
                 {sixServices.map((item) => (
                   <a
                     key={item.id}
                     href={`/services#${item.slug}`}
                     onClick={() => setIsMobileOpen(false)}
-                    className="flex items-center justify-between rounded-xl bg-white p-3 text-left border border-black/[0.06] hover:bg-neutral-50 transition-colors"
+                    className="flex items-center justify-between rounded-xl bg-[#1A1A22] p-3 text-left border border-white/[0.06] hover:bg-[#22222E] transition-colors"
                   >
                     <div>
-                      <div className="text-[14px] font-bold text-[#09090B]">{item.title}</div>
-                      <div className="text-[12px] text-[#52525B] line-clamp-1">{item.description}</div>
+                      <div className="text-[14px] font-bold text-white">{item.title}</div>
+                      <div className="text-[12px] text-[#A1A1AA] line-clamp-1">{item.description}</div>
                     </div>
-                    <ArrowUpRight size={15} className="text-[#09090B] shrink-0 ml-2" />
+                    <ArrowUpRight size={15} className="text-white shrink-0 ml-2" />
                   </a>
                 ))}
               </div>
@@ -564,7 +567,7 @@ export function Header({ onSelectService }: HeaderProps) {
           <a
             href="/our-work"
             onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#F4F4F6] px-4 text-[15px] font-medium text-[#09090B] transition-colors hover:bg-black hover:font-semibold hover:text-white"
+            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
           >
             Our Work
           </a>
@@ -573,7 +576,7 @@ export function Header({ onSelectService }: HeaderProps) {
           <a
             href="/case-studies"
             onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#F4F4F6] px-4 text-[15px] font-medium text-[#09090B] transition-colors hover:bg-black hover:font-semibold hover:text-white"
+            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
           >
             Case Studies
           </a>
@@ -582,7 +585,7 @@ export function Header({ onSelectService }: HeaderProps) {
           <a
             href="/studio"
             onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#F4F4F6] px-4 text-[15px] font-medium text-[#09090B] transition-colors hover:bg-black hover:font-semibold hover:text-white"
+            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
           >
             brandit. Studio
           </a>
@@ -591,7 +594,7 @@ export function Header({ onSelectService }: HeaderProps) {
           <a
             href="/careers"
             onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#F4F4F6] px-4 text-[15px] font-medium text-[#09090B] transition-colors hover:bg-black hover:font-semibold hover:text-white"
+            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
           >
             Careers
           </a>
@@ -600,7 +603,7 @@ export function Header({ onSelectService }: HeaderProps) {
           <a
             href="/contact"
             onClick={() => setIsMobileOpen(false)}
-            className="mt-1 flex min-h-[50px] items-center justify-center gap-2 rounded-full border-2 border-black bg-black px-5 text-[15px] font-semibold text-white transition-transform hover:bg-neutral-800"
+            className="mt-1 flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-[#1E6BFF] hover:bg-[#185DE8] px-5 text-[15px] font-semibold text-white shadow-lg shadow-blue-600/30 transition-transform"
           >
             <span>Get Started</span>
             <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />

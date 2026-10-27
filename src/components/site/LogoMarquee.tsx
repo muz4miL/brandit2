@@ -42,12 +42,12 @@ export function LogoMarquee({
   return (
     <section
       aria-label="Trusted by 100+ brands across industries and borders"
-      className="relative w-full overflow-hidden bg-white py-10 sm:py-14 select-none border-b border-black/[0.06]"
+      className="relative w-full overflow-hidden bg-[#000000] py-10 sm:py-14 select-none border-b border-white/[0.08]"
     >
       <div className="mx-auto flex max-w-[1440px] flex-col items-center px-4">
         {/* Heading and accessible pause/resume control */}
         <div className="flex items-center justify-center gap-3">
-          <h2 className="text-center font-display text-[13px] sm:text-[14px] md:text-[15px] font-semibold tracking-[0.16em] text-[#71717A] uppercase">
+          <h2 className="text-center font-display text-[13px] sm:text-[14px] md:text-[15px] font-semibold tracking-[0.18em] text-[#A1A1AA] uppercase">
             {label}
           </h2>
 
@@ -55,7 +55,7 @@ export function LogoMarquee({
             type="button"
             onClick={() => setIsPaused((p) => !p)}
             aria-label={isPaused ? "Resume logo marquee animation" : "Pause logo marquee animation"}
-            className="grid h-6 w-6 place-items-center rounded-full border border-black/10 bg-black/[0.04] text-[#71717A] transition-colors hover:border-black hover:text-black focus-visible:outline-2 focus-visible:outline-black"
+            className="grid h-6 w-6 place-items-center rounded-full border border-white/10 bg-white/[0.05] text-[#A1A1AA] transition-colors hover:border-[#1E6BFF] hover:text-white focus-visible:outline-2 focus-visible:outline-[#1E6BFF]"
             title={isPaused ? "Resume marquee" : "Pause marquee"}
           >
             {isPaused ? (
@@ -87,16 +87,16 @@ export function LogoMarquee({
               {brands.map((brand, bIdx) => (
                 <div
                   key={bIdx}
-                  className="flex items-center gap-3 text-[18px] sm:text-[22px] font-bold text-[#09090B] tracking-tight opacity-75 hover:opacity-100 transition-opacity"
+                  className="flex items-center gap-3 text-[18px] sm:text-[22px] font-bold text-white tracking-tight opacity-80 hover:opacity-100 transition-opacity"
                 >
                   <span className="font-display">{brand}</span>
-                  <span className="text-[#A1A1AA] text-sm">•</span>
+                  <span className="text-[#1E6BFF] text-sm">•</span>
                 </div>
               ))}
               <img
                 src={logosSequence}
                 alt="Partner and media logos"
-                className="h-[28px] sm:h-[34px] w-auto max-w-none opacity-60 grayscale hover:opacity-90 transition-opacity"
+                className="h-[28px] sm:h-[34px] w-auto max-w-none opacity-80 invert brightness-200 hover:opacity-100 transition-opacity"
               />
             </div>
           ))}

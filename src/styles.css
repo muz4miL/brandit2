@@ -41,27 +41,27 @@
   --radius: 0.75rem;
   --shell-radius: 1.5rem;
   --tile-radius: 1.25rem;
-  --background: #fafafa;
-  --panel: #ffffff;
-  --surface: #f4f4f5;
-  --foreground: #09090b;
-  --muted-foreground: #71717a;
-  --primary: #09090b;
+  --background: #000000;
+  --panel: #0d0d12;
+  --surface: #121218;
+  --foreground: #ffffff;
+  --muted-foreground: #a1a1aa;
+  --primary: #1e6bff;
   --primary-foreground: #ffffff;
-  --card: #ffffff;
-  --card-foreground: #09090b;
-  --popover: #ffffff;
-  --popover-foreground: #09090b;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #09090b;
-  --muted: #f4f4f5;
-  --accent: #f4f4f5;
-  --accent-foreground: #09090b;
+  --card: #0d0d12;
+  --card-foreground: #ffffff;
+  --popover: #0d0d12;
+  --popover-foreground: #ffffff;
+  --secondary: #18181f;
+  --secondary-foreground: #ffffff;
+  --muted: #18181f;
+  --accent: #1e6bff;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.65 0.2 25);
   --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.08);
-  --input: rgba(0, 0, 0, 0.12);
-  --ring: #09090b;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #1e6bff;
   --header-h: 76px;
 }
 
@@ -80,7 +80,7 @@
 
 @supports not (backdrop-filter: blur(1px)) {
   header.is-scrolled {
-    background-color: #ffffff !important;
+    background-color: #000000 !important;
   }
 }
 
