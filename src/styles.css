@@ -116,6 +116,9 @@
   --brandit-watermark: rgba(20, 20, 20, 0.05);
 }
 
+:root,
+:root[data-theme="dark"],
+:root[data-theme="light"] {
   /* Step 1: True luxury metallic gold tokens */
   --gold-50: #FFF6D6;
   --gold-200: #F7E08A;
