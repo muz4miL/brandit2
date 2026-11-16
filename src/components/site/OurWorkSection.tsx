@@ -566,7 +566,7 @@ export function OurWorkSection() {
       ref={sectionRef}
       id="creative-library"
       aria-label="Creative Library"
-      className="relative w-full overflow-hidden bg-[#000000] pt-16 sm:pt-22 lg:pt-28 pb-16 sm:pb-22 lg:pb-28 select-none scroll-mt-24"
+      className="relative w-full overflow-hidden bg-bg text-fg pt-16 sm:pt-22 lg:pt-28 pb-16 sm:pb-22 lg:pb-28 select-none scroll-mt-24"
     >
       <div className="mx-auto flex max-w-[1440px] flex-col items-center px-4 text-center">
         {/* Pill badge at top */}
@@ -574,10 +574,10 @@ export function OurWorkSection() {
 
         {/* Section Heading: Creative that Converts */}
         <h2 className="mt-5 sm:mt-7 lg:mt-9 flex flex-col items-center text-center">
-          <span className="block font-display text-[34px] sm:text-[50px] lg:text-[clamp(50px,6vw,96px)] font-extrabold leading-[0.98] lg:leading-[0.95] tracking-[-0.04em] text-white">
+          <span className="block font-display text-[34px] sm:text-[50px] lg:text-[clamp(50px,6vw,96px)] font-extrabold leading-[0.98] lg:leading-[0.95] tracking-[-0.04em] text-fg">
             {headingPrefix}
           </span>
-          <span className="block font-serif text-[38px] sm:text-[54px] lg:text-[clamp(54px,6.5vw,104px)] font-normal italic leading-[0.98] lg:leading-[0.95] tracking-[-0.02em] text-white mt-1">
+          <span className="block font-serif text-[38px] sm:text-[54px] lg:text-[clamp(54px,6.5vw,104px)] font-normal italic leading-[0.98] lg:leading-[0.95] tracking-[-0.02em] text-fg mt-1">
             {headingItalic}
           </span>
         </h2>
@@ -586,7 +586,7 @@ export function OurWorkSection() {
         <div
           role="tablist"
           aria-label="Work categories"
-          className="mt-8 sm:mt-10 lg:mt-12 inline-flex items-center gap-1 sm:gap-2 rounded-full border border-white/10 bg-[#0c0c10] p-1.5 sm:p-2 backdrop-blur-md"
+          className="mt-8 sm:mt-10 lg:mt-12 inline-flex items-center gap-1 sm:gap-2 rounded-full border border-line bg-surface p-1.5 sm:p-2 backdrop-blur-md"
         >
           {TABS.map((tab) => {
             const isActive = activeTab === tab.id;
@@ -600,8 +600,8 @@ export function OurWorkSection() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`relative rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-[13px] sm:text-[15px] font-medium transition-all duration-300 ${
                   isActive
-                    ? "bg-white text-black font-semibold shadow-md"
-                    : "text-neutral-400 hover:text-white hover:bg-white/5"
+                    ? "bg-primary text-primary-foreground font-semibold shadow-md"
+                    : "text-muted hover:text-fg hover:bg-surface-2"
                 }`}
               >
                 {tab.label}
@@ -729,10 +729,10 @@ export function OurWorkSection() {
       <div className="mx-auto mt-12 sm:mt-16 lg:mt-20 flex w-full max-w-[1140px] flex-col items-center justify-between gap-8 px-5 sm:px-8 md:flex-row md:gap-6">
         {/* Left: "Want more inspiration?" */}
         <div className="text-center md:text-left">
-          <p className="font-display text-[26px] sm:text-[30px] font-bold leading-[1.05] tracking-tight text-white">
+          <p className="font-display text-[26px] sm:text-[30px] font-bold leading-[1.05] tracking-tight text-fg">
             Want more
           </p>
-          <p className="font-serif text-[28px] sm:text-[34px] italic font-normal leading-[1.05] tracking-tight text-neutral-300 mt-0.5">
+          <p className="font-serif text-[28px] sm:text-[34px] italic font-normal leading-[1.05] tracking-tight text-muted mt-0.5">
             inspiration?
           </p>
         </div>
@@ -741,7 +741,7 @@ export function OurWorkSection() {
         <a
           href="/case-studies#creative-library"
           aria-label="Go to Creative Library"
-          className="group inline-flex h-[56px] sm:h-[62px] items-center justify-center gap-3 rounded-full bg-white px-8 sm:px-10 text-[16px] sm:text-[18px] font-bold text-black transition-all duration-300 hover:bg-neutral-200 hover:scale-105 shadow-xl select-none"
+          className="group inline-flex h-[56px] sm:h-[62px] items-center justify-center gap-3 rounded-full bg-primary px-8 sm:px-10 text-[16px] sm:text-[18px] font-bold text-primary-foreground transition-all duration-300 hover:opacity-90 hover:scale-105 shadow-xl select-none"
         >
           <span>Go to Creative Library</span>
           <ArrowUpRight
@@ -773,11 +773,11 @@ export function OurWorkSection() {
               />
             </svg>
             {/* 4.9 | 5★ badge */}
-            <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-[#141418] px-2.5 py-0.5 text-[11px] font-semibold text-white/90">
+            <span className="inline-flex items-center gap-1 rounded-full border border-line bg-surface px-2.5 py-0.5 text-[11px] font-semibold text-fg">
               4.9 | 5<span className="text-[#FBBF24]">★</span>
             </span>
           </div>
-          <p className="mt-1.5 text-[13px] text-neutral-400">
+          <p className="mt-1.5 text-[13px] text-muted">
             Discover why 14+ Businesses Choose brandit.
           </p>
         </div>

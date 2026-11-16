@@ -108,10 +108,10 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
         "sticky top-0 z-50 w-full transition-all duration-200 select-none",
         "h-[76px] min-[920px]:h-[100px]",
         isScrolled
-          ? "border-b border-white/[0.08] bg-[#08080B]/90 backdrop-blur-[18px] is-scrolled shadow-2xl shadow-black/80"
+          ? "border-b border-line bg-surface/90 backdrop-blur-[18px] is-scrolled shadow-2xl shadow-black/20"
           : overlay
             ? "border-b border-transparent bg-transparent"
-            : "border-b border-transparent bg-[#08080B]",
+            : "border-b border-transparent bg-bg",
       )}
     >
       {/* Mobile Top Bar (< 920px): Logo pinned LEFT, Hamburger pinned FAR RIGHT */}
@@ -162,17 +162,17 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
         <div className="flex items-center justify-self-center">
           <nav
             aria-label="Main navigation"
-            className="relative inline-flex h-[58px] sm:h-[62px] items-center gap-[4px] sm:gap-[6px] rounded-full bg-[#121216] border border-white/10 p-[5px] sm:p-[6px] shadow-lg shadow-black/50"
+            className="relative inline-flex h-[58px] sm:h-[62px] items-center gap-[4px] sm:gap-[6px] rounded-full bg-surface border border-line p-[5px] sm:p-[6px] shadow-lg shadow-black/10"
           >
             {/* 1. Home */}
             <a
               href="/"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
+                "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
                 activePath === "/"
-                  ? "bg-white font-bold text-black shadow-md shadow-black/40"
-                  : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
+                  ? "bg-primary font-bold text-primary-foreground shadow-md"
+                  : "bg-transparent font-medium text-muted hover:bg-surface-2 hover:text-fg",
               )}
             >
               Home
@@ -183,10 +183,10 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
               href="/about"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
+                "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
                 activePath.startsWith("/about")
-                  ? "bg-white font-bold text-black shadow-md shadow-black/40"
-                  : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
+                  ? "bg-primary font-bold text-primary-foreground shadow-md"
+                  : "bg-transparent font-medium text-muted hover:bg-surface-2 hover:text-fg",
               )}
             >
               About
@@ -200,8 +200,8 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                   className={cn(
                     "flex h-[44px] items-center justify-center pl-4 pr-1.5 text-[15px] transition-colors duration-150 rounded-l-full",
                     activePath.startsWith("/services")
-                      ? "bg-white/[0.08] font-bold text-white ring-1 ring-white/30"
-                      : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
+                      ? "bg-surface-2 font-bold text-fg ring-1 ring-line"
+                      : "bg-transparent font-medium text-muted hover:bg-surface-2 hover:text-fg",
                   )}
                 >
                   Services & Packages
@@ -217,8 +217,8 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                   className={cn(
                     "flex h-[44px] items-center justify-center pr-3 pl-1 text-[15px] transition-colors duration-150 rounded-r-full",
                     activePath.startsWith("/services") || isServicesOpen
-                      ? "bg-white/[0.08] text-white ring-1 ring-white/30"
-                      : "bg-transparent text-[#E4E4E7] hover:bg-white/10 hover:text-white",
+                      ? "bg-surface-2 text-fg ring-1 ring-line"
+                      : "bg-transparent text-muted hover:bg-surface-2 hover:text-fg",
                   )}
                   aria-label="Toggle services menu"
                 >
@@ -239,10 +239,10 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
               href="/case-studies"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
+                "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
                 activePath.startsWith("/case-studies") || activePath.startsWith("/our-work")
-                  ? "bg-white font-bold text-black shadow-md shadow-black/40"
-                  : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
+                  ? "bg-primary font-bold text-primary-foreground shadow-md"
+                  : "bg-transparent font-medium text-muted hover:bg-surface-2 hover:text-fg",
               )}
             >
               Case Studies
@@ -253,10 +253,10 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
               href="/contact"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
+                "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
                 activePath.startsWith("/contact")
-                  ? "bg-white font-bold text-black shadow-md shadow-black/40"
-                  : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
+                  ? "bg-primary font-bold text-primary-foreground shadow-md"
+                  : "bg-transparent font-medium text-muted hover:bg-surface-2 hover:text-fg",
               )}
             >
               Contact
@@ -287,7 +287,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
           aria-label="Services Overview"
           className="absolute left-0 right-0 top-full pt-2 px-[clamp(24px,3vw,56px)] z-50 animate-in fade-in slide-in-from-top-3 duration-200"
         >
-          <div className="mx-auto max-w-[1440px] rounded-[28px] border border-white/10 bg-[#0E0E12]/95 backdrop-blur-2xl p-5 lg:p-6 shadow-[0_20px_70px_rgba(0,0,0,0.8)] text-white">
+          <div className="mx-auto max-w-[1440px] rounded-[28px] border border-line bg-surface/95 backdrop-blur-2xl p-5 lg:p-6 shadow-[0_20px_70px_rgba(0,0,0,0.5)] text-fg">
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_340px] xl:grid-cols-[1fr_380px]">
               {/* Left: 6 Service Cards Grid (3 cols x 2 rows) matching the 6 brief services */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -296,7 +296,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                     key={item.id}
                     href={`/services#${item.slug}`}
                     onClick={() => setIsServicesOpen(false)}
-                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-[#15151C] p-4 text-left transition-all duration-200 hover:border-white/30 hover:bg-[#1C1C26] focus-visible:outline-2 focus-visible:outline-white min-h-[145px]"
+                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface-2 p-4 text-left transition-all duration-200 hover:border-fg/30 hover:bg-surface focus-visible:outline-2 focus-visible:outline-primary min-h-[145px]"
                   >
                     <div>
                       <div className="flex items-center justify-between">

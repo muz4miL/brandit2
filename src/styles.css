@@ -14,10 +14,15 @@
   --radius-xl: calc(var(--radius) + 4px);
   --radius-shell: var(--shell-radius);
   --radius-tile: var(--tile-radius);
+  --color-bg: var(--background);
   --color-background: var(--background);
+  --color-fg: var(--foreground);
   --color-foreground: var(--foreground);
   --color-panel: var(--panel);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--border);
+  --color-line-subtle: var(--border-subtle);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -46,9 +51,10 @@
   --shell-radius: 1.5rem;
   --tile-radius: 1.25rem;
   --background: #08080B;
+  --bg: #08080B;
   --panel: #000000;
-  --surface: #121217;
-  --surface-2: #18181E;
+  --surface: #0E0E12;
+  --surface-2: #14141A;
   --foreground: #F4F4F5;
   --muted-foreground: #A1A1AA;
   --primary: #FFFFFF;
@@ -58,7 +64,7 @@
   --brand-navy: #0A0A0A;
   --brand-navy-light: #1A1A1A;
   --brand-blue-subtle: rgba(255, 255, 255, 0.10);
-  --card: #111116;
+  --card: #0E0E12;
   --card-foreground: #F4F4F5;
   --popover: #121217;
   --popover-foreground: #F4F4F5;
@@ -69,8 +75,8 @@
   --accent-foreground: #F4F4F5;
   --destructive: oklch(0.65 0.2 25);
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-subtle: #232323;
+  --border: #232323;
+  --border-subtle: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.14);
   --ring: #FFFFFF;
   --header-h: 76px;
@@ -84,6 +90,7 @@
   --shell-radius: 1.5rem;
   --tile-radius: 1.25rem;
   --background: #f7f5f1; /* warm paper */
+  --bg: #f7f5f1;
   --panel: #efece6;
   --surface: #ffffff;
   --surface-2: #efece6;
@@ -114,21 +121,6 @@
   --header-h: 76px;
   --blue-glow: 0 12px 32px rgba(20, 20, 20, 0.08);
   --brandit-watermark: rgba(20, 20, 20, 0.05);
-}
-
-:root,
-:root[data-theme="dark"],
-:root[data-theme="light"] {
-  /* Step 1: True luxury metallic gold tokens */
-  --gold-50: #FFF6D6;
-  --gold-200: #F7E08A;
-  --gold-400: #E6B93C;
-  --gold-500: #D4AF37; /* classic metallic gold */
-  --gold-600: #B8860B;
-  --gold-800: #7A5A12;
-  --gold-metal: linear-gradient(135deg, #7A5A12 0%, #D4AF37 22%, #FFF1B8 45%, #E6B93C 60%, #B8860B 80%, #F7E08A 100%);
-  --gold-text: linear-gradient(180deg, #FFF1B8 0%, #E6B93C 45%, #B8860B 100%);
-  --gold-glow: 0 0 18px rgba(212, 175, 55, 0.28), 0 0 2px rgba(255, 241, 184, 0.5);
 }
 
 @media (min-width: 768px) {
