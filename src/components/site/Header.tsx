@@ -1,21 +1,10 @@
+"use client";
+
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Menu, X, ChevronDown, ArrowUpRight, Star } from "lucide-react";
-import { type Category } from "@/content/site";
+import { X, ChevronDown, ArrowUpRight } from "lucide-react";
 import { Wordmark } from "./Wordmark";
 import { cn } from "@/lib/utils";
-
-import halo from "@/assets/work-identity-halo.jpg";
-import zest from "@/assets/work-social-juice.jpg";
-import voltex from "@/assets/work-ad-sneaker.jpg";
-import rise from "@/assets/work-package-rise.jpg";
-import skin from "@/assets/work-package-skin.jpg";
-import pulse from "@/assets/work-identity-pulse.jpg";
-import voyara from "@/assets/work-ads-travel.jpg";
-import featuredPhone from "@/assets/services-mega-featured.jpg";
-
-interface HeaderProps {
-  onSelectService?: (category: Category) => void;
-}
+import { services as siteServices, siteMeta } from "@/content/site";
 
 export interface MegaServiceItem {
   id: string;
@@ -23,105 +12,39 @@ export interface MegaServiceItem {
   title: string;
   description: string;
   visibleTags: string[];
-  image: string;
+  image: any;
 }
 
-export const sixServices: MegaServiceItem[] = [
-  {
-    id: "strategy-growth-systems",
-    slug: "strategy-growth-systems",
-    title: "Strategy & Growth Systems",
-    description: "The operating system behind everything else. We map content architecture, SOPs, and revenue priorities.",
-    visibleTags: ["Marketing Strategy", "Growth Systems", "SOPs & Workflows", "Reporting"],
-    image: halo,
-  },
-  {
-    id: "paid-advertising",
-    slug: "paid-advertising",
-    title: "Paid Advertising",
-    description: "Campaigns built around sales reality. Spend structured to convert and test continuously.",
-    visibleTags: ["Meta Ads", "Google Ads", "TikTok Ads", "Performance Creative"],
-    image: voltex,
-  },
-  {
-    id: "content-production",
-    slug: "content-production",
-    title: "Content Production",
-    description: "Full in-house crew — videographers, photographers, editors. Films, UGC, and SOP shoot days.",
-    visibleTags: ["Video Production", "Photography", "UGC & Reels", "Podcast Production"],
-    image: zest,
-  },
-  {
-    id: "branding-design",
-    slug: "branding-design",
-    title: "Branding & Design",
-    description: "Look like the leader. Complete identity systems, daily creative, and founder brands built for authority.",
-    visibleTags: ["Brand Identity", "Graphic Design", "Personal Branding", "Ad Creative"],
-    image: skin,
-  },
-  {
-    id: "web-stores-automation",
-    slug: "web-stores-automation",
-    title: "Web, Stores & Automation",
-    description: "Where traffic becomes revenue. Fast websites, landing pages, Shopify stores, and AI follow-up.",
-    visibleTags: ["Website Design", "Landing Pages", "Shopify Stores", "AI Automation"],
-    image: rise,
-  },
-  {
-    id: "influencer-collab-marketing",
-    slug: "influencer-collab-marketing",
-    title: "Influencer & Collab Marketing",
-    description: "Borrow audiences you haven’t built yet. Creator sourcing, campaigns, and warm market collaborations.",
-    visibleTags: ["Influencer Campaigns", "Creator Sourcing", "Brand Collaborations", "Seeding & Gifting"],
-    image: pulse,
-  },
-];
+export const sixServices: MegaServiceItem[] = siteServices.map((s) => ({
+  id: s.id,
+  slug: s.slug,
+  title: s.title,
+  description: s.summary,
+  visibleTags: s.bullets.slice(0, 3),
+  image: s.image,
+}));
 
-export function Header({ onSelectService }: HeaderProps) {
+export function Header({ overlay = false }: { overlay?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activePath, setActivePath] = useState("/");
 
   const headerRef = useRef<HTMLElement>(null);
   const servicesTriggerRef = useRef<HTMLButtonElement>(null);
   const megaMenuRef = useRef<HTMLDivElement>(null);
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
 
-  // Scroll detection for translucent blurred header & section active state
+  // Scroll detection for translucent blurred header
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 15);
-
-      if (window.scrollY < 100) {
-        setActiveSection(null);
-        return;
-      }
-
-      const sections = [
-        { id: "about", name: "about" },
-        { id: "services", name: "services" },
-        { id: "work", name: "work" },
-      ];
-
-      const scrollPos = window.scrollY + 180;
-      let matched: string | null = null;
-
-      for (const s of sections) {
-        const el = document.getElementById(s.id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            matched = s.name;
-            break;
-          }
-        }
-      }
-
-      setActiveSection(matched);
     };
+
+    if (typeof window !== "undefined") {
+      setActivePath(window.location.pathname);
+    }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
@@ -177,52 +100,33 @@ export function Header({ onSelectService }: HeaderProps) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isMobileOpen]);
 
-  const handleSelectMegaItem = useCallback(
-    (item: MegaServiceItem) => {
-      setIsServicesOpen(false);
-      setIsMobileOpen(false);
-
-      if (item.targetId) {
-        const el = document.getElementById(item.targetId);
-        el?.scrollIntoView({ behavior: "smooth" });
-        return;
-      }
-
-      if (onSelectService) {
-        onSelectService(item.category);
-      } else {
-        const el = document.getElementById("work") || document.getElementById("services");
-        el?.scrollIntoView({ behavior: "smooth" });
-      }
-    },
-    [onSelectService],
-  );
-
   return (
     <header
       ref={headerRef}
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-200",
+        "sticky top-0 z-50 w-full transition-all duration-200 select-none",
         "h-[76px] min-[920px]:h-[100px]",
         isScrolled
-          ? "border-b border-white/[0.08] bg-black/90 backdrop-blur-[18px] is-scrolled shadow-[0_4px_30px_rgba(0,0,0,0.7)]"
-          : "border-b border-transparent bg-black",
+          ? "border-b border-white/[0.08] bg-[#08080B]/90 backdrop-blur-[18px] is-scrolled shadow-2xl shadow-black/80"
+          : overlay
+            ? "border-b border-transparent bg-transparent"
+            : "border-b border-transparent bg-[#08080B]",
       )}
     >
       {/* Mobile Top Bar (< 920px): Logo pinned LEFT, Hamburger pinned FAR RIGHT */}
       <div className="flex h-full w-full items-center justify-between px-5 min-[920px]:hidden">
         <a
-          href="#top"
-          aria-label="the brandit. home"
-          className="group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4"
+          href="/"
+          aria-label="brandit. home"
+          className="group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-4"
         >
-          <Wordmark className="text-[26px]" />
+          <Wordmark glow className="text-[24px] sm:text-[27px] w-auto" />
         </a>
 
         <button
           ref={mobileToggleRef}
           type="button"
-          className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] text-white transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-primary"
+          className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] text-white transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-white"
           aria-expanded={isMobileOpen}
           aria-controls="mobile-navigation-drawer"
           aria-label={isMobileOpen ? "Close navigation menu" : "Open navigation menu"}
@@ -242,14 +146,14 @@ export function Header({ onSelectService }: HeaderProps) {
 
       {/* Desktop Top Bar (>= 920px) */}
       <div className="hidden h-full w-full max-w-[1440px] mx-auto min-[920px]:grid grid-cols-[1fr_auto_1fr] items-center px-[clamp(24px,3vw,56px)]">
-        {/* Left: Brand It Logo */}
+        {/* Left: brandit. Logo */}
         <div className="flex items-center justify-self-start">
           <a
-            href="#top"
-            aria-label="the brandit. home"
-            className="group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4"
+            href="/"
+            aria-label="brandit. home"
+            className="group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-4"
           >
-            <Wordmark className="text-[32px]" />
+            <Wordmark glow className="text-[25px] xl:text-[28px] w-auto" />
           </a>
         </div>
 
@@ -257,65 +161,77 @@ export function Header({ onSelectService }: HeaderProps) {
         <div className="flex items-center justify-self-center">
           <nav
             aria-label="Main navigation"
-            className="relative inline-flex h-[56px] items-center gap-[4px] sm:gap-[6px] rounded-full bg-[#0D0D12] border border-white/[0.08] p-[5px] shadow-lg shadow-black/40"
+            className="relative inline-flex h-[58px] sm:h-[62px] items-center gap-[4px] sm:gap-[6px] rounded-full bg-[#121216] border border-white/10 p-[5px] sm:p-[6px] shadow-lg shadow-black/50"
           >
-            {/* 1. About */}
+            {/* 1. Home */}
+            <a
+              href="/"
+              className={cn(
+                "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
+                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
+                activePath === "/"
+                  ? "bg-white font-bold text-black shadow-md shadow-black/40"
+                  : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
+              )}
+            >
+              Home
+            </a>
+
+            {/* 2. About */}
             <a
               href="/about"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
                 "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
-                activeSection === "about"
-                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
-                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
+                activePath.startsWith("/about")
+                  ? "bg-white font-bold text-black shadow-md shadow-black/40"
+                  : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
               )}
             >
               About
             </a>
 
-            {/* 2. Services Disclosure */}
+            {/* 3. Services & Packages with dropdown */}
             <div className="relative">
-              <button
-                ref={servicesTriggerRef}
-                type="button"
-                id="services-disclosure-button"
-                aria-haspopup="true"
-                aria-expanded={isServicesOpen}
-                aria-controls="services-mega-menu"
-                onClick={() => setIsServicesOpen((prev) => !prev)}
-                className={cn(
-                  "flex h-[44px] items-center justify-center gap-1.5 rounded-full px-4 text-[15px] transition-colors duration-150",
-                  "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
-                  activeSection === "services" || isServicesOpen
-                    ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
-                    : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
-                )}
-              >
-                <span>Services</span>
-                <ChevronDown
-                  size={15}
+              <div className="flex items-center">
+                <a
+                  href="/services"
                   className={cn(
-                    "stroke-[2.5] text-neutral-400 transition-transform duration-200",
-                    isServicesOpen && "rotate-180 text-white",
+                    "flex h-[44px] items-center justify-center pl-4 pr-1.5 text-[15px] transition-colors duration-150 rounded-l-full",
+                    activePath.startsWith("/services")
+                      ? "bg-white/[0.08] font-bold text-white ring-1 ring-white/30"
+                      : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
                   )}
-                  aria-hidden="true"
-                />
-              </button>
+                >
+                  Services & Packages
+                </a>
+                <button
+                  ref={servicesTriggerRef}
+                  type="button"
+                  id="services-disclosure-button"
+                  aria-haspopup="true"
+                  aria-expanded={isServicesOpen}
+                  aria-controls="services-mega-menu"
+                  onClick={() => setIsServicesOpen((prev) => !prev)}
+                  className={cn(
+                    "flex h-[44px] items-center justify-center pr-3 pl-1 text-[15px] transition-colors duration-150 rounded-r-full",
+                    activePath.startsWith("/services") || isServicesOpen
+                      ? "bg-white/[0.08] text-white ring-1 ring-white/30"
+                      : "bg-transparent text-[#E4E4E7] hover:bg-white/10 hover:text-white",
+                  )}
+                  aria-label="Toggle services menu"
+                >
+                  <ChevronDown
+                    size={15}
+                    className={cn(
+                      "stroke-[2.5] transition-transform duration-200",
+                      isServicesOpen && "rotate-180",
+                    )}
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
             </div>
-
-            {/* 3. Our Work */}
-            <a
-              href="/our-work"
-              className={cn(
-                "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
-                activeSection === "work"
-                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
-                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
-              )}
-            >
-              Our Work
-            </a>
 
             {/* 4. Case Studies */}
             <a
@@ -323,55 +239,39 @@ export function Header({ onSelectService }: HeaderProps) {
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
                 "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
-                activeSection === "case-studies"
-                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
-                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
+                activePath.startsWith("/case-studies") || activePath.startsWith("/our-work")
+                  ? "bg-white font-bold text-black shadow-md shadow-black/40"
+                  : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
               )}
             >
               Case Studies
             </a>
 
-            {/* 5. brandit. Studio */}
+            {/* 5. Contact */}
             <a
-              href="/studio"
+              href="/contact"
               className={cn(
                 "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
                 "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
-                activeSection === "studio"
-                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
-                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
+                activePath.startsWith("/contact")
+                  ? "bg-white font-bold text-black shadow-md shadow-black/40"
+                  : "bg-transparent font-medium text-[#E4E4E7] hover:bg-white/10 hover:text-white",
               )}
             >
-              brandit. Studio
-            </a>
-
-            {/* 6. Careers */}
-            <a
-              href="/careers"
-              className={cn(
-                "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
-                activeSection === "careers"
-                  ? "bg-[#1E6BFF] font-semibold text-white shadow-md shadow-blue-500/25"
-                  : "bg-transparent font-medium text-[#CECED2] hover:text-white hover:bg-white/[0.08]",
-              )}
-            >
-              Careers
+              Contact
             </a>
           </nav>
         </div>
 
-        {/* Right: Contact button matching inspiration styling with vibrant blue pill */}
+        {/* Right: Standout CTA Button "t. Get Started" in Shiny Poppy Blue */}
         <div className="flex items-center gap-3 justify-self-end">
           <a
             href="/contact"
-            className="inline-flex h-[52px] min-w-[170px] items-center justify-center gap-2.5 rounded-full bg-[#1E6BFF] hover:bg-[#185DE8] px-6 text-[15px] font-semibold text-white select-none transition-all duration-150 shadow-lg shadow-blue-600/30 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-3"
+            className="inline-flex h-[50px] items-center gap-2.5 rounded-full btn-shiny-blue px-6 text-[15px] font-bold text-white transition-all duration-200 select-none focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-3 cursor-pointer"
           >
-            <div className="grid h-6 w-6 place-items-center rounded-md bg-white/20 text-white font-bold text-xs leading-none">
-              b.
-            </div>
-            <span>Get Started</span>
-            <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />
+            <span className="font-display font-black text-[17px] leading-none drop-shadow-sm">b.</span>
+            <span className="drop-shadow-sm">Get Started</span>
+            <ArrowUpRight size={17} className="stroke-[2.5] drop-shadow-sm" aria-hidden="true" />
           </a>
         </div>
       </div>
@@ -385,7 +285,7 @@ export function Header({ onSelectService }: HeaderProps) {
           aria-label="Services Overview"
           className="absolute left-0 right-0 top-full pt-2 px-[clamp(24px,3vw,56px)] z-50 animate-in fade-in slide-in-from-top-3 duration-200"
         >
-          <div className="mx-auto max-w-[1440px] rounded-[28px] border border-white/[0.1] bg-[#0D0D12]/95 backdrop-blur-2xl p-5 lg:p-6 shadow-[0_24px_80px_rgba(0,0,0,0.9)] text-white">
+          <div className="mx-auto max-w-[1440px] rounded-[28px] border border-white/10 bg-[#0E0E12]/95 backdrop-blur-2xl p-5 lg:p-6 shadow-[0_20px_70px_rgba(0,0,0,0.8)] text-white">
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_340px] xl:grid-cols-[1fr_380px]">
               {/* Left: 6 Service Cards Grid (3 cols x 2 rows) matching the 6 brief services */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -394,14 +294,14 @@ export function Header({ onSelectService }: HeaderProps) {
                     key={item.id}
                     href={`/services#${item.slug}`}
                     onClick={() => setIsServicesOpen(false)}
-                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/[0.08] bg-[#14141A] p-4 text-left transition-all duration-200 hover:border-[#1E6BFF]/50 hover:bg-[#1A1A22] focus-visible:outline-2 focus-visible:outline-primary min-h-[145px]"
+                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-[#15151C] p-4 text-left transition-all duration-200 hover:border-white/30 hover:bg-[#1C1C26] focus-visible:outline-2 focus-visible:outline-white min-h-[145px]"
                   >
                     <div>
                       <div className="flex items-center justify-between">
-                        <span className="font-display text-[17px] font-bold tracking-tight text-white">
+                        <span className="font-display text-[16px] font-bold tracking-tight text-white group-hover:text-neutral-300 transition-colors">
                           {item.title}
                         </span>
-                        <span className="grid h-7 w-7 place-items-center rounded-full bg-white/10 text-white transition-all group-hover:bg-[#1E6BFF]">
+                        <span className="grid h-7 w-7 place-items-center rounded-full bg-white/10 text-white transition-all group-hover:bg-white group-hover:text-black">
                           <ArrowUpRight size={14} className="stroke-[2.5]" />
                         </span>
                       </div>
@@ -410,12 +310,12 @@ export function Header({ onSelectService }: HeaderProps) {
                       </p>
                     </div>
 
-                    {/* Visible Tag Row as specified in brief */}
-                    <div className="mt-3 flex flex-wrap gap-1.5 pt-2 border-t border-white/[0.08]">
-                      {item.visibleTags.slice(0, 3).map((tag, idx) => (
+                    {/* Visible Tag Row */}
+                    <div className="mt-3 flex flex-wrap gap-1.5 pt-2 border-t border-white/10">
+                      {item.visibleTags.slice(0, 2).map((tag, idx) => (
                         <span
                           key={idx}
-                          className="rounded-md bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 text-[10.5px] font-medium text-neutral-300"
+                          className="rounded-md bg-white/5 border border-white/10 px-2 py-0.5 text-[10.5px] font-medium text-neutral-300"
                         >
                           {tag}
                         </span>
@@ -425,81 +325,33 @@ export function Header({ onSelectService }: HeaderProps) {
                 ))}
               </div>
 
-
-              {/* Right Section: Large Featured Showcase Card */}
-              <div className="relative flex min-h-[280px] flex-col justify-between overflow-hidden rounded-2xl border border-black/10 bg-[#09090B] p-5 sm:p-6 lg:min-h-full text-white">
-                {/* Background subtle glow */}
-                <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/[0.04] blur-3xl" />
-
-                {/* Top Section: Google Rating Badge & Headline */}
-                <div className="relative z-10">
-                  {/* Google 4.9 Rating pill */}
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-3.5 py-1.5 backdrop-blur-md">
-                    <svg
-                      className="h-4 w-4"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                        fill="#4285F4"
-                      />
-                      <path
-                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                        fill="#34A853"
-                      />
-                      <path
-                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-                        fill="#FBBC05"
-                      />
-                      <path
-                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                        fill="#EA4335"
-                      />
-                    </svg>
-                    <span className="text-xs font-semibold text-white">4.9</span>
-                    <div className="flex items-center text-[#FBBC05]">
-                      <Star size={11} className="fill-current" />
-                      <Star size={11} className="fill-current" />
-                      <Star size={11} className="fill-current" />
-                      <Star size={11} className="fill-current" />
-                      <Star size={11} className="fill-current" />
-                    </div>
+              {/* Right: The 3 Packages Preview Column */}
+              <div className="relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[#000000] border border-white/10 p-6 text-white shadow-xl">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
+                    <span>Packages for Every Stage</span>
                   </div>
 
-                  {/* Headline */}
-                  <h3 className="mt-4 font-display text-2xl font-bold leading-tight tracking-tight text-white xl:text-[28px]">
-                    All the services you need to build & scale
+                  <h3 className="mt-4 font-display text-2xl font-bold leading-tight tracking-tight text-white xl:text-[26px]">
+                    Kickstart · Accelerate · Authority
                   </h3>
+
+                  <p className="mt-3 text-[14px] leading-relaxed text-neutral-300">
+                    From setting up your online presence in 3 weeks to complete custom market dominance.
+                  </p>
                 </div>
 
-                {/* Middle: Phone Mockup showcase image */}
-                <div className="relative my-3 flex items-center justify-center overflow-hidden rounded-xl border border-white/[0.08] bg-[#141416]">
-                  <img
-                    src={featuredPhone}
-                    alt="Brand It mobile experience preview"
-                    className="max-h-[190px] w-full object-cover object-top transition-transform duration-500 hover:scale-105"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#09090B] to-transparent" />
-                </div>
-
-                {/* Bottom: Partner Badges & Quick Action */}
-                <div className="relative z-10 flex flex-col gap-3">
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.08] pt-3 text-[11px] text-[#A1A1AA]">
-                    <span className="font-medium text-white/90">Meta Partner</span>
-                    <span>•</span>
-                    <span className="font-medium text-white/90">Shopify Plus</span>
-                    <span>•</span>
-                    <span className="font-medium text-white/90">Klaviyo Partner</span>
+                <div className="relative z-10 flex flex-col gap-3 mt-6">
+                  <div className="flex items-center justify-between border-t border-white/10 pt-3 text-[12px] text-neutral-400">
+                    <span>{siteMeta.trustBarSummary}</span>
                   </div>
 
                   <a
-                    href="#contact"
+                    href="/services#packages"
                     onClick={() => setIsServicesOpen(false)}
-                    className="flex h-[46px] w-full items-center justify-center gap-2 rounded-full border border-white bg-white font-semibold text-[#09090B] transition-transform hover:bg-neutral-200"
+                    className="flex h-[46px] w-full items-center justify-center gap-2 rounded-full bg-white font-bold text-black transition-transform hover:scale-[1.02] shadow-[0_0_18px_rgba(255,255,255,0.08)]"
                   >
-                    <span>Get started with Brand It</span>
+                    <span>Compare All Packages</span>
                     <ArrowUpRight size={16} className="stroke-[2.5]" />
                   </a>
                 </div>
@@ -514,43 +366,61 @@ export function Header({ onSelectService }: HeaderProps) {
         <nav
           id="mobile-navigation-drawer"
           aria-label="Mobile navigation"
-          className="mx-3 mt-2 flex flex-col gap-2 rounded-3xl border border-white/[0.1] bg-[#0D0D12] p-3.5 shadow-2xl backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 duration-150 min-[920px]:hidden text-white"
+          className="mx-3 mt-2 flex flex-col gap-2 rounded-3xl border border-white/10 bg-[#0E0E12] p-3.5 shadow-2xl backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 duration-150 min-[920px]:hidden text-white"
         >
+          {/* Home */}
+          <a
+            href="/"
+            onClick={() => setIsMobileOpen(false)}
+            className="flex min-h-[46px] items-center rounded-2xl bg-[#17171E] px-4 text-[15px] font-medium text-white transition-colors hover:bg-white hover:font-bold hover:text-black"
+          >
+            Home
+          </a>
+
           {/* About */}
           <a
-            href="#about"
+            href="/about"
             onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
+            className="flex min-h-[46px] items-center rounded-2xl bg-[#17171E] px-4 text-[15px] font-medium text-white transition-colors hover:bg-white hover:font-bold hover:text-black"
           >
             About
           </a>
 
-          {/* Services Accordion with rich previews */}
-          <div className="flex flex-col rounded-2xl bg-[#16161D] overflow-hidden">
-            <button
-              type="button"
-              className="flex min-h-[46px] w-full items-center justify-between px-4 text-[15px] font-medium text-white transition-colors hover:text-[#1E6BFF]"
-              aria-expanded={isMobileServicesOpen}
-              onClick={() => setIsMobileServicesOpen((prev) => !prev)}
-            >
-              <span>Services</span>
-              <ChevronDown
-                size={16}
-                className={cn(
-                  "stroke-[2.5] text-neutral-400 transition-transform duration-200",
-                  isMobileServicesOpen && "rotate-180 text-white",
-                )}
-                aria-hidden="true"
-              />
-            </button>
+          {/* Services & Packages Accordion */}
+          <div className="flex flex-col rounded-2xl bg-[#17171E] overflow-hidden">
+            <div className="flex items-center justify-between pr-2">
+              <a
+                href="/services"
+                onClick={() => setIsMobileOpen(false)}
+                className="flex min-h-[46px] flex-1 items-center px-4 text-[15px] font-medium text-white hover:text-neutral-300"
+              >
+                Services & Packages
+              </a>
+              <button
+                type="button"
+                className="grid h-10 w-10 place-items-center text-white"
+                aria-expanded={isMobileServicesOpen}
+                onClick={() => setIsMobileServicesOpen((prev) => !prev)}
+                aria-label="Toggle services list"
+              >
+                <ChevronDown
+                  size={16}
+                  className={cn(
+                    "stroke-[2.5] transition-transform duration-200",
+                    isMobileServicesOpen && "rotate-180",
+                  )}
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
             {isMobileServicesOpen && (
-              <div className="grid grid-cols-1 gap-1.5 border-t border-white/[0.08] bg-[#121217] p-2.5">
+              <div className="grid grid-cols-1 gap-1.5 border-t border-white/10 bg-[#121217] p-2.5">
                 {sixServices.map((item) => (
                   <a
                     key={item.id}
                     href={`/services#${item.slug}`}
                     onClick={() => setIsMobileOpen(false)}
-                    className="flex items-center justify-between rounded-xl bg-[#1A1A22] p-3 text-left border border-white/[0.06] hover:bg-[#22222E] transition-colors"
+                    className="flex items-center justify-between rounded-xl bg-[#1C1C24] p-3 text-left border border-white/5 hover:border-white/30 transition-colors"
                   >
                     <div>
                       <div className="text-[14px] font-bold text-white">{item.title}</div>
@@ -563,48 +433,31 @@ export function Header({ onSelectService }: HeaderProps) {
             )}
           </div>
 
-          {/* Our Work */}
-          <a
-            href="/our-work"
-            onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
-          >
-            Our Work
-          </a>
-
           {/* Case Studies */}
           <a
             href="/case-studies"
             onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
+            className="flex min-h-[46px] items-center rounded-2xl bg-[#17171E] px-4 text-[15px] font-medium text-white transition-colors hover:bg-white hover:font-bold hover:text-black"
           >
             Case Studies
           </a>
 
-          {/* brandit. Studio */}
+          {/* Contact */}
           <a
-            href="/studio"
+            href="/contact"
             onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
+            className="flex min-h-[46px] items-center rounded-2xl bg-[#17171E] px-4 text-[15px] font-medium text-white transition-colors hover:bg-white hover:font-bold hover:text-black"
           >
-            brandit. Studio
-          </a>
-
-          {/* Careers */}
-          <a
-            href="/careers"
-            onClick={() => setIsMobileOpen(false)}
-            className="flex min-h-[46px] items-center rounded-2xl bg-[#16161D] px-4 text-[15px] font-medium text-white transition-colors hover:bg-[#1E6BFF]"
-          >
-            Careers
+            Contact
           </a>
 
           {/* Mobile CTA */}
           <a
             href="/contact"
             onClick={() => setIsMobileOpen(false)}
-            className="mt-1 flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-[#1E6BFF] hover:bg-[#185DE8] px-5 text-[15px] font-semibold text-white shadow-lg shadow-blue-600/30 transition-transform"
+            className="mt-1 flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-white px-5 text-[15px] font-bold text-black transition-transform active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.15)]"
           >
+            <span className="font-display font-black text-[16px]">b.</span>
             <span>Get Started</span>
             <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />
           </a>
