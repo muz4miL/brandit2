@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
@@ -5,12 +6,12 @@ import {
   getAllPublishedWorkSlugs,
   getPublicWorkPageData,
 } from "@/server/work-service";
-import { CaseStudyClient } from "@/app/our-work/[slug]/CaseStudyClient";
+import { CaseStudyDetailClient } from "./CaseStudyDetailClient";
 import type { WorkProjectDoc } from "@/server/types";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ preview?: string }>;
+  searchParams: Promise<{ preview?: string; fromCategory?: string }>;
 }
 
 export async function generateStaticParams() {
@@ -64,7 +65,7 @@ export default async function CaseStudyDetailPage({ params, searchParams }: Page
     notFound();
   }
 
-  // Find next published project for navigation
+  // Find next published project for cyclic navigation loop
   const { projects } = await getPublicWorkPageData();
   const currentIndex = projects.findIndex((p) => p.slug === slug);
   const nextProject: WorkProjectDoc | null =
@@ -104,7 +105,9 @@ export default async function CaseStudyDetailPage({ params, searchParams }: Page
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <CaseStudyClient project={project} nextProject={nextProject} isPreview={isPreview} />
+      <Suspense fallback={<div className="min-h-screen bg-[#070709]" />}>
+        <CaseStudyDetailClient project={project} nextProject={nextProject} isPreview={isPreview} />
+      </Suspense>
     </>
   );
 }

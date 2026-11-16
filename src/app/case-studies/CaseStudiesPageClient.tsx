@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Header } from "@/components/site/Header";
@@ -19,7 +20,16 @@ export function CaseStudiesPageClient({
   settings,
   projects,
 }: CaseStudiesPageClientProps) {
-  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get("category") || "All";
+  const [activeCategory, setActiveCategory] = useState<string>(initialCategory);
+
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat) {
+      setActiveCategory(cat);
+    }
+  }, [searchParams]);
 
   // Filter categories that have at least 1 published case study
   const availableCategories = useMemo(() => {
@@ -183,7 +193,7 @@ export function CaseStudiesPageClient({
 
                         {/* Cover image: aspect 16/10, object-cover, radius 12px, hover scale 1.04 */}
                         <Link
-                          href={`/case-studies/${project.slug}`}
+                          href={`/case-studies/${project.slug}${activeCategory !== "All" ? `?fromCategory=${encodeURIComponent(activeCategory)}` : ""}`}
                           className="block relative aspect-[16/10] w-full overflow-hidden rounded-[12px] bg-neutral-900 mb-5"
                           tabIndex={-1}
                           aria-hidden="true"
@@ -200,7 +210,7 @@ export function CaseStudiesPageClient({
 
                       {/* Bottom: full-width "Read More ↗" button, 44px tall, radius 10px, 1px border */}
                       <Link
-                        href={`/case-studies/${project.slug}`}
+                        href={`/case-studies/${project.slug}${activeCategory !== "All" ? `?fromCategory=${encodeURIComponent(activeCategory)}` : ""}`}
                         className="group/btn mt-auto flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] border border-[#232323] bg-[#14141A] text-sm font-semibold text-white transition-all duration-200 hover:bg-[#1E1E26] hover:border-white/20"
                       >
                         <span>Read More</span>
