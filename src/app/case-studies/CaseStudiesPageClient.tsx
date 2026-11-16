@@ -8,6 +8,7 @@ import { ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { OurWorkSection } from "@/components/site/OurWorkSection";
 import { WorkClosingCta } from "@/components/work/WorkClosingCta";
 import type { WorkProjectDoc, WorkPageSettingsDoc } from "@/server/types";
 
@@ -228,7 +229,12 @@ export function CaseStudiesPageClient({
         </section>
 
         {/* ========================================================================= */}
-        {/* 6. FINAL CTA ("Your brand. Our next masterpiece.")                        */}
+        {/* 4. CREATIVE THAT CONVERTS (CREATIVE LIBRARY BRIDGE)                      */}
+        {/* ========================================================================= */}
+        <OurWorkSection />
+
+        {/* ========================================================================= */}
+        {/* 5. FINAL CTA ("Your brand. Our next masterpiece.")                        */}
         {/* ========================================================================= */}
         <WorkClosingCta settings={settings} />
       </main>
