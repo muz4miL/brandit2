@@ -282,6 +282,7 @@ export interface WorkProjectDoc {
   slug: string;
   title: string;
   clientName: string;
+  clientLogo?: string;
   summary: string;
   industry: string;
   services: string[];
@@ -477,6 +478,7 @@ export interface WorkPageSettingsDoc {
   closingCtaDestination: string;
   motionPreset: "subtle" | "standard" | "reduced";
   categoryOrder: string[];
+  managedCategories?: { id: string; label: string }[];
   seo: {
     title: string;
     description: string;

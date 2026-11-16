@@ -5,6 +5,7 @@ import { X, ChevronDown, ArrowUpRight } from "lucide-react";
 import { Wordmark } from "./Wordmark";
 import { cn } from "@/lib/utils";
 import { services as siteServices, siteMeta } from "@/content/site";
+import { ThemeToggle } from "./ThemeToggle";
 
 export interface MegaServiceItem {
   id: string;
@@ -263,8 +264,9 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
           </nav>
         </div>
 
-        {/* Right: Standout CTA Button "t. Get Started" in Shiny Poppy Blue */}
+        {/* Right: Standout CTA Button + Theme Toggle */}
         <div className="flex items-center gap-3 justify-self-end">
+          <ThemeToggle />
           <a
             href="/contact"
             className="inline-flex h-[50px] items-center gap-2.5 rounded-full btn-shiny-blue px-6 text-[15px] font-bold text-white transition-all duration-200 select-none focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-3 cursor-pointer"
@@ -451,16 +453,19 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
             Contact
           </a>
 
-          {/* Mobile CTA */}
-          <a
-            href="/contact"
-            onClick={() => setIsMobileOpen(false)}
-            className="mt-1 flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-white px-5 text-[15px] font-bold text-black transition-transform active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-          >
-            <span className="font-display font-black text-[16px]">b.</span>
-            <span>Get Started</span>
-            <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />
-          </a>
+          {/* Mobile Theme Toggle & CTA */}
+          <div className="flex items-center gap-3 mt-1">
+            <ThemeToggle className="h-[50px] w-[50px] shrink-0" />
+            <a
+              href="/contact"
+              onClick={() => setIsMobileOpen(false)}
+              className="flex-1 flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-white px-5 text-[15px] font-bold text-black transition-transform active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+            >
+              <span className="font-display font-black text-[16px]">b.</span>
+              <span>Get Started</span>
+              <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />
+            </a>
+          </div>
         </nav>
       )}
     </header>

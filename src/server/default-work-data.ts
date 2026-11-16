@@ -24,6 +24,11 @@ export const defaultWorkPageSettings: WorkPageSettingsDoc = {
     "Services",
     "SaaS",
   ],
+  managedCategories: [
+    { id: "Ecom", label: "Ecom" },
+    { id: "Services", label: "Services" },
+    { id: "SaaS", label: "SaaS" },
+  ],
   seo: {
     title: "Case Studies | brandit.",
     description:

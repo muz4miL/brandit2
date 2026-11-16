@@ -1,6 +1,6 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 @import "tw-animate-css";
+@import "lenis/dist/lenis.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -35,34 +35,97 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-navy: var(--brand-navy);
 }
 
-:root {
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
   --radius: 0.75rem;
   --shell-radius: 1.5rem;
   --tile-radius: 1.25rem;
-  --background: #000000;
-  --panel: #0d0d12;
-  --surface: #121218;
-  --foreground: #ffffff;
-  --muted-foreground: #a1a1aa;
-  --primary: #1e6bff;
-  --primary-foreground: #ffffff;
-  --card: #0d0d12;
-  --card-foreground: #ffffff;
-  --popover: #0d0d12;
-  --popover-foreground: #ffffff;
-  --secondary: #18181f;
-  --secondary-foreground: #ffffff;
-  --muted: #18181f;
-  --accent: #1e6bff;
-  --accent-foreground: #ffffff;
+  --background: #08080B;
+  --panel: #000000;
+  --surface: #121217;
+  --surface-2: #18181E;
+  --foreground: #F4F4F5;
+  --muted-foreground: #A1A1AA;
+  --primary: #FFFFFF;
+  --primary-foreground: #000000;
+  --brand-blue: #FFFFFF;
+  --brand-blue-hover: #E5E5E5;
+  --brand-navy: #0A0A0A;
+  --brand-navy-light: #1A1A1A;
+  --brand-blue-subtle: rgba(255, 255, 255, 0.10);
+  --card: #111116;
+  --card-foreground: #F4F4F5;
+  --popover: #121217;
+  --popover-foreground: #F4F4F5;
+  --secondary: #18181E;
+  --secondary-foreground: #F4F4F5;
+  --muted: #18181E;
+  --accent: #1C1C22;
+  --accent-foreground: #F4F4F5;
   --destructive: oklch(0.65 0.2 25);
   --destructive-foreground: #ffffff;
   --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.15);
-  --ring: #1e6bff;
+  --border-subtle: #232323;
+  --input: rgba(255, 255, 255, 0.14);
+  --ring: #FFFFFF;
   --header-h: 76px;
+  --blue-glow: 0 0 24px rgba(255, 255, 255, 0.08), 0 6px 18px rgba(0, 0, 0, 0.5);
+  --brandit-watermark: rgba(255, 255, 255, 0.04);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --radius: 0.75rem;
+  --shell-radius: 1.5rem;
+  --tile-radius: 1.25rem;
+  --background: #f7f5f1; /* warm paper */
+  --panel: #efece6;
+  --surface: #ffffff;
+  --surface-2: #efece6;
+  --foreground: #141414;
+  --muted-foreground: #5f5b54;
+  --primary: #141414; /* ink pill */
+  --primary-foreground: #ffffff;
+  --brand-blue: #141414;
+  --brand-blue-hover: #262626;
+  --brand-navy: #f7f5f1;
+  --brand-navy-light: #efece6;
+  --brand-blue-subtle: rgba(20, 20, 20, 0.06);
+  --card: #ffffff;
+  --card-foreground: #141414;
+  --popover: #ffffff;
+  --popover-foreground: #141414;
+  --secondary: #efece6;
+  --secondary-foreground: #141414;
+  --muted: #efece6;
+  --accent: #e3dfd7;
+  --accent-foreground: #141414;
+  --destructive: oklch(0.65 0.2 25);
+  --destructive-foreground: #ffffff;
+  --border: #e3dfd7;
+  --border-subtle: #e3dfd7;
+  --input: #e3dfd7;
+  --ring: #141414;
+  --header-h: 76px;
+  --blue-glow: 0 12px 32px rgba(20, 20, 20, 0.08);
+  --brandit-watermark: rgba(20, 20, 20, 0.05);
+}
+
+  /* Step 1: True luxury metallic gold tokens */
+  --gold-50: #FFF6D6;
+  --gold-200: #F7E08A;
+  --gold-400: #E6B93C;
+  --gold-500: #D4AF37; /* classic metallic gold */
+  --gold-600: #B8860B;
+  --gold-800: #7A5A12;
+  --gold-metal: linear-gradient(135deg, #7A5A12 0%, #D4AF37 22%, #FFF1B8 45%, #E6B93C 60%, #B8860B 80%, #F7E08A 100%);
+  --gold-text: linear-gradient(180deg, #FFF1B8 0%, #E6B93C 45%, #B8860B 100%);
+  --gold-glow: 0 0 18px rgba(212, 175, 55, 0.28), 0 0 2px rgba(255, 241, 184, 0.5);
 }
 
 @media (min-width: 768px) {
@@ -80,8 +143,118 @@
 
 @supports not (backdrop-filter: blur(1px)) {
   header.is-scrolled {
-    background-color: #000000 !important;
+    background-color: #08080B !important;
   }
+
+  .services-hero-art {
+    transform: translate3d(0, var(--hero-parallax-y, 0px), 0) scale(1.02);
+  }
+
+  .services-hero-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+  }
+}
+
+/* ========================================================
+   GLOBAL CUSTOM LUXURY SCROLLBAR (DESKTOP & MOBILE)
+   ======================================================== */
+
+/* Standard CSS for Firefox & standards-compliant browsers */
+html,
+body,
+:root {
+  scrollbar-width: thin;
+  scrollbar-color: #555555 transparent;
+}
+
+/* WebKit & Chromium-based browsers (Chrome, Edge, Safari, Brave, Android Webview) */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Right-most site scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: #444444;
+  border-radius: 9999px;
+  border: 1.5px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.06);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666666;
+  border: 1.5px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.10);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #888888;
+}
+
+/* Kill all default browser arrows / buttons completely */
+::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Mobile & Touch refinement: ultra-subtle, sleek 4px scrollbar */
+@media (max-width: 768px) {
+  html,
+  body,
+  :root {
+    scrollbar-width: thin;
+    scrollbar-color: #444444 transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #444444;
+    border-radius: 9999px;
+    border: none;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.06);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: #666666;
+  }
+}
+
+/* ========================================================
+   COMPLETE ELIMINATION OF SCROLLBARS ON OUR SERVICES
+   ======================================================== */
+.no-scrollbar,
+.no-scrollbar *,
+#services .overflow-x-auto,
+#services [ref="trackRef"] {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.no-scrollbar *::-webkit-scrollbar,
+#services .overflow-x-auto::-webkit-scrollbar,
+#services [ref="trackRef"]::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+  -webkit-appearance: none !important;
 }
 
 @layer base {
@@ -167,6 +340,18 @@
 }
 @utility rise-in {
   animation: rise-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes badge-shine {
+  0% {
+    transform: translateX(-150%) skewX(-15deg);
+  }
+  30%, 100% {
+    transform: translateX(150%) skewX(-15deg);
+  }
+}
+.animate-badge-shine {
+  animation: badge-shine 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes marquee-scroll {
@@ -379,12 +564,12 @@
   0%,
   100% {
     transform: scale(1);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-    opacity: 0.95;
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
+    opacity: 0.9;
   }
   50% {
     transform: scale(1.055);
-    box-shadow: 0 0 24px rgba(0, 0, 0, 0.32);
+    box-shadow: 0 0 28px rgba(255, 255, 255, 0.15);
     opacity: 1;
   }
 }
@@ -486,12 +671,16 @@
 }
 
 .showcase-track {
-  animation: showcase-left 50s linear infinite;
+  animation: showcase-left 14s linear infinite;
+  contain: layout paint;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 @media (min-width: 768px) {
   .showcase-track {
-    animation-duration: 70s;
+    animation-duration: 19s;
   }
 }
 
@@ -529,4 +718,187 @@
     transform: none !important;
     transition: none !important;
   }
+}
+
+/* ========================================================
+   TRUE LUXURY METALLIC GOLD UTILITIES & SHINE
+   ======================================================== */
+
+.gold-text-gradient {
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+}
+
+/* Solid metallic gold pill badge with dark espresso text */
+.gold-pill-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold-metal);
+  color: #1A1203 !important;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255, 241, 184, 0.45);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.32), inset 0 1px 0 rgba(255, 241, 184, 0.5);
+  border: 1px solid rgba(255, 241, 184, 0.45);
+}
+
+.gold-pill-badge span,
+.gold-pill-text {
+  position: relative;
+  z-index: 2;
+  color: #1A1203 !important;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255, 241, 184, 0.45);
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  background: none !important;
+}
+
+/* Transparent/dark fill status pills with readable gold text */
+.gold-status-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(212, 175, 55, 0.10);
+  border: 1px solid rgba(212, 175, 55, 0.40);
+  box-shadow: inset 0 1px 0 rgba(255, 241, 184, 0.25);
+  color: #F7E08A;
+}
+
+.gold-circle-node {
+  position: relative;
+  border: 1.5px solid transparent;
+  background: linear-gradient(#0A0A0F, #0A0A0F) padding-box, var(--gold-metal) border-box;
+  box-shadow: var(--gold-glow);
+}
+
+.gold-card-hover {
+  transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
+}
+
+.gold-card-hover:hover {
+  border-color: rgba(212, 175, 55, 0.35) !important;
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.08), 0 20px 50px rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Step 3: Reusable .gold-shine utility */
+@keyframes gold-shine-sweep {
+  0% {
+    background-position: -250% 0;
+  }
+  42% {
+    background-position: 250% 0;
+  }
+  100% {
+    background-position: 250% 0;
+  }
+}
+
+.gold-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(115deg, transparent 40%, rgba(255, 245, 200, 0.55) 50%, transparent 60%);
+  background-size: 250% 100%;
+  background-repeat: no-repeat;
+  animation: gold-shine-sweep 8s ease-in-out infinite;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.gold-shine-d1::after { animation-delay: 0.8s; }
+.gold-shine-d2::after { animation-delay: 1.8s; }
+.gold-shine-d3::after { animation-delay: 2.8s; }
+.gold-shine-d4::after { animation-delay: 3.8s; }
+
+@keyframes gold-node-pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.gold-pulse-ring {
+  animation: gold-node-pulse 2.4s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gold-shine::after,
+  .gold-pulse-ring {
+    animation: none !important;
+  }
+}
+
+/* ── Floating logo cloud (Stats Strip background) ──────────────── */
+@keyframes floatLogo {
+  0%   { transform: translateY(0px);    opacity: 0;   }
+  10%  { opacity: 1;                                   }
+  90%  { opacity: 1;                                   }
+  100% { transform: translateY(-18px);  opacity: 0.75; }
+}
+
+/* ── Luxury Shiny Monochrome White Buttons (Reference-Grade) ── */
+.btn-shiny-blue {
+  position: relative;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E8E8E8 52%, #D0D0D0 100%);
+  color: #000000 !important;
+  box-shadow: 
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.15),
+    0 0 24px rgba(255, 255, 255, 0.08),
+    0 6px 20px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-shiny-blue:hover {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 50%, #E0E0E0 100%);
+  box-shadow: 
+    inset 0 1px 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.1),
+    0 0 36px rgba(255, 255, 255, 0.12),
+    0 8px 24px rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px) scale(1.015);
+}
+
+.btn-shiny-blue:active {
+  transform: translateY(1px) scale(0.985);
+  box-shadow: 
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.15),
+    0 0 16px rgba(255, 255, 255, 0.06);
+}
+
+/* Text color override for btn-shiny-blue to ensure black text */
+.btn-shiny-blue *,
+.btn-shiny-blue span,
+.btn-shiny-blue svg {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* Ambient Logo Bloom for High-End Cinematic Feel */
+.logo-bloom {
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.08)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.logo-bloom:hover {
+  filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.15)) drop-shadow(0 1px 4px rgba(0, 0, 0, 0.9));
+  transform: scale(1.02);
 }
