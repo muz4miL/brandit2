@@ -40,7 +40,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-brand-blue: var(--brand-blue);
+  --color-brand-accent: var(--brand-accent);
   --color-brand-navy: var(--brand-navy);
 }
 
@@ -59,11 +59,11 @@
   --muted-foreground: #A1A1AA;
   --primary: #FFFFFF;
   --primary-foreground: #000000;
-  --brand-blue: #FFFFFF;
-  --brand-blue-hover: #E5E5E5;
+  --brand-accent: #FFFFFF;
+  --brand-accent-hover: #E5E5E5;
   --brand-navy: #0A0A0A;
   --brand-navy-light: #1A1A1A;
-  --brand-blue-subtle: rgba(255, 255, 255, 0.10);
+  --brand-accent-subtle: rgba(255, 255, 255, 0.10);
   --card: #0E0E12;
   --card-foreground: #F4F4F5;
   --popover: #121217;
@@ -80,8 +80,11 @@
   --input: rgba(255, 255, 255, 0.14);
   --ring: #FFFFFF;
   --header-h: 76px;
-  --blue-glow: 0 0 24px rgba(255, 255, 255, 0.08), 0 6px 18px rgba(0, 0, 0, 0.5);
+  --accent-glow: 0 0 24px rgba(255, 255, 255, 0.08), 0 6px 18px rgba(0, 0, 0, 0.5);
   --brandit-watermark: rgba(255, 255, 255, 0.04);
+  --gold-text: linear-gradient(90deg, #ffffff 0%, #a1a1aa 50%, #ffffff 100%);
+  --gold-metal: linear-gradient(135deg, #ffffff 0%, #d4d4d8 50%, #ffffff 100%);
+  --gold-glow: 0 0 18px rgba(255, 255, 255, 0.12);
 }
 
 :root[data-theme="light"] {
@@ -98,11 +101,11 @@
   --muted-foreground: #5f5b54;
   --primary: #141414; /* ink pill */
   --primary-foreground: #ffffff;
-  --brand-blue: #141414;
-  --brand-blue-hover: #262626;
+  --brand-accent: #141414;
+  --brand-accent-hover: #262626;
   --brand-navy: #f7f5f1;
   --brand-navy-light: #efece6;
-  --brand-blue-subtle: rgba(20, 20, 20, 0.06);
+  --brand-accent-subtle: rgba(20, 20, 20, 0.06);
   --card: #ffffff;
   --card-foreground: #141414;
   --popover: #ffffff;
@@ -119,8 +122,11 @@
   --input: #e3dfd7;
   --ring: #141414;
   --header-h: 76px;
-  --blue-glow: 0 12px 32px rgba(20, 20, 20, 0.08);
+  --accent-glow: 0 12px 32px rgba(20, 20, 20, 0.08);
   --brandit-watermark: rgba(20, 20, 20, 0.05);
+  --gold-text: linear-gradient(90deg, #141414 0%, #5f5b54 50%, #141414 100%);
+  --gold-metal: linear-gradient(135deg, #141414 0%, #5f5b54 50%, #141414 100%);
+  --gold-glow: 0 12px 32px rgba(20, 20, 20, 0.08);
 }
 
 @media (min-width: 768px) {
@@ -666,21 +672,48 @@ body,
 }
 
 .showcase-track {
-  animation: showcase-left 14s linear infinite;
+  animation: showcase-left var(--showcase-duration, 32s) linear infinite;
   contain: layout paint;
   will-change: transform;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
 }
-@media (min-width: 768px) {
-  .showcase-track {
-    animation-duration: 19s;
+
+.showcase-muted {
+  color: var(--muted-foreground) !important;
+}
+
+.showcase-row + .showcase-cta .showcase-muted {
+  color: var(--muted-foreground) !important;
+}
+
+@keyframes services-logo-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-.showcase-row:hover .showcase-track {
+.services-logo-track {
+  animation: services-logo-left 28s linear infinite;
+}
+
+.services-logo-marquee:hover .services-logo-track {
   animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-logo-track {
+    animation: none;
+  }
+}
+@media (min-width: 768px) {
+  .showcase-track {
+    animation-duration: var(--showcase-duration, 32s);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -850,7 +883,7 @@ body,
 }
 
 /* ── Luxury Shiny Monochrome White Buttons (Reference-Grade) ── */
-.btn-shiny-blue {
+.btn-shiny {
   position: relative;
   background: linear-gradient(180deg, #FFFFFF 0%, #E8E8E8 52%, #D0D0D0 100%);
   color: #000000 !important;
@@ -862,7 +895,7 @@ body,
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-shiny-blue:hover {
+.btn-shiny:hover {
   background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 50%, #E0E0E0 100%);
   box-shadow: 
     inset 0 1px 2px 0 rgba(255, 255, 255, 1),
@@ -872,19 +905,61 @@ body,
   transform: translateY(-1px) scale(1.015);
 }
 
-.btn-shiny-blue:active {
+.btn-shiny:active {
   transform: translateY(1px) scale(0.985);
   box-shadow: 
     inset 0 2px 4px 0 rgba(0, 0, 0, 0.15),
     0 0 16px rgba(255, 255, 255, 0.06);
 }
 
-/* Text color override for btn-shiny-blue to ensure black text */
-.btn-shiny-blue *,
-.btn-shiny-blue span,
-.btn-shiny-blue svg {
+/* Text color override for the primary shiny button. */
+.btn-shiny *,
+.btn-shiny span,
+.btn-shiny svg {
   color: #000000 !important;
   stroke: #000000 !important;
+}
+
+:root[data-theme="light"] .btn-shiny {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground) !important;
+  box-shadow: 0 12px 32px rgba(20, 20, 20, 0.08);
+}
+
+:root[data-theme="light"] .btn-shiny:hover {
+  background: var(--brand-accent-hover);
+}
+
+:root[data-theme="light"] .btn-shiny *,
+:root[data-theme="light"] .btn-shiny span,
+:root[data-theme="light"] .btn-shiny svg {
+  color: var(--color-primary-foreground) !important;
+  stroke: var(--color-primary-foreground) !important;
+}
+
+:root[data-theme="light"] .site-header [class*="bg-[#0E0E12]"],
+:root[data-theme="light"] .site-header [class*="bg-[#17171E]"],
+:root[data-theme="light"] .site-header [class*="bg-[#121217]"],
+:root[data-theme="light"] .site-header [class*="bg-[#1C1C24]"] {
+  background-color: var(--color-surface) !important;
+}
+
+:root[data-theme="light"] .site-header [class*="border-white"] {
+  border-color: var(--color-border) !important;
+}
+
+/* Legacy service-step utilities are kept for compatibility but render in the
+   active monochrome palette rather than their former accent colors. */
+[class*="D4AF37"],
+[class*="B8860B"],
+[class*="7A5A12"],
+[class*="FFF1B8"] {
+  --tw-gradient-from: var(--color-primary) !important;
+  --tw-gradient-to: var(--color-primary) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-primary-foreground) !important;
 }
 
 /* Ambient Logo Bloom for High-End Cinematic Feel */
@@ -896,4 +971,31 @@ body,
 .logo-bloom:hover {
   filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.15)) drop-shadow(0 1px 4px rgba(0, 0, 0, 0.9));
   transform: scale(1.02);
+}
+
+.footer-watermark {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--foreground) 20%, transparent),
+    color-mix(in srgb, var(--foreground) 5%, transparent),
+    transparent
+  );
+  filter: drop-shadow(0 0 45px color-mix(in srgb, var(--foreground) 5%, transparent));
+}
+
+.case-studies-hero {
+  background:
+    radial-gradient(ellipse at 68% 48%, color-mix(in srgb, var(--foreground) 4%, transparent), transparent 42%),
+    var(--surface);
+}
+
+.case-studies-filter-band,
+.case-studies-grid-band {
+  background-color: var(--surface-2);
+}
+
+:root[data-theme="light"] .case-studies-hero {
+  background:
+    radial-gradient(ellipse at 68% 48%, rgba(20, 20, 20, 0.04), transparent 42%),
+    var(--surface);
 }
