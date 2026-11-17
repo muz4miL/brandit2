@@ -1,12 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { MessageCircle, Phone } from "lucide-react";
 import { SectionBadge } from "./SectionBadge";
 import { teamMembers } from "@/content/site";
+import type { SiteSettingsDoc } from "@/server/types";
+
+type FounderData = NonNullable<SiteSettingsDoc["founder"]>;
+type PublicContactSettings = Pick<SiteSettingsDoc, "phoneWhatsApp" | "whatsappLink">;
 
 export function Leadership() {
   const [hasEntered, setHasEntered] = useState(false);
-  const [founderData, setFounderData] = useState<any>(null);
+  const [founderData, setFounderData] = useState<FounderData | null>(null);
+  const [contactSettings, setContactSettings] = useState<PublicContactSettings | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -14,8 +20,12 @@ export function Leadership() {
     fetch("/api/public")
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
-        if (!cancelled && data?.settings?.founder) {
-          setFounderData(data.settings.founder);
+        if (!cancelled && data?.settings) {
+          setFounderData(data.settings.founder ?? null);
+          setContactSettings({
+            phoneWhatsApp: data.settings.phoneWhatsApp ?? "",
+            whatsappLink: data.settings.whatsappLink ?? "",
+          });
         }
       })
       .catch(() => {});
@@ -60,6 +70,11 @@ export function Leadership() {
     }
     return member;
   });
+  const phoneNumber = contactSettings?.phoneWhatsApp?.trim() || "";
+  const phoneHref = phoneNumber ? `tel:${phoneNumber.replace(/[^\d+]/g, "")}` : "";
+  const whatsappHref =
+    contactSettings?.whatsappLink?.trim() ||
+    (phoneNumber ? `https://wa.me/${phoneNumber.replace(/\D/g, "")}` : "");
 
   return (
     <section
@@ -133,6 +148,33 @@ export function Leadership() {
                 <span className="absolute left-4 bottom-4 font-mono text-[9px] font-bold tracking-[0.18em] text-white/90 bg-black/65 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 z-10">
                   PARTNER
                 </span>
+
+                {index === 0 && (phoneHref || whatsappHref) && (
+                  <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2">
+                    {phoneHref && (
+                      <a
+                        href={phoneHref}
+                        aria-label={`Call ${member.name}`}
+                        title={`Call ${member.name}`}
+                        className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black/65 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:border-white/50 hover:bg-black/80 focus-visible:outline-2 focus-visible:outline-white"
+                      >
+                        <Phone size={16} aria-hidden="true" />
+                      </a>
+                    )}
+                    {whatsappHref && (
+                      <a
+                        href={whatsappHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Message ${member.name} on WhatsApp`}
+                        title={`Message ${member.name} on WhatsApp`}
+                        className="grid h-10 w-10 place-items-center rounded-full border border-emerald-300/40 bg-emerald-500/80 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-emerald-300"
+                      >
+                        <MessageCircle size={17} aria-hidden="true" />
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Person Info */}

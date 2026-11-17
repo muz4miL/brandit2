@@ -151,7 +151,7 @@ export function LogoMarquee({ speedPixelsPerSecond }: StatsStripProps) {
   return (
     <section
       aria-label="Trust Bar"
-      className="relative w-full overflow-hidden bg-[#08080B] py-8 sm:py-12 select-none border-y border-white/[0.08]"
+      className="stats-strip relative w-full overflow-hidden bg-panel py-8 text-fg sm:py-12 select-none border-y border-line"
     >
       {/* 3D floating logo cloud background */}
       {settings.logoCloudEnabled && logos.length > 0 && (
@@ -161,12 +161,12 @@ export function LogoMarquee({ speedPixelsPerSecond }: StatsStripProps) {
       <div className="relative mx-auto flex max-w-[1440px] flex-col items-center px-4 z-10">
         {/* Stat pills */}
         <div className="flex items-center justify-center gap-3">
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-center font-display text-[13px] sm:text-[15px] md:text-[16px] font-bold tracking-[0.14em] text-white uppercase">
+          <div className="flex flex-wrap items-center justify-center gap-2 text-center font-display text-[13px] font-bold uppercase tracking-[0.14em] text-fg sm:gap-4 sm:text-[15px] md:text-[16px]">
             {pills.map((pill, i) => (
               <span key={pill.id} className="flex items-center gap-2 sm:gap-4">
                 <span>{pill.value}</span>
                 {i < pills.length - 1 && (
-                  <span className="text-white/40">•</span>
+                  <span className="text-muted-foreground">•</span>
                 )}
               </span>
             ))}
@@ -176,7 +176,7 @@ export function LogoMarquee({ speedPixelsPerSecond }: StatsStripProps) {
             type="button"
             onClick={() => setIsPaused((p) => !p)}
             aria-label={isPaused ? "Resume marquee animation" : "Pause marquee animation"}
-            className="ml-2 grid h-6 w-6 place-items-center rounded-full border border-white/20 bg-white/5 text-neutral-400 transition-colors hover:border-white hover:text-white focus-visible:outline-2 focus-visible:outline-white"
+            className="ml-2 grid h-6 w-6 place-items-center rounded-full border border-line bg-surface-2 text-muted-foreground transition-colors hover:border-fg hover:text-fg focus-visible:outline-2 focus-visible:outline-primary"
             title={isPaused ? "Resume marquee" : "Pause marquee"}
           >
             {isPaused ? (
@@ -210,10 +210,10 @@ export function LogoMarquee({ speedPixelsPerSecond }: StatsStripProps) {
               {marqueeItems.map((item, bIdx) => (
                 <div
                   key={bIdx}
-                  className="flex items-center gap-3 text-[17px] sm:text-[20px] font-bold text-white/75 hover:text-white tracking-tight transition-colors"
+                  className="flex items-center gap-3 text-[17px] font-bold tracking-tight text-fg/75 transition-colors hover:text-fg sm:text-[20px]"
                 >
                   <span className="font-display">{item.text}</span>
-                  <span className="text-white/30 text-sm">•</span>
+                  <span className="text-muted-foreground text-sm">•</span>
                 </div>
               ))}
             </div>
