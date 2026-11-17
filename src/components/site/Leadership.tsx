@@ -164,7 +164,7 @@ export function Leadership() {
 
                 {/* Bottom-left discreet pill */}
                 <span className="absolute left-4 bottom-4 font-mono text-[9px] font-bold tracking-[0.18em] text-white/90 bg-black/65 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 z-10">
-                  PARTNER
+                  {index === 0 ? member.role : "PARTNER"}
                 </span>
 
                 {index === 0 && (phoneHref || whatsappHref) && (

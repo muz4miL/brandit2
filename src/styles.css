@@ -713,30 +713,6 @@ body,
   perspective: 1000px;
 }
 
-@media (max-width: 767px) {
-  .showcase-track {
-    width: 100% !important;
-    justify-content: center;
-    animation: none !important;
-    transform: none !important;
-  }
-
-  .showcase-track > div {
-    display: none;
-  }
-
-  .showcase-track > div:first-child {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    padding-right: 0;
-  }
-
-  .showcase-track > div:first-child > :not(:first-child) {
-    display: none;
-  }
-}
-
 .showcase-secondary {
   color: color-mix(in srgb, var(--foreground) 68%, var(--background)) !important;
 }
