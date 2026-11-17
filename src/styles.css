@@ -50,35 +50,35 @@
   --radius: 0.75rem;
   --shell-radius: 1.5rem;
   --tile-radius: 1.25rem;
-  --background: #08080B;
-  --bg: #08080B;
+  --background: #08080b;
+  --bg: #08080b;
   --panel: #000000;
-  --surface: #0E0E12;
-  --surface-2: #14141A;
-  --foreground: #F4F4F5;
-  --muted-foreground: #A1A1AA;
-  --primary: #FFFFFF;
+  --surface: #0e0e12;
+  --surface-2: #14141a;
+  --foreground: #f4f4f5;
+  --muted-foreground: #a1a1aa;
+  --primary: #ffffff;
   --primary-foreground: #000000;
-  --brand-accent: #FFFFFF;
-  --brand-accent-hover: #E5E5E5;
-  --brand-navy: #0A0A0A;
-  --brand-navy-light: #1A1A1A;
-  --brand-accent-subtle: rgba(255, 255, 255, 0.10);
-  --card: #0E0E12;
-  --card-foreground: #F4F4F5;
+  --brand-accent: #ffffff;
+  --brand-accent-hover: #e5e5e5;
+  --brand-navy: #0a0a0a;
+  --brand-navy-light: #1a1a1a;
+  --brand-accent-subtle: rgba(255, 255, 255, 0.1);
+  --card: #0e0e12;
+  --card-foreground: #f4f4f5;
   --popover: #121217;
-  --popover-foreground: #F4F4F5;
-  --secondary: #18181E;
-  --secondary-foreground: #F4F4F5;
-  --muted: #18181E;
-  --accent: #1C1C22;
-  --accent-foreground: #F4F4F5;
+  --popover-foreground: #f4f4f5;
+  --secondary: #18181e;
+  --secondary-foreground: #f4f4f5;
+  --muted: #18181e;
+  --accent: #1c1c22;
+  --accent-foreground: #f4f4f5;
   --destructive: oklch(0.65 0.2 25);
   --destructive-foreground: #ffffff;
   --border: #232323;
   --border-subtle: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.14);
-  --ring: #FFFFFF;
+  --ring: #ffffff;
   --header-h: 76px;
   --accent-glow: 0 0 24px rgba(255, 255, 255, 0.08), 0 6px 18px rgba(0, 0, 0, 0.5);
   --brandit-watermark: rgba(255, 255, 255, 0.04);
@@ -86,15 +86,15 @@
   --gold-metal: linear-gradient(135deg, #ffffff 0%, #d4d4d8 50%, #ffffff 100%);
   --gold-glow: 0 0 18px rgba(255, 255, 255, 0.12);
   /* Champagne Gold accent — dark mode */
-  --gold: #D1AD69;
-  --gold-muted: #99958D;
-  --gold-bg: rgba(209, 173, 105, 0.10);
+  --gold: #d1ad69;
+  --gold-muted: #99958d;
+  --gold-bg: rgba(209, 173, 105, 0.1);
   --gold-border: rgba(209, 173, 105, 0.38);
-  --gold-text-solid: #F4EBD0;
+  --gold-text-solid: #f4ebd0;
   --gold-shine-color: rgba(255, 245, 200, 0.55);
   --section-bg: #090909;
   --section-surface: #121212;
-  --section-elevated: #1B1B1B;
+  --section-elevated: #1b1b1b;
   --section-border: #292722;
 }
 
@@ -139,16 +139,16 @@
   --gold-metal: linear-gradient(135deg, #141414 0%, #5f5b54 50%, #141414 100%);
   --gold-glow: 0 12px 32px rgba(20, 20, 20, 0.08);
   /* Warm Gold accent — light mode */
-  --gold: #98713B;
-  --gold-muted: #77736B;
-  --gold-bg: rgba(152, 113, 59, 0.10);
+  --gold: #98713b;
+  --gold-muted: #77736b;
+  --gold-bg: rgba(152, 113, 59, 0.1);
   --gold-border: rgba(152, 113, 59, 0.35);
-  --gold-text-solid: #6B4E20;
+  --gold-text-solid: #6b4e20;
   --gold-shine-color: rgba(152, 113, 59, 0.3);
-  --section-bg: #F5F3EF;
-  --section-surface: #FFFFFF;
-  --section-elevated: #ECE9E2;
-  --section-border: #E2DACE;
+  --section-bg: #f5f3ef;
+  --section-surface: #ffffff;
+  --section-elevated: #ece9e2;
+  --section-border: #e2dace;
 }
 
 @media (min-width: 768px) {
@@ -166,7 +166,7 @@
 
 @supports not (backdrop-filter: blur(1px)) {
   header.is-scrolled {
-    background-color: #08080B !important;
+    background-color: #08080b !important;
   }
 
   .services-hero-art {
@@ -176,6 +176,11 @@
   .services-hero-grain {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
   }
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
 }
 
 /* ========================================================
@@ -207,14 +212,16 @@ body,
   border: 1.5px solid transparent;
   background-clip: padding-box;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.06);
-  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #666666;
   border: 1.5px solid transparent;
   background-clip: padding-box;
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.10);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.1);
 }
 
 ::-webkit-scrollbar-thumb:active {
@@ -371,7 +378,8 @@ body,
   0% {
     transform: translateX(-150%) skewX(-15deg);
   }
-  30%, 100% {
+  30%,
+  100% {
     transform: translateX(150%) skewX(-15deg);
   }
 }
@@ -732,28 +740,6 @@ body,
   color: color-mix(in srgb, var(--foreground) 68%, var(--background)) !important;
 }
 
-@keyframes services-logo-left {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.services-logo-track {
-  animation: services-logo-left 28s linear infinite;
-}
-
-.services-logo-marquee:hover .services-logo-track {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .services-logo-track {
-    animation: none;
-  }
-}
 @media (min-width: 768px) {
   .showcase-track {
     animation-duration: var(--showcase-duration, 32s);
@@ -847,12 +833,17 @@ body,
 }
 
 .gold-card-hover {
-  transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
+  transition:
+    border-color 250ms ease,
+    box-shadow 250ms ease,
+    transform 250ms ease;
 }
 
 .gold-card-hover:hover {
   border-color: var(--gold-border) !important;
-  box-shadow: 0 0 32px var(--gold-bg), 0 12px 40px rgba(0, 0, 0, 0.18) !important;
+  box-shadow:
+    0 0 32px var(--gold-bg),
+    0 12px 40px rgba(0, 0, 0, 0.18) !important;
 }
 
 /* Step 3: Reusable .gold-shine utility */
@@ -878,7 +869,12 @@ body,
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: linear-gradient(115deg, transparent 40%, var(--gold-shine-color) 50%, transparent 60%);
+  background-image: linear-gradient(
+    115deg,
+    transparent 40%,
+    var(--gold-shine-color) 50%,
+    transparent 60%
+  );
   background-size: 250% 100%;
   background-repeat: no-repeat;
   animation: gold-shine-sweep 8s ease-in-out infinite;
@@ -886,10 +882,18 @@ body,
   z-index: 1;
 }
 
-.gold-shine-d1::after { animation-delay: 0.8s; }
-.gold-shine-d2::after { animation-delay: 1.8s; }
-.gold-shine-d3::after { animation-delay: 2.8s; }
-.gold-shine-d4::after { animation-delay: 3.8s; }
+.gold-shine-d1::after {
+  animation-delay: 0.8s;
+}
+.gold-shine-d2::after {
+  animation-delay: 1.8s;
+}
+.gold-shine-d3::after {
+  animation-delay: 2.8s;
+}
+.gold-shine-d4::after {
+  animation-delay: 3.8s;
+}
 
 @keyframes gold-node-pulse {
   0% {
@@ -915,18 +919,28 @@ body,
 
 /* ── Floating logo cloud (Stats Strip background) ──────────────── */
 @keyframes floatLogo {
-  0%   { transform: translateY(0px);    opacity: 0;   }
-  10%  { opacity: 1;                                   }
-  90%  { opacity: 1;                                   }
-  100% { transform: translateY(-18px);  opacity: 0.75; }
+  0% {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-18px);
+    opacity: 0.75;
+  }
 }
 
 /* ── Luxury Shiny Monochrome White Buttons (Reference-Grade) ── */
 .btn-shiny {
   position: relative;
-  background: linear-gradient(180deg, #FFFFFF 0%, #E8E8E8 52%, #D0D0D0 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #e8e8e8 52%, #d0d0d0 100%);
   color: #000000 !important;
-  box-shadow: 
+  box-shadow:
     inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.9),
     inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.15),
     0 0 24px rgba(255, 255, 255, 0.08),
@@ -935,8 +949,8 @@ body,
 }
 
 .btn-shiny:hover {
-  background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 50%, #E0E0E0 100%);
-  box-shadow: 
+  background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+  box-shadow:
     inset 0 1px 2px 0 rgba(255, 255, 255, 1),
     inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.1),
     0 0 36px rgba(255, 255, 255, 0.12),
@@ -946,7 +960,7 @@ body,
 
 .btn-shiny:active {
   transform: translateY(1px) scale(0.985);
-  box-shadow: 
+  box-shadow:
     inset 0 2px 4px 0 rgba(0, 0, 0, 0.15),
     0 0 16px rgba(255, 255, 255, 0.06);
 }
@@ -1013,7 +1027,9 @@ body,
 /* Ambient Logo Bloom for High-End Cinematic Feel */
 .logo-bloom {
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.08)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
-  transition: filter 0.3s ease, transform 0.3s ease;
+  transition:
+    filter 0.3s ease,
+    transform 0.3s ease;
 }
 
 .logo-bloom:hover {
@@ -1033,7 +1049,11 @@ body,
 
 .case-studies-hero {
   background:
-    radial-gradient(ellipse at 68% 48%, color-mix(in srgb, var(--foreground) 4%, transparent), transparent 42%),
+    radial-gradient(
+      ellipse at 68% 48%,
+      color-mix(in srgb, var(--foreground) 4%, transparent),
+      transparent 42%
+    ),
     var(--surface);
 }
 
@@ -1044,6 +1064,5 @@ body,
 
 :root[data-theme="light"] .case-studies-hero {
   background:
-    radial-gradient(ellipse at 68% 48%, rgba(20, 20, 20, 0.04), transparent 42%),
-    var(--surface);
+    radial-gradient(ellipse at 68% 48%, rgba(20, 20, 20, 0.04), transparent 42%), var(--surface);
 }

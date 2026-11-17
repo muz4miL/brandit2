@@ -1,13 +1,30 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 import { SectionBadge } from "./SectionBadge";
 import { teamMembers } from "@/content/site";
 import type { SiteSettingsDoc } from "@/server/types";
 
 type FounderData = NonNullable<SiteSettingsDoc["founder"]>;
 type PublicContactSettings = Pick<SiteSettingsDoc, "phoneWhatsApp" | "whatsappLink">;
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 32 32" width="18" height="18" aria-hidden="true" fill="none">
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M16 3C8.268 3 2 9.268 2 17c0 2.51.661 4.867 1.818 6.905L2 31l7.315-1.696A13.94 13.94 0 0 0 16 31c7.732 0 14-6.268 14-14S23.732 3 16 3Zm0 2.154C9.458 5.154 4.154 10.458 4.154 17c0 2.527.79 4.868 2.138 6.79l-1.061 3.98 4.049-1.013A11.83 11.83 0 0 0 16 28.846c6.542 0 11.846-5.304 11.846-11.846S22.542 5.154 16 5.154Z"
+        clipRule="evenodd"
+      />
+      <path
+        fill="currentColor"
+        d="M12.5 9.5c-.333-.668-.844-.609-1.36-.609-.922 0-2.36 1.104-2.36 3.159 0 1.684.743 3.528 3.243 6.286 2.414 2.661 5.585 4.038 8.218 3.991 2.633-.046 3.174-2.312 3.174-3.077 0-.339-.21-.508-.355-.554-.897-.43-2.552-1.233-2.929-1.384-.376-.151-.573.053-.695.164-.341.325-1.018 1.284-1.25 1.5-.232.216-.577.107-.721.025-.53-.212-1.965-.85-3.107-1.959-1.415-1.371-1.497-1.842-1.764-2.262-.214-.336-.057-.542.021-.632.305-.352.725-.895.914-1.165.189-.27.039-.679-.051-.934-.387-1.097-.714-2.016-.978-2.55Z"
+      />
+    </svg>
+  );
+}
 
 export function Leadership() {
   const [hasEntered, setHasEntered] = useState(false);
@@ -45,7 +62,7 @@ export function Leadership() {
           observer.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
 
     observer.observe(el);
@@ -94,7 +111,8 @@ export function Leadership() {
           </h2>
 
           <p className="mt-5 max-w-[760px] font-sans text-[16px] sm:text-[18px] text-muted-foreground leading-relaxed">
-            Senior growth practitioners who personally architect strategy and run operations daily. No account managers passing notes to junior contractors.
+            Senior growth practitioners who personally architect strategy and run operations daily.
+            No account managers passing notes to junior contractors.
           </p>
         </div>
 
@@ -170,7 +188,7 @@ export function Leadership() {
                         title={`Message ${member.name} on WhatsApp`}
                         className="grid h-10 w-10 place-items-center rounded-full border border-emerald-300/40 bg-emerald-500/80 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-emerald-300"
                       >
-                        <MessageCircle size={17} aria-hidden="true" />
+                        <WhatsAppIcon />
                       </a>
                     )}
                   </div>

@@ -276,7 +276,9 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
             href="/contact"
             className="inline-flex h-[50px] cursor-pointer select-none items-center gap-2.5 rounded-full btn-shiny px-6 text-[15px] font-bold text-primary-foreground transition-all duration-200 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-3"
           >
-            <span className="font-display font-black text-[17px] leading-none drop-shadow-sm">b.</span>
+            <span className="font-display font-black text-[17px] leading-none drop-shadow-sm">
+              b.
+            </span>
             <span className="drop-shadow-sm">Get Started</span>
             <ArrowUpRight size={17} className="stroke-[2.5] drop-shadow-sm" aria-hidden="true" />
           </a>
@@ -313,7 +315,9 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                     <div className="relative z-10 flex items-end justify-between gap-2">
                       <span className="font-display text-[13.5px] font-extrabold leading-tight tracking-tight text-fg">
                         {item.title}
-                        <span className="block font-serif text-[15px] font-normal italic text-fg/75 leading-snug">{item.serifLine}</span>
+                        <span className="block font-serif text-[15px] font-normal italic text-fg/75 leading-snug">
+                          {item.serifLine}
+                        </span>
                       </span>
                       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-fg/10 text-fg opacity-0 transition-all duration-200 group-hover:bg-fg group-hover:text-bg group-hover:opacity-100">
                         <ArrowUpRight size={12} className="stroke-[2.5]" />
@@ -331,8 +335,10 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                   </span>
 
                   <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-fg">
-                    Kickstart<br />
-                    <span className="font-serif italic font-normal text-[20px]">Accelerate</span><br />
+                    Kickstart
+                    <br />
+                    <span className="font-serif italic font-normal text-[20px]">Accelerate</span>
+                    <br />
                     Authority
                   </h3>
 
@@ -417,8 +423,15 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                     className="flex items-center justify-between rounded-xl bg-surface p-3 text-left border border-line hover:border-fg/30 transition-colors"
                   >
                     <div>
-                      <div className="text-[14px] font-bold text-fg">{item.title} <span className="font-serif font-normal italic text-muted-foreground">{item.serifLine}</span></div>
-                      <div className="text-[12px] text-muted-foreground line-clamp-1">{item.description}</div>
+                      <div className="text-[14px] font-bold text-fg">
+                        {item.title}{" "}
+                        <span className="font-serif font-normal italic text-muted-foreground">
+                          {item.serifLine}
+                        </span>
+                      </div>
+                      <div className="text-[12px] text-muted-foreground line-clamp-1">
+                        {item.description}
+                      </div>
                     </div>
                     <ArrowUpRight size={15} className="text-fg shrink-0 ml-2" />
                   </a>

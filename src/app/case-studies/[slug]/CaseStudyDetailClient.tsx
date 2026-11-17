@@ -289,10 +289,7 @@ export function CaseStudyDetailClient({
                 className="h-full w-full object-cover"
               />
             ) : (
-              <motion.div
-                className="absolute inset-[-8%]"
-                style={{ y: reduce ? 0 : coverY }}
-              >
+              <motion.div className="absolute inset-[-8%]" style={{ y: reduce ? 0 : coverY }}>
                 <Image
                   src={project.heroMediaUrl || project.thumbnailUrl}
                   alt={project.altText || project.title}

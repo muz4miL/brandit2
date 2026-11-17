@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { HeroButton } from "@/components/site/HeroButton";
+import { LogoMarquee } from "@/components/site/LogoMarquee";
 import { WhoItsFor } from "@/components/site/WhoItsFor";
 import ReadyToScale from "@/components/ReadyToScale";
 import { OnboardingSection } from "@/components/services/onboarding/OnboardingSection";
@@ -645,20 +646,7 @@ export function ServicesContent({ data }: ServicesContentProps) {
           </div>
         </section>
 
-        <section aria-label="Trusted by ambitious brands" className="overflow-hidden border-y border-line bg-bg py-8">
-          <div className="mx-auto flex max-w-[1240px] items-center gap-8 px-4 sm:px-6">
-            <span className="shrink-0 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-              Trusted by ambitious brands
-            </span>
-            <div className="services-logo-marquee min-w-0 overflow-hidden">
-              <div className="services-logo-track flex min-w-max items-center gap-10 text-[14px] font-display font-bold uppercase tracking-[0.12em] text-muted-foreground">
-                {["APEX", "VOLTEX", "PULSE", "RIVET", "LUMEN", "VOYARA", "APEX", "VOLTEX", "PULSE", "RIVET", "LUMEN", "VOYARA"].map((brand, index) => (
-                  <span key={`${brand}-${index}`}>{brand}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <LogoMarquee />
 
         {/* 5. FAQS */}
         <section

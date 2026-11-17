@@ -28,13 +28,8 @@ export function BrandIntro() {
             className="mt-3 sm:mt-4 flex items-center justify-center relative"
             aria-label="brandit"
           >
-            {/* Ambient monochrome glow behind mark */}
-            <div
-              className="pointer-events-none absolute -inset-x-8 -inset-y-4 bg-white/10 blur-[35px] rounded-full"
-              aria-hidden="true"
-            />
             <div className="relative flex items-center">
-              <Wordmark glow className="text-5xl drop-shadow-[0_0_24px_rgba(255,255,255,0.15)] sm:text-6xl lg:text-7xl" />
+              <Wordmark variant="theme" className="text-5xl sm:text-6xl lg:text-7xl" />
               <span className="mt-[-2px] ml-1 self-start font-display text-[13px] font-bold text-fg opacity-90 select-none sm:-mt-1 sm:text-[18px] lg:text-[22px]">
                 ®
               </span>
@@ -46,13 +41,16 @@ export function BrandIntro() {
         <p className="mt-5 max-w-[760px] text-center text-[16px] font-normal leading-[1.45] tracking-tight text-fg sm:mt-6 sm:text-[19px] lg:text-[22px]">
           You’re here because you’re building something that matters.
           <span className="mt-0.5 block font-medium text-fg sm:mt-0">
-            {" "}A business that wins. A brand that dominates.
+            {" "}
+            A business that wins. A brand that dominates.
           </span>
         </p>
 
         {/* Paragraph 2 - Agency capability */}
         <p className="mt-2.5 max-w-[720px] text-center text-[14px] font-normal leading-[1.5] text-muted-foreground sm:mt-3.5 sm:text-[15px] lg:text-[17px]">
-          We partner with fast-growing brands doing serious volume to create and scale performance-driven creative systems, iconic brand identity, and acquisition engines that fuel serious growth.
+          We partner with fast-growing brands doing serious volume to create and scale
+          performance-driven creative systems, iconic brand identity, and acquisition engines that
+          fuel serious growth.
         </p>
 
         {/* Shared brand CTA */}
