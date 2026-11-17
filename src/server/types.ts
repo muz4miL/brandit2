@@ -18,6 +18,14 @@ export interface SiteSettingsDoc {
     metaDescription: string;
     ogImage: string;
   };
+  founder?: {
+    name?: string;
+    role?: string;
+    image?: string;
+    bio?: string;
+    bioParagraph1?: string;
+    bioParagraph2?: string;
+  } | null;
   updatedAt: Date;
 }
 
