@@ -1,5 +1,4 @@
-import { MongoClient, Db, Collection } from "mongodb";
-import dns from "dns";
+import { MongoClient, Db } from "mongodb";
 import type {
   SiteSettingsDoc,
   ServiceDoc,
@@ -12,49 +11,62 @@ import type {
   VacancyDoc,
   SubmissionDoc,
   AdminUserDoc,
+  ShowcaseItemDoc,
+  ShowcaseSettingsDoc,
 } from "./types";
-
-// Ensure DNS resolution succeeds across Windows Node SRV lookups
-try {
-  dns.setServers(["8.8.8.8", "1.1.1.1"]);
-} catch {
-  // Ignore in environments where setServers is restricted
-}
 
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
+let connecting: Promise<Db> | null = null;
 let indexesCreated = false;
 
 export async function getDb(): Promise<Db> {
   if (cachedDb) return cachedDb;
+  if (connecting) return connecting;
 
-  const uri = process.env.MONGODB_URI;
-  if (!uri) {
-    throw new Error(
-      "MONGODB_URI environment variable is missing. Please configure it in your server environment or .env.local.",
-    );
-  }
+  connecting = (async () => {
+    const uri = process.env["MONGODB_URI"]?.trim();
+    if (!uri) {
+      throw new Error(
+        "MONGODB_URI environment variable is missing. Please configure it in your server environment or .env.local.",
+      );
+    }
 
-  if (!cachedClient) {
     cachedClient = new MongoClient(uri, {
       maxPoolSize: 10,
       minPoolSize: 1,
-      serverSelectionTimeoutMS: 8000,
+      serverSelectionTimeoutMS: 10000,
       connectTimeoutMS: 10000,
+      retryWrites: true,
     });
-    await cachedClient.connect();
-  }
 
-  cachedDb = cachedClient.db("brandit");
+    try {
+      await cachedClient.connect();
+      cachedDb = cachedClient.db("brandit");
 
-  if (!indexesCreated) {
-    indexesCreated = true;
-    createIndexes(cachedDb).catch((err) => {
-      console.error("Non-fatal: Failed to ensure database indexes:", err);
-    });
-  }
+      if (!indexesCreated) {
+        indexesCreated = true;
+        createIndexes(cachedDb).catch((err) => {
+          console.error("Non-fatal: Failed to ensure database indexes:", err);
+        });
+      }
 
-  return cachedDb;
+      return cachedDb;
+    } catch (error) {
+      await cachedClient.close().catch(() => undefined);
+      cachedClient = null;
+      throw new Error(
+        `MongoDB Atlas connection failed for the configured MONGODB_URI. Check the Atlas IP allowlist, credentials, and network access. ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+        { cause: error },
+      );
+    } finally {
+      connecting = null;
+    }
+  })();
+
+  return connecting;
 }
 
 export async function getCollections() {
@@ -71,6 +83,23 @@ export async function getCollections() {
     vacancies: db.collection<VacancyDoc>("vacancies"),
     submissions: db.collection<SubmissionDoc>("submissions"),
     adminUsers: db.collection<AdminUserDoc>("admin_users"),
+    showcaseItems: db.collection<ShowcaseItemDoc>("showcase_items"),
+    showcaseSettings: db.collection<ShowcaseSettingsDoc>("showcase_settings"),
+    statPills: db.collection<Record<string, any>>("stat_pills"),
+    marqueeItems: db.collection<Record<string, any>>("marquee_items"),
+    statsLogos: db.collection<Record<string, any>>("stats_logos"),
+    statsStripSettings: db.collection<Record<string, any>>("stats_strip_settings"),
+    spSettings: db.collection<any>("sp_settings"),
+    spHero: db.collection<any>("sp_hero"),
+    spPackages: db.collection<any>("sp_packages"),
+    spComparisonRows: db.collection<any>("sp_comparison_rows"),
+    spProcessSteps: db.collection<any>("sp_process_steps"),
+    spChecklistItems: db.collection<any>("sp_checklist_items"),
+    spTimelineSteps: db.collection<any>("sp_timeline_steps"),
+    spCoreServices: db.collection<any>("sp_core_services"),
+    spFaqs: db.collection<any>("sp_faqs"),
+    workProjects: db.collection<any>("work_projects"),
+    workPageSettings: db.collection<any>("work_page_settings"),
   };
 }
 

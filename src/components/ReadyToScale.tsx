@@ -1,60 +1,90 @@
-import { ArrowUpRight, MessageSquare } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { SectionBadge } from "./site/SectionBadge";
 
 export default function ReadyToScale() {
   return (
     <section
       id="final-cta"
-      aria-label="Ready to Grow"
-      className="relative w-full overflow-hidden bg-[#000000] pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 select-none"
+      aria-label="Ready to Scale"
+      className="relative w-full overflow-hidden bg-[#000000] pt-16 sm:pt-22 lg:pt-28 pb-16 sm:pb-22 lg:pb-28 select-none border-t border-white/[0.06] scroll-mt-24"
     >
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
-        {/* High-Contrast Architectural Shell Card */}
-        <div className="relative overflow-hidden rounded-[36px] sm:rounded-[44px] bg-[#0A0A10] border border-white/[0.08] px-6 py-16 sm:px-12 sm:py-20 lg:py-24 text-center text-white shadow-2xl">
-          <div className="mx-auto max-w-[760px] flex flex-col items-center">
-            {/* Eyebrow */}
-            <div className="inline-flex h-[36px] items-center justify-center rounded-full border border-white/15 bg-white/[0.08] px-4">
-              <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-white/80 uppercase">
-                You made it this far.
+        {/* Eyebrow and Section Header */}
+        <div className="flex flex-col items-center text-center max-w-[840px] mx-auto">
+          <SectionBadge>YOU MADE IT THIS FAR</SectionBadge>
+
+          <h2 className="mt-5 sm:mt-7 text-center">
+            <span className="block font-display text-[36px] sm:text-[54px] lg:text-[72px] font-extrabold leading-[0.98] lg:leading-[0.95] tracking-[-0.04em] text-white">
+              Ready to{" "}
+              <span className="font-serif italic font-normal text-white">
+                Scale?
               </span>
-            </div>
+            </span>
+          </h2>
 
-            {/* Heading */}
-            <h2 className="mt-5 font-display text-[38px] sm:text-[54px] lg:text-[68px] font-extrabold leading-[0.96] tracking-tight text-white">
-              Ready to Grow?
-            </h2>
+          <p className="mt-4 sm:mt-5 text-[15px] sm:text-[17px] lg:text-[19px] leading-relaxed text-[#A1A1AA] max-w-[660px]">
+            Whether you’re <strong className="text-white font-semibold">scaling to $1M/month</strong> or heading towards a <strong className="text-white font-semibold">$100M+ valuation</strong>. brandit. becomes your unfair advantage in creative, media, and performance.
+          </p>
+        </div>
 
-            {/* Body */}
-            <p className="mt-5 max-w-[600px] text-[16px] sm:text-[18px] lg:text-[20px] leading-relaxed text-[#A1A1AA]">
-              Whether you’re a founder building authority or a business scaling toward market leadership — you need a system, not just content.
-            </p>
+        {/* Architectural Banner Container */}
+        <div className="relative mt-12 sm:mt-16 overflow-hidden rounded-[30px] sm:rounded-[44px] border border-white/10 bg-[#08080C] shadow-2xl">
+          {/* Ambient Monochrome Backlight */}
+          <div
+            className="pointer-events-none absolute -right-20 top-1/2 -translate-y-1/2 h-80 w-80 rounded-full bg-white/[0.04] blur-3xl"
+            aria-hidden="true"
+          />
 
-            {/* Button */}
-            <div className="mt-9 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+          {/* Banner Graphic Layer */}
+          <div className="relative w-full overflow-hidden min-h-[270px] sm:min-h-[340px] lg:min-h-[440px] flex items-center justify-between">
+            <picture className="absolute inset-0 h-full w-full pointer-events-none select-none">
+              <img
+                src="/banner/bannerHero.jfif"
+                alt="Ready to scale? Make your next move with brandit."
+                className="h-full w-full object-cover object-left-top sm:object-[center_top] select-none"
+                loading="lazy"
+              />
+            </picture>
+
+            {/* Contrast and glow overlays */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/40 md:bg-gradient-to-r md:from-black/40 md:via-transparent md:to-black/50" />
+
+            {/* Ambient monochrome glow behind button */}
+            <div className="pointer-events-none absolute right-4 md:right-16 top-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-white/[0.06] blur-[90px]" />
+
+            {/* Floating Hero Bouncy Pulsing Button on the Right (Centered on mobile) */}
+            <div className="relative z-20 w-full flex justify-center md:justify-end px-4 sm:px-10 lg:px-16 py-8 md:py-0">
               <a
                 href="/contact"
-                className="inline-flex h-[60px] items-center justify-center gap-2.5 rounded-full bg-[#1E6BFF] hover:bg-[#185DE8] px-8 text-[16px] font-bold text-white shadow-lg shadow-blue-600/35 transition-all hover:scale-105 active:scale-[0.98]"
+                aria-label="Book a Growth Audit"
+                className="group relative inline-flex h-[68px] sm:h-[78px] w-full max-w-[320px] sm:max-w-[360px] items-center justify-between rounded-full bg-[#000000] p-[5px] transition-all duration-300 hover:bg-white hover:scale-[1.03] active:scale-[0.98] select-none shadow-[0_0_35px_rgba(255,255,255,0.08)]"
               >
-                <span>Book a Growth Audit</span>
-                <ArrowUpRight size={18} className="stroke-[2.5]" />
-              </a>
+                {/* Animated Outer White Pulse */}
+                <span
+                  className="pointer-events-none absolute -inset-[2px] rounded-full border-2 border-white/40 animate-hero-border-pulse"
+                  aria-hidden="true"
+                />
 
-              <a
-                href="https://wa.me/971525347120"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-[60px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.05] px-7 text-[15px] font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                <MessageSquare size={17} />
-                <span>WhatsApp Directly</span>
-              </a>
-            </div>
+                {/* Inner Pill */}
+                <div className="relative z-10 flex h-full w-full items-center justify-between rounded-full border border-white/20 px-5 sm:px-6 transition-colors duration-300 group-hover:border-transparent">
+                  <span className="text-[16px] sm:text-[17px] font-medium text-white transition-colors duration-300 group-hover:text-black">
+                    Book a
+                  </span>
 
-            {/* Contact Line */}
-            <div className="mt-8 pt-6 border-t border-white/10 text-[13px] sm:text-[14px] text-[#A1A1AA] flex flex-wrap items-center justify-center gap-3">
-              <span>WhatsApp: +971 52 534 7120</span>
-              <span>•</span>
-              <a href="mailto:info@brandit.agency" className="hover:text-white underline-offset-4 hover:underline">
-                info@brandit.agency
+                  {/* Central Monochrome Icon Tile with t. */}
+                  <div className="relative flex items-center justify-center">
+                    <div className="absolute inset-0 rounded-[12px] bg-white blur-[8px] opacity-20 transition-opacity duration-300 group-hover:opacity-40" />
+                    <div className="relative grid h-[42px] w-[42px] sm:h-[46px] sm:w-[46px] place-items-center rounded-[12px] bg-white shadow-[0_0_14px_rgba(255,255,255,0.3)] group-hover:bg-black transition-colors">
+                      <span className="font-display text-[22px] sm:text-[24px] font-black text-black group-hover:text-white leading-none pl-0.5 transition-colors">
+                        t.
+                      </span>
+                    </div>
+                  </div>
+
+                  <span className="text-[16px] sm:text-[17px] font-medium text-white transition-colors duration-300 group-hover:text-black">
+                    Growth Audit
+                  </span>
+                </div>
               </a>
             </div>
           </div>

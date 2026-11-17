@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.next
+*.tsbuildinfo
 .output
 .vinxi
 .tanstack/**
@@ -35,3 +37,4 @@ dist-ssr
 *.sw?
 
 .vercel
+.env*

@@ -1,53 +1,24 @@
+"use client";
+
 import { useState } from "react";
 import { Plus } from "lucide-react";
-
-export const BRIEF_FAQS = [
-  {
-    q: "Where are you based — do you work internationally?",
-    a: "brandit. was built in the UAE, one of the most competitive markets in the world, and we deliver to clients across industries and borders. Wherever your business is, you get that standard.",
-  },
-  {
-    q: "Are you an agency or a freelancer?",
-    a: "A full agency. You work directly with our founder as senior strategist, and a trained specialist team executes under his systems. Senior thinking, full capacity, one point of contact.",
-  },
-  {
-    q: "What makes you different?",
-    a: "Systems. Most teams make content. We build the operating system around it — architecture, SOPs, quality gates, and ad spend aligned to real revenue — proven inside the UAE’s largest brokerage.",
-  },
-  {
-    q: "Can you handle everything, or just one service?",
-    a: "Either. Some clients take ads only, or a Shopify build only. Others hand us the whole growth engine — strategy, video, photography, design, media buying, website, and automation. Both work.",
-  },
-  {
-    q: "Do you build websites and online stores too?",
-    a: "Yes. Websites, conversion-built landing pages, and Shopify stores. We also set up AI automation for lead follow-up, booking, and reporting, so leads don’t go cold while you’re busy.",
-  },
-  {
-    q: "How does influencer marketing work with you?",
-    a: "We source creators who genuinely match your audience, negotiate and manage the campaign, and fold the resulting content back into your paid ads — so one collaboration works twice.",
-  },
-  {
-    q: "How soon will I see results?",
-    a: "Brand lift shows in the first month. Paid campaigns typically show early traction in 30–60 days as testing finds winners. Compounding growth comes from the system running month over month.",
-  },
-  {
-    q: "What does it cost?",
-    a: "Structured by scope — content only, ads only, a website build, or a full growth system. Share your goal on a call and we’ll send a clear plan and price.",
-  },
-];
+import { faqs } from "@/content/site";
 
 export default function FAQ() {
-  // All accordion items collapsed on initial page load as required by brief
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleItem = (idx: number) => {
     setOpenIndex((prev) => (prev === idx ? null : idx));
   };
 
+  const half = Math.ceil(faqs.length / 2);
+  const leftFaqs = faqs.slice(0, half);
+  const rightFaqs = faqs.slice(half);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: BRIEF_FAQS.map((faq) => ({
+    mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.q,
       acceptedAnswer: {
@@ -57,59 +28,72 @@ export default function FAQ() {
     })),
   };
 
+  const renderFaqItem = (faq: { q: string; a: string }, actualIdx: number) => {
+    const isOpen = openIndex === actualIdx;
+    return (
+      <div key={actualIdx} className="border-b border-white/[0.08] transition-colors">
+        <button
+          type="button"
+          onClick={() => toggleItem(actualIdx)}
+          aria-expanded={isOpen}
+          className="flex w-full items-center justify-between py-4 sm:py-5 text-left group cursor-pointer gap-4"
+        >
+          <span
+            className={`text-[15px] sm:text-[16px] font-normal tracking-tight transition-colors leading-snug ${
+              isOpen ? "text-white font-medium" : "text-white/80 group-hover:text-white"
+            }`}
+          >
+            {faq.q}
+          </span>
+          <span
+            className={`shrink-0 flex items-center justify-center text-neutral-400 group-hover:text-white transition-transform duration-200 ${
+              isOpen ? "rotate-45 text-white" : ""
+            }`}
+          >
+            <Plus size={16} strokeWidth={1.75} />
+          </span>
+        </button>
+
+        {isOpen && (
+          <div className="pb-5 pt-0 text-[13.5px] sm:text-[14px] leading-relaxed text-[#A1A1AA] animate-in fade-in duration-200">
+            {faq.a}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <section
       id="faq"
       aria-label="Frequently Asked Questions"
-      className="relative w-full overflow-hidden bg-[#09090D] pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24 border-t border-b border-white/[0.08] select-none"
+      className="relative w-full overflow-hidden bg-[#060608] pt-20 sm:pt-28 lg:pt-32 pb-20 sm:pb-28 lg:pb-32 border-b border-white/[0.06] select-none scroll-mt-24"
     >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mx-auto max-w-[1040px] px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="font-display text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold leading-[1.02] tracking-tight text-white">
-            Frequently Asked Questions
+      <div className="relative mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-10">
+        <div className="flex flex-col items-center text-center mb-12 sm:mb-16 lg:mb-20">
+          <h2 className="font-display text-[clamp(40px,5.8vw,80px)] font-extrabold tracking-[-0.035em] text-white leading-[1.02]">
+            Frequently Asked <span className="font-serif italic font-normal text-white">Questions</span>
           </h2>
+
+          <p className="mt-4 max-w-[620px] font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed">
+            Everything you need to know about our partnerships, delivery cadence, and strategy.
+          </p>
         </div>
 
-        {/* Accordion list */}
-        <div className="mt-10 sm:mt-12 space-y-3">
-          {BRIEF_FAQS.map((faq, idx) => {
-            const isOpen = openIndex === idx;
-            return (
-              <div
-                key={idx}
-                className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#121217] transition-colors duration-150"
-              >
-                <button
-                  type="button"
-                  onClick={() => toggleItem(idx)}
-                  aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between p-5 sm:p-6 text-left transition-colors hover:bg-white/[0.03]"
-                >
-                  <span className="font-display text-[17px] sm:text-[18px] font-bold text-white pr-4">
-                    {faq.q}
-                  </span>
-                  <span
-                    className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-white transition-transform duration-200 ${
-                      isOpen ? "rotate-45 text-[#1E6BFF]" : ""
-                    }`}
-                  >
-                    <Plus size={16} className="stroke-[2.5]" />
-                  </span>
-                </button>
+        {/* 2-Column Minimalist Defiant-Style Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 gap-y-0 items-start">
+          <div className="flex flex-col">
+            {leftFaqs.map((faq, idx) => renderFaqItem(faq, idx))}
+          </div>
 
-                {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-[15px] sm:text-[16px] leading-relaxed text-[#A1A1AA] border-t border-white/[0.06]">
-                    {faq.a}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          <div className="flex flex-col">
+            {rightFaqs.map((faq, idx) => renderFaqItem(faq, half + idx))}
+          </div>
         </div>
       </div>
     </section>

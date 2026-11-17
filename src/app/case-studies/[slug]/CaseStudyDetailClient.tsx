@@ -105,7 +105,7 @@ export function CaseStudyDetailClient({
             {/* Back link "← All Case Studies" preserving filter state */}
             <Link
               href={backHref}
-              className="group inline-flex items-center gap-2 text-sm font-medium text-muted hover:text-fg transition-colors"
+              className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-fg transition-colors"
             >
               <ArrowLeft size={16} className="transition-transform duration-200 group-hover:-translate-x-1" />
               <span>← All Case Studies</span>
@@ -116,16 +116,16 @@ export function CaseStudyDetailClient({
               <span className="font-display font-bold uppercase tracking-tight text-fg">
                 {project.clientName}
               </span>
-              <span className="text-muted/60">•</span>
+              <span className="text-muted-foreground/60">•</span>
               {project.categories && project.categories.length > 0 && (
-                <span className="rounded-full border border-line bg-surface-2 px-3 py-0.5 font-mono text-[11px] font-semibold text-muted">
+                <span className="rounded-full border border-line bg-surface-2 px-3 py-0.5 font-mono text-[11px] font-semibold text-muted-foreground">
                   {project.categories.join(", ")}
                 </span>
               )}
               {project.year && (
                 <>
-                  <span className="text-muted/60">•</span>
-                  <span className="font-mono text-muted">{project.year}</span>
+                  <span className="text-muted-foreground/60">•</span>
+                  <span className="font-mono text-muted-foreground">{project.year}</span>
                 </>
               )}
             </div>
@@ -141,7 +141,7 @@ export function CaseStudyDetailClient({
             <h1 className="font-display text-[clamp(32px,5.5vw,72px)] font-extrabold leading-[1.04] tracking-[-0.03em] text-fg max-w-5xl">
               {project.title.split("&").map((part, index, arr) => (
                 <span key={index}>
-                  {index > 0 && <span className="font-serif italic font-normal text-muted px-2">&</span>}
+                  {index > 0 && <span className="px-2 font-serif italic font-normal text-muted-foreground">&</span>}
                   {part}
                 </span>
               ))}
@@ -149,7 +149,7 @@ export function CaseStudyDetailClient({
 
             {/* One-line summary */}
             {project.summary && (
-              <p className="mt-6 text-[17px] sm:text-[20px] text-muted leading-relaxed max-w-3xl font-normal">
+              <p className="mt-6 max-w-3xl text-[17px] font-normal leading-relaxed text-muted-foreground sm:text-[20px]">
                 {project.summary}
               </p>
             )}
@@ -201,7 +201,7 @@ export function CaseStudyDetailClient({
                         {stat.label}
                       </span>
                       {stat.context && (
-                        <span className="block font-mono text-xs text-muted mt-1">
+                        <span className="mt-1 block font-mono text-xs text-muted-foreground">
                           {stat.context}
                         </span>
                       )}
@@ -224,7 +224,7 @@ export function CaseStudyDetailClient({
                 {/* Mobile / Desktop Section Nav */}
                 {navSections.length > 0 && (
                   <div className="rounded-[16px] border border-line bg-surface p-5">
-                    <span className="block font-mono text-[11px] font-bold uppercase tracking-wider text-muted mb-3">
+                    <span className="mb-3 block font-mono text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                       TABLE OF CONTENTS
                     </span>
                     <nav className="flex lg:flex-col flex-wrap gap-2">
@@ -236,7 +236,7 @@ export function CaseStudyDetailClient({
                           className={`text-left rounded-lg px-3 py-2 text-sm font-medium transition-colors cursor-pointer ${
                             activeSection === sec.id
                               ? "bg-primary text-primary-foreground font-bold shadow-sm"
-                              : "text-muted hover:text-fg hover:bg-surface-2"
+                              : "text-muted-foreground hover:bg-surface-2 hover:text-fg"
                           }`}
                         >
                           {sec.label}
@@ -248,18 +248,18 @@ export function CaseStudyDetailClient({
 
                 {/* Client Facts Card */}
                 <div className="rounded-[16px] border border-line bg-surface p-5 space-y-4">
-                  <span className="block font-mono text-[11px] font-bold uppercase tracking-wider text-muted">
+                  <span className="block font-mono text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     CLIENT FACTS
                   </span>
                   <div>
-                    <span className="block text-xs text-muted font-mono">CLIENT</span>
+                    <span className="block font-mono text-xs text-muted-foreground">CLIENT</span>
                     <span className="block font-display font-semibold text-fg text-sm mt-0.5">
                       {project.clientName}
                     </span>
                   </div>
                   {project.industry && (
                     <div>
-                      <span className="block text-xs text-muted font-mono">INDUSTRY</span>
+                      <span className="block font-mono text-xs text-muted-foreground">INDUSTRY</span>
                       <span className="block font-display font-semibold text-fg text-sm mt-0.5">
                         {project.industry}
                       </span>
@@ -267,12 +267,12 @@ export function CaseStudyDetailClient({
                   )}
                   {project.services && project.services.length > 0 && (
                     <div>
-                      <span className="block text-xs text-muted font-mono mb-1.5">CAPABILITIES</span>
+                      <span className="mb-1.5 block font-mono text-xs text-muted-foreground">CAPABILITIES</span>
                       <div className="flex flex-wrap gap-1.5">
                         {project.services.map((svc, i) => (
                           <span
                             key={i}
-                            className="rounded-md border border-line bg-surface-2 px-2.5 py-1 text-xs font-mono text-muted"
+                            className="rounded-md border border-line bg-surface-2 px-2.5 py-1 font-mono text-xs text-muted-foreground"
                           >
                             {svc}
                           </span>
@@ -286,7 +286,7 @@ export function CaseStudyDetailClient({
                         href={project.externalUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-fg hover:text-muted transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-fg hover:text-muted-foreground transition-colors"
                       >
                         <span>Visit Live Project</span>
                         <ExternalLink size={13} />
@@ -301,13 +301,13 @@ export function CaseStudyDetailClient({
                 {/* 01. The Challenge */}
                 {hasChallenge && (
                   <div id="challenge" className="space-y-4 scroll-mt-28">
-                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted block">
+                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground block">
                       01. THE CHALLENGE
                     </span>
                     <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-fg">
                       The Friction Point
                     </h2>
-                    <p className="text-[16px] sm:text-[18px] text-muted leading-relaxed font-normal">
+                    <p className="text-[16px] sm:text-[18px] text-muted-foreground leading-relaxed font-normal">
                       {project.challenge}
                     </p>
                   </div>
@@ -316,13 +316,13 @@ export function CaseStudyDetailClient({
                 {/* 02. Our Approach */}
                 {hasApproach && (
                   <div id="approach" className="space-y-4 scroll-mt-28">
-                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted block">
+                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground block">
                       02. OUR APPROACH
                     </span>
                     <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-fg">
                       The Purpose-Built Solution
                     </h2>
-                    <p className="text-[16px] sm:text-[18px] text-muted leading-relaxed font-normal">
+                    <p className="text-[16px] sm:text-[18px] text-muted-foreground leading-relaxed font-normal">
                       {project.approach}
                     </p>
                   </div>
@@ -338,7 +338,7 @@ export function CaseStudyDetailClient({
                 {/* 03. Measured Results Details */}
                 {hasResults && (
                   <div id="results" className="space-y-6 scroll-mt-28 pt-8 border-t border-line">
-                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted block">
+                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground block">
                       03. MEASURED RESULTS
                     </span>
                     <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-fg">
@@ -350,7 +350,7 @@ export function CaseStudyDetailClient({
                           <span className="font-display text-3xl font-black text-fg">{r.metric}</span>
                           <span className="block font-display text-sm font-semibold text-fg/90 mt-1">{r.label}</span>
                           {r.context && (
-                            <span className="block font-mono text-xs text-muted mt-0.5">{r.context}</span>
+                            <span className="block font-mono text-xs text-muted-foreground mt-0.5">{r.context}</span>
                           )}
                         </div>
                       ))}
@@ -361,7 +361,7 @@ export function CaseStudyDetailClient({
                 {/* 04. Optional Image Gallery */}
                 {hasGallery && (
                   <div id="gallery" className="space-y-6 scroll-mt-28 pt-8 border-t border-line">
-                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted block">
+                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground block">
                       04. GALLERY
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -375,7 +375,7 @@ export function CaseStudyDetailClient({
                             className="object-cover"
                           />
                           {img.caption && (
-                            <div className="absolute inset-x-0 bottom-0 bg-surface/80 backdrop-blur-sm p-3 text-xs text-muted">
+                            <div className="absolute inset-x-0 bottom-0 bg-surface/80 backdrop-blur-sm p-3 text-xs text-muted-foreground">
                               {img.caption}
                             </div>
                           )}
@@ -388,7 +388,7 @@ export function CaseStudyDetailClient({
                 {/* 05. Testimonial Block */}
                 {hasTestimonial && (
                   <div className="rounded-[16px] border border-line bg-surface p-6 sm:p-8 relative overflow-hidden">
-                    <Quote size={40} className="text-muted/20 absolute right-6 top-6" />
+                    <Quote size={40} className="text-muted-foreground/20 absolute right-6 top-6" />
                     <p className="font-serif italic text-[18px] sm:text-[22px] leading-relaxed text-fg">
                       &ldquo;{project.testimonial!.quote}&rdquo;
                     </p>
@@ -397,7 +397,7 @@ export function CaseStudyDetailClient({
                         <span className="block font-display font-bold text-fg text-sm">
                           {project.testimonial!.clientName}
                         </span>
-                        <span className="block text-xs font-mono text-muted mt-0.5">
+                        <span className="block text-xs font-mono text-muted-foreground mt-0.5">
                           {project.testimonial!.clientTitle} • {project.testimonial!.companyName}
                         </span>
                       </div>
@@ -421,13 +421,13 @@ export function CaseStudyDetailClient({
               >
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                   <div>
-                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted block mb-2">
+                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground block mb-2">
                       NEXT CASE STUDY →
                     </span>
-                    <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-fg group-hover:text-muted transition-colors">
+                    <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-fg group-hover:text-muted-foreground transition-colors">
                       {nextProject.title}
                     </h3>
-                    <div className="mt-2 flex items-center gap-3 text-xs sm:text-sm text-muted">
+                    <div className="mt-2 flex items-center gap-3 text-xs sm:text-sm text-muted-foreground">
                       <span className="font-display font-semibold text-fg uppercase">{nextProject.clientName}</span>
                       <span>•</span>
                       <span>{nextProject.industry}</span>

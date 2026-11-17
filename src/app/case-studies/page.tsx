@@ -55,7 +55,7 @@ export default async function CaseStudiesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Suspense fallback={<div className="min-h-screen bg-[#070709]" />}>
+      <Suspense fallback={<div className="min-h-screen bg-bg" />}>
         <CaseStudiesPageClient settings={settings} projects={projects} />
       </Suspense>
     </>

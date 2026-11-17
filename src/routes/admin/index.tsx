@@ -298,7 +298,7 @@ function AdminDashboardPage() {
                               <span
                                 className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                                   sub.type === "contact"
-                                    ? "bg-blue-50 text-blue-700 border border-blue-200"
+                                    ? "bg-neutral-100 text-neutral-800 border border-neutral-300"
                                     : sub.type === "studio"
                                       ? "bg-purple-50 text-purple-700 border border-purple-200"
                                       : "bg-emerald-50 text-emerald-700 border border-emerald-200"
@@ -364,7 +364,7 @@ function AdminDashboardPage() {
                                       href={sub.data.portfolioUrl}
                                       target="_blank"
                                       rel="noopener noreferrer"
-                                      className="text-[11px] text-blue-600 underline flex items-center gap-1"
+                                      className="text-[11px] text-neutral-900 underline font-medium flex items-center gap-1"
                                     >
                                       Portfolio Link
                                       <ExternalLink size={10} />
@@ -388,7 +388,7 @@ function AdminDashboardPage() {
                                     : sub.status === "contacted"
                                       ? "border-emerald-300 bg-emerald-50 text-emerald-800"
                                       : sub.status === "in_review"
-                                        ? "border-blue-300 bg-blue-50 text-blue-800"
+                                        ? "border-neutral-400 bg-neutral-100 text-neutral-900"
                                         : "border-neutral-200 bg-neutral-100 text-neutral-600"
                                 }`}
                               >

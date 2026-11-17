@@ -1,0 +1,153 @@
+"use client";
+
+import React from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Instrument_Serif } from "next/font/google";
+import { JourneyStep } from "./JourneyStep";
+import { HOW_IT_WORKS_STEPS, HowItWorksStep } from "./types";
+import { HeroButton } from "@/components/site/HeroButton";
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["italic"],
+  display: "swap",
+});
+
+export function HowItWorksSection({ steps }: { steps?: HowItWorksStep[] | undefined } = {}) {
+  const shouldReduceMotion = useReducedMotion();
+  const displaySteps = steps && steps.length > 0 ? steps : HOW_IT_WORKS_STEPS;
+
+  return (
+    <section
+      id="how-it-works"
+      aria-label="How it works process"
+      className="relative py-24 sm:py-32 overflow-hidden bg-[#060608] border-t border-b border-white/[0.05] select-none"
+    >
+      {/* 1. Ambient luxury warm gold radial glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 left-1/4 h-[550px] w-[550px] rounded-full bg-[#D4AF37]/[0.035] blur-[160px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-40 right-1/4 h-[550px] w-[550px] rounded-full bg-[#B8860B]/[0.03] blur-[160px]"
+      />
+
+      {/* 2. 3% Film Grain SVG Noise Filter */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.03] mix-blend-overlay"
+      >
+        <filter id="noiseFilter-process">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.8"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter-process)" />
+      </svg>
+
+      <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 md:px-8">
+        <div className="max-w-2xl mb-14 sm:mb-18">
+          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#E6B93C] block">
+            SIMPLE PROCESS
+          </span>
+
+          <h2 className="mt-3 font-display text-[clamp(32px,4.5vw,56px)] font-extrabold tracking-[-0.04em] text-[#F5F2EC] leading-[1.08]">
+            How it{" "}
+            <span
+              className={`${instrumentSerif.className} italic font-normal text-[#F5F2EC] text-[1.12em] tracking-normal`}
+            >
+              works
+            </span>
+          </h2>
+
+          <p className="mt-3 text-[15px] sm:text-[16px] text-neutral-400 leading-relaxed">
+            Three steps. First call to real results.
+          </p>
+        </div>
+
+        <div className="relative">
+          <div
+            aria-hidden="true"
+            className="hidden lg:block absolute top-[52px] left-[18px] right-[18px] h-[2px] pointer-events-none z-0"
+          >
+            {/* Faint 6px blur glow duplicate underneath */}
+            <div
+              className="absolute inset-0 blur-[6px] opacity-60"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0%, #B8860B 25%, #F7E08A 50%, #B8860B 75%, transparent 100%)",
+              }}
+            />
+            {/* Background track that fades gold */}
+            <div
+              className="absolute inset-0 opacity-30"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0%, #B8860B 20%, #F7E08A 50%, #B8860B 80%, transparent 100%)",
+              }}
+            />
+
+            {/* Filled / progress portion using --gold-metal */}
+            <motion.div
+              initial={
+                shouldReduceMotion
+                  ? { scaleX: 1, opacity: 1 }
+                  : { scaleX: 0, opacity: 1 }
+              }
+              whileInView={{ scaleX: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                duration: 1.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              style={{
+                background: "var(--gold-metal)",
+              }}
+              className="absolute inset-0 origin-left shadow-[0_0_14px_rgba(212,175,55,0.45),0_0_22px_rgba(212,175,55,0.25)]"
+            />
+          </div>
+
+          <ol className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-8 relative z-10 m-0 p-0">
+            {displaySteps.map((step, idx) => (
+              <JourneyStep key={`${step.title}-${idx}`} step={step} index={idx} />
+            ))}
+          </ol>
+        </div>
+
+        <motion.div
+          initial={
+            shouldReduceMotion
+              ? { opacity: 1 }
+              : { opacity: 0, y: 16 }
+          }
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-14 sm:mt-18 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-6"
+        >
+          <div className="flex items-center gap-3">
+            <div className="flex h-3 w-3 items-center justify-center rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.6)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-black" />
+            </div>
+            <p className="text-[13.5px] font-mono text-neutral-300">
+              Clear timelines, guaranteed delivery dates, no guesswork.
+            </p>
+          </div>
+
+          <HeroButton
+            href="/contact"
+            leftText="Book a"
+            rightText="Free Strategy Call"
+            ariaLabel="Book your free strategy call"
+            className="sm:max-w-[360px]"
+          />
+        </motion.div>
+      </div>
+    </section>
+  );
+}

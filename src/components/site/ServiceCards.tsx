@@ -1,164 +1,263 @@
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import identityImg from "@/assets/service-identity.jpg";
-import socialImg from "@/assets/service-social.jpg";
-import adsImg from "@/assets/service-ads.jpg";
-import packagesImg from "@/assets/service-packages.jpg";
-import skinImg from "@/assets/work-package-skin.jpg";
-import pulseImg from "@/assets/work-identity-pulse.jpg";
+"use client";
 
-export interface ServiceData {
+import { useRef, useState, useEffect } from "react";
+import { ArrowRight } from "lucide-react";
+
+import creativeImg from "@/assets/service-creative.jpg";
+import metaImg from "@/assets/service-meta.jpg";
+import googleImg from "@/assets/service-google.jpg";
+import tiktokImg from "@/assets/service-tiktok.jpg";
+import croImg from "@/assets/service-cro.jpg";
+import emailImg from "@/assets/service-email.jpg";
+import webImg from "@/assets/service-web.jpg";
+import identityImg from "@/assets/service-identity.jpg";
+
+import { SectionBadge } from "./SectionBadge";
+
+interface ServiceCardItem {
   id: string;
-  slug: string;
-  title: string;
-  body: string;
-  visibleTags: string[];
-  image: string;
+  titleSans: string;
+  titleSerif: string;
+  image: any;
+  alt: string;
+  link: string;
 }
 
-export const servicesList: ServiceData[] = [
+const serviceItems: ServiceCardItem[] = [
   {
-    id: "strategy-growth-systems",
-    slug: "strategy-growth-systems",
-    title: "Strategy & Growth Systems",
-    body: "The operating system behind everything else. We map your content architecture, build the SOPs, align ad spend to real revenue priorities, and report on what actually moved.",
-    visibleTags: ["Marketing Strategy", "Growth Systems", "SOPs & Workflows", "Reporting"],
+    id: "creative",
+    titleSans: "Performance",
+    titleSerif: "Creative",
+    image: creativeImg,
+    alt: "Performance creative and content production on set",
+    link: "/services",
+  },
+  {
+    id: "meta-ads",
+    titleSans: "Meta",
+    titleSerif: "Ads",
+    image: metaImg,
+    alt: "Meta and paid social acquisition campaigns on smartphone",
+    link: "/services",
+  },
+  {
+    id: "google-ads",
+    titleSans: "Google",
+    titleSerif: "Ads",
+    image: googleImg,
+    alt: "High-intent Google Ads and search engine marketing showcase",
+    link: "/services",
+  },
+  {
+    id: "tiktok-ads",
+    titleSans: "Tik Tok",
+    titleSerif: "Ads",
+    image: tiktokImg,
+    alt: "TikTok viral video advertising and UGC campaigns",
+    link: "/services",
+  },
+  {
+    id: "cro-landing",
+    titleSans: "CRO &",
+    titleSerif: "Landing Pages",
+    image: croImg,
+    alt: "Conversion rate optimization and landing page design",
+    link: "/services",
+  },
+  {
+    id: "email-sms",
+    titleSans: "Email &",
+    titleSerif: "SMS",
+    image: emailImg,
+    alt: "Automated retention, email newsletters and SMS workflows",
+    link: "/services",
+  },
+  {
+    id: "web-dev",
+    titleSans: "Web",
+    titleSerif: "Design & Dev",
+    image: webImg,
+    alt: "Bespoke high-performance websites and digital experiences",
+    link: "/services",
+  },
+  {
+    id: "brand-identity",
+    titleSans: "Brand",
+    titleSerif: "Identity",
     image: identityImg,
-  },
-  {
-    id: "paid-advertising",
-    slug: "paid-advertising",
-    title: "Paid Advertising",
-    body: "Campaigns built around your sales reality, not vanity metrics. We structure spend so your budget goes to what converts, then keep testing until it gets cheaper.",
-    visibleTags: ["Meta Ads", "Google Ads", "TikTok Ads", "Performance Creative"],
-    image: adsImg,
-  },
-  {
-    id: "content-production",
-    slug: "content-production",
-    title: "Content Production",
-    body: "A full in-house production team — videographers, photographers, editors. Cinematic films, scroll-stopping UGC, and shoot days run to SOPs so nothing is wasted.",
-    visibleTags: ["Video Production", "Photography", "UGC & Reels", "Podcast Production"],
-    image: socialImg,
-  },
-  {
-    id: "branding-design",
-    slug: "branding-design",
-    title: "Branding & Design",
-    body: "Look like the leader in your category. Complete identity systems, daily creative, and founder brands built for authority.",
-    visibleTags: ["Brand Identity", "Graphic Design", "Personal Branding", "Ad Creative"],
-    image: packagesImg,
-  },
-  {
-    id: "web-stores-automation",
-    slug: "web-stores-automation",
-    title: "Web, Stores & Automation",
-    body: "Where traffic becomes revenue. Fast websites, conversion-built landing pages, Shopify stores that sell, and AI automation that handles the follow-up.",
-    visibleTags: ["Website Design", "Landing Pages", "Shopify Stores", "AI Automation"],
-    image: skinImg,
-  },
-  {
-    id: "influencer-collab-marketing",
-    slug: "influencer-collab-marketing",
-    title: "Influencer & Collab Marketing",
-    body: "Borrow the audiences you haven’t built yet. We source the right creators, run the campaigns, and structure brand collaborations that put you in front of a warm market.",
-    visibleTags: ["Influencer Campaigns", "Creator Sourcing", "Brand Collaborations", "Seeding & Gifting"],
-    image: pulseImg,
+    alt: "Complete brand identity, packaging and luxury positioning",
+    link: "/services",
   },
 ];
 
-export function ServiceCards({ onSelect }: { onSelect?: (slug: string) => void }) {
+export function ServiceCards() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeftStart = useRef(0);
+  const hasMoved = useRef(false);
+
+  // Update active dot index based on scroll position
+  const updateActiveIndex = () => {
+    if (!trackRef.current) return;
+    const { scrollLeft } = trackRef.current;
+    const cards = trackRef.current.children;
+    if (cards.length === 0) return;
+
+    let closest = 0;
+    let minDistance = Infinity;
+
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i] as HTMLElement;
+      const cardLeft = card.offsetLeft - trackRef.current.offsetLeft;
+      const diff = Math.abs(cardLeft - scrollLeft);
+      if (diff < minDistance) {
+        minDistance = diff;
+        closest = i;
+      }
+    }
+    setActiveIndex(closest);
+  };
+
+  const scrollToIndex = (index: number) => {
+    if (!trackRef.current) return;
+    const cards = trackRef.current.children;
+    if (cards[index]) {
+      const card = cards[index] as HTMLElement;
+      const targetLeft = card.offsetLeft - trackRef.current.offsetLeft;
+      trackRef.current.scrollTo({ left: targetLeft, behavior: "smooth" });
+    }
+  };
+
+  // Mouse dragging support for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!trackRef.current) return;
+    isDragging.current = true;
+    hasMoved.current = false;
+    startX.current = e.pageX - trackRef.current.offsetLeft;
+    scrollLeftStart.current = trackRef.current.scrollLeft;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !trackRef.current) return;
+    const x = e.pageX - trackRef.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5;
+    if (Math.abs(walk) > 6) {
+      hasMoved.current = true;
+    }
+    trackRef.current.scrollLeft = scrollLeftStart.current - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isDragging.current = false;
+  };
+
   return (
     <section
       id="services"
       aria-label="Our Services"
-      className="relative w-full overflow-hidden bg-[#000000] pt-12 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 select-none border-t border-b border-white/[0.08]"
+      className="relative w-full overflow-hidden bg-[#000000] pt-16 sm:pt-22 lg:pt-28 pb-16 sm:pt-20 pb-16 sm:pb-22 lg:pb-28 select-none scroll-mt-24"
     >
       {/* 1. Centred Section Introduction */}
       <div className="mx-auto flex max-w-[1040px] flex-col items-center px-4 sm:px-6 text-center">
-        {/* Eyebrow label */}
-        <div className="flex h-[40px] items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-5">
-          <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#A1A1AA] uppercase">
-            What We Do
-          </span>
-        </div>
+        {/* Capsule Badge Label */}
+        <SectionBadge>OUR SERVICES</SectionBadge>
 
-        {/* Main Heading: The Art & Science of Scale */}
-        <h2 className="mt-4 sm:mt-6 text-center">
-          <span className="block font-display text-[32px] sm:text-[44px] lg:text-[clamp(44px,5.2vw,72px)] font-bold lg:font-extrabold leading-[1] tracking-[-0.045em] text-white">
+        {/* Section Headline */}
+        <h2 className="mt-5 sm:mt-7 lg:mt-9 select-none text-center">
+          <span className="block font-display text-[34px] sm:text-[48px] lg:text-[clamp(48px,5.4vw,88px)] font-extrabold leading-[0.98] lg:leading-[0.96] tracking-[-0.04em] text-white">
+            We Mastered
+          </span>
+          <span className="block font-serif text-[36px] sm:text-[50px] lg:text-[clamp(50px,5.6vw,94px)] font-normal italic leading-[0.98] lg:leading-[0.96] tracking-[-0.02em] text-white mt-1">
             The Art & Science of Scale
           </span>
         </h2>
 
-        {/* Sub-heading */}
-        <p className="mt-3 sm:mt-4 max-w-[620px] text-center text-[15px] sm:text-[18px] lg:text-[20px] font-normal leading-[1.4] text-[#A1A1AA]">
-          Strategy, creative, media, and technology — under one roof.
+        {/* Subtitle */}
+        <p className="mt-4 sm:mt-6 max-w-[560px] text-center text-[15px] sm:text-[17px] lg:text-[19px] font-normal leading-[1.45] text-[#A1A1AA]">
+          Performance marketers, strategists and top-tier creatives under one roof.
         </p>
       </div>
 
-      {/* 2. Responsive Grid: 3 columns on desktop, 2 columns on tablet, 1 column on mobile */}
-      <div className="mx-auto mt-10 sm:mt-14 lg:mt-16 max-w-[1440px] px-4 sm:px-6 lg:px-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8">
-          {servicesList.map((s) => (
+      {/* 2. Smooth Horizontal Carousel Slider */}
+      <div className="relative mt-10 sm:mt-16 lg:mt-20 w-full overflow-hidden">
+        <div
+          ref={trackRef}
+          onScroll={updateActiveIndex}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          onMouseLeave={handleMouseUpOrLeave}
+          className="no-scrollbar flex snap-x snap-mandatory gap-4 sm:gap-6 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pl-5 pr-8 sm:pl-[6vw] sm:pr-[10vw] cursor-grab active:cursor-grabbing pb-3"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {serviceItems.map((item) => (
             <a
-              key={s.id}
-              href={`/services#${s.slug}`}
+              key={item.id}
+              href={item.link}
               onClick={(e) => {
-                if (onSelect) {
+                if (hasMoved.current) {
                   e.preventDefault();
-                  onSelect(s.slug);
                 }
               }}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-[24px] sm:rounded-[28px] border border-white/[0.08] bg-[#0F0F14] p-5 sm:p-6 transition-all duration-300 hover:border-[#1E6BFF]/50 hover:shadow-2xl hover:shadow-blue-950/20 hover:-translate-y-1"
+              className="group relative shrink-0 snap-start overflow-hidden rounded-[26px] sm:rounded-[34px] bg-[#141418] text-left transition-all duration-300 hover:scale-[1.015] aspect-[4/5] w-[78vw] max-w-[320px] sm:w-[320px] md:w-[360px] lg:w-[390px] xl:w-[410px] shadow-2xl block border border-white/5 hover:border-white/20"
             >
-              {/* Media Thumbnail */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-neutral-900">
-                <img
-                  src={s.image}
-                  alt={s.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <span className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-all duration-200 group-hover:bg-[#1E6BFF] group-hover:scale-110">
-                  <ArrowUpRight size={17} className="stroke-[2.5]" />
+              {/* Full-bleed high-end photographic imagery */}
+              <img
+                src={typeof item.image === "string" ? item.image : item.image?.src || ""}
+                alt={item.alt}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-106"
+              />
+
+              {/* Gradient Vignettes for supreme readability */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/75 via-black/30 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+              {/* Card Typography at TOP LEFT */}
+              <div className="relative z-10 p-5 sm:p-7 lg:p-8 flex flex-col items-start text-left">
+                <span className="font-display text-[24px] sm:text-[30px] lg:text-[36px] font-extrabold leading-[0.94] tracking-tight text-white drop-shadow-md">
+                  {item.titleSans}
+                </span>
+                <span className="font-serif text-[26px] sm:text-[32px] lg:text-[38px] font-normal italic leading-[0.94] tracking-normal text-white drop-shadow-md mt-0.5">
+                  {item.titleSerif}
                 </span>
               </div>
 
-              {/* Title & Body */}
-              <div className="mt-5 flex-1">
-                <h3 className="font-display text-[20px] sm:text-[22px] font-bold tracking-tight text-white">
-                  {s.title}
-                </h3>
-                <p className="mt-2.5 text-[14px] sm:text-[15px] leading-relaxed text-[#A1A1AA]">
-                  {s.body}
-                </p>
-              </div>
-
-              {/* Visible Tag Row (Visible text, NOT tooltips or hover-only) */}
-              <div className="mt-5 pt-4 border-t border-white/[0.08] flex flex-wrap gap-1.5">
-                {s.visibleTags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="rounded-full bg-white/[0.06] border border-white/[0.08] px-3 py-1 text-[11.5px] font-medium text-neutral-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
+              {/* Circular dark action button at BOTTOM RIGHT */}
+              <div className="absolute bottom-5 right-5 sm:bottom-6 sm:right-6 z-10">
+                <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:border-white group-hover:scale-110 shadow-lg">
+                  <ArrowRight size={17} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                </div>
               </div>
             </a>
           ))}
         </div>
+      </div>
 
-        {/* Section CTA from brief */}
-        <div className="mt-12 sm:mt-16 flex justify-center">
-          <a
-            href="/contact"
-            className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] hover:bg-[#1E6BFF] hover:border-[#1E6BFF] px-7 py-3.5 text-[15px] sm:text-[16px] font-semibold text-white shadow-sm transition-all duration-200"
+      {/* 3. Centred Pagination Indicators */}
+      <div className="mt-8 sm:mt-11 lg:mt-12 flex items-center justify-center gap-2">
+        {serviceItems.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => scrollToIndex(i)}
+            aria-label={`Go to service slide ${i + 1}`}
+            className="p-1.5 -m-1.5 flex items-center justify-center focus-visible:outline-2 focus-visible:outline-white rounded-full"
           >
-            <span>Not sure what you need? Book a call and we’ll map it</span>
-            <ArrowRight size={17} className="stroke-[2.5] transition-transform duration-200 group-hover:translate-x-1" />
-          </a>
-        </div>
+            <span
+              className={`block transition-all duration-300 ${
+                activeIndex === i
+                  ? "h-1.5 w-6 sm:h-2 sm:w-7 rounded-full bg-white"
+                  : "h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-white/30 hover:bg-white/60"
+              }`}
+            />
+          </button>
+        ))}
       </div>
     </section>
   );

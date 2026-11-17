@@ -71,13 +71,13 @@ export function CaseStudiesPageClient({
         {/* ========================================================================= */}
         <section
           aria-label="Case Studies Hero"
-          className="relative pt-36 sm:pt-40 md:pt-48 pb-12 sm:pb-16 text-center px-4 sm:px-6"
+          className="case-studies-hero relative flex min-h-[388px] items-center justify-center rounded-[36px] border border-line bg-surface px-4 py-12 text-center sm:rounded-[42px] sm:px-6"
         >
-          <div className="mx-auto max-w-[1280px] flex flex-col items-center">
+          <div className="mx-auto flex max-w-[1280px] flex-col items-center">
             {/* Centered small "b." brand mark (~40px) */}
-            <div className="mb-6 sm:mb-8 flex items-center justify-center">
-              <div className="h-10 w-10 rounded-full border border-line bg-surface/80 backdrop-blur-md flex items-center justify-center shadow-sm">
-                <span className="font-display font-extrabold text-[22px] leading-none text-fg tracking-tighter">
+            <div className="mb-10 flex items-center justify-center sm:mb-11">
+              <div className="flex h-[46px] w-[46px] items-center justify-center rounded-[14px] border border-line bg-surface-2 shadow-[0_0_24px_rgba(255,255,255,0.04)]">
+                <span className="font-display text-[23px] font-extrabold leading-none tracking-tighter text-fg">
                   b<span className="opacity-60">.</span>
                 </span>
               </div>
@@ -92,7 +92,7 @@ export function CaseStudiesPageClient({
             </h1>
 
             {/* Subcopy: 16px, muted, max-width 480px */}
-            <p className="mt-6 text-[16px] text-muted max-w-[480px] leading-relaxed mx-auto font-normal">
+            <p className="mx-auto mt-8 max-w-[480px] text-[16px] font-normal leading-relaxed text-muted-foreground">
               Learn more about the tactics that grew our clients&apos; brands.
             </p>
           </div>
@@ -103,7 +103,7 @@ export function CaseStudiesPageClient({
         {/* ========================================================================= */}
         <section
           aria-label="Case Study Filters"
-          className="pb-12 sm:pb-16 px-4 sm:px-6"
+          className="case-studies-filter-band rounded-t-[36px] border-x border-t border-line bg-surface-2 px-4 pb-3 pt-6 sm:rounded-t-[42px] sm:px-6 sm:pt-7"
         >
           <div className="mx-auto max-w-[1280px]">
             {/* Mobile: horizontal scroll row with edge fades | Desktop: centered */}
@@ -123,7 +123,7 @@ export function CaseStudiesPageClient({
                       className={`h-[40px] px-6 rounded-full text-sm font-medium transition-all duration-200 shrink-0 cursor-pointer ${
                         isActive
                           ? "bg-primary text-primary-foreground font-semibold shadow-md"
-                          : "bg-surface-2 text-muted hover:text-fg border border-line hover:border-fg/30"
+                          : "border border-line bg-surface text-muted-foreground hover:border-fg/30 hover:text-fg"
                       }`}
                     >
                       {cat}
@@ -140,19 +140,19 @@ export function CaseStudiesPageClient({
         {/* ========================================================================= */}
         <section
           aria-label="Case Studies Showcase"
-          className="pb-24 sm:pb-32 px-4 sm:px-6"
+          className="case-studies-grid-band bg-surface-2 px-4 pb-24 pt-0 sm:px-6 sm:pb-32"
         >
           <div className="mx-auto max-w-[1280px]">
             {filteredProjects.length === 0 ? (
               /* 5. Empty filter state */
               <div className="py-20 text-center rounded-[24px] border border-line bg-surface px-6 max-w-xl mx-auto shadow-sm">
-                <div className="mx-auto w-12 h-12 rounded-full border border-line bg-surface-2 flex items-center justify-center text-muted mb-4">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-line bg-surface-2 text-muted-foreground">
                   <span className="font-display font-bold text-lg">0</span>
                 </div>
                 <h3 className="font-display text-xl font-bold text-fg mb-2">
                   No case studies found
                 </h3>
-                <p className="text-sm text-muted mb-6">
+                <p className="mb-6 text-sm text-muted-foreground">
                   There are no published case studies matching &ldquo;{activeCategory}&rdquo;.
                 </p>
                 <button

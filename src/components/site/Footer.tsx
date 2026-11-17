@@ -28,9 +28,9 @@ export function Footer() {
         {/* Top Logo & Statement */}
         <div className="mb-14 sm:mb-16 max-w-xl">
           <a href="/" aria-label="brandit. home" className="inline-block mb-5">
-            <Wordmark glow className="text-4xl sm:text-5xl w-auto" />
+            <Wordmark variant="theme" glow className="text-4xl sm:text-5xl w-auto" />
           </a>
-          <p className="text-[17px] sm:text-[18px] text-muted leading-relaxed">
+          <p className="text-[17px] sm:text-[18px] text-muted-foreground leading-relaxed">
             brandit. is a high-growth digital creative and performance agency that specializes in
             creative performance, brand identity, and scalable ad campaigns built to convert.
           </p>
@@ -42,37 +42,37 @@ export function Footer() {
           <div className="md:col-span-3 flex flex-col gap-3.5 sm:gap-4">
             <a
               href="/"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted transition-colors tracking-tight"
+              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
             >
               Home
             </a>
             <a
               href="/about"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted transition-colors tracking-tight"
+              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
             >
               About Us
             </a>
             <a
               href="/case-studies"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted transition-colors tracking-tight"
+              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
             >
               Case Studies
             </a>
             <a
               href="/careers"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted transition-colors tracking-tight"
+              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
             >
               Careers
             </a>
             <a
               href="/studio"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted transition-colors tracking-tight"
+              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
             >
               Studio
             </a>
             <a
               href="/contact"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted transition-colors tracking-tight"
+              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
             >
               Contact
             </a>
@@ -87,7 +87,7 @@ export function Footer() {
               <li>
                 <a
                   href="/services#creative-performance"
-                  className="block py-2.5 text-muted hover:text-fg transition-colors"
+                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
                 >
                   Performance Creative
                 </a>
@@ -95,7 +95,7 @@ export function Footer() {
               <li>
                 <a
                   href="/services#paid-social"
-                  className="block py-2.5 text-muted hover:text-fg transition-colors"
+                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
                 >
                   Meta & Instagram Ads
                 </a>
@@ -103,7 +103,7 @@ export function Footer() {
               <li>
                 <a
                   href="/services#paid-search"
-                  className="block py-2.5 text-muted hover:text-fg transition-colors"
+                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
                 >
                   Google & YouTube Ads
                 </a>
@@ -111,7 +111,7 @@ export function Footer() {
               <li>
                 <a
                   href="/services#creative-performance"
-                  className="block py-2.5 text-muted hover:text-fg transition-colors"
+                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
                 >
                   TikTok & Vertical Video
                 </a>
@@ -119,7 +119,7 @@ export function Footer() {
               <li>
                 <a
                   href="/services#conversion-websites"
-                  className="block py-2.5 text-muted hover:text-fg transition-colors"
+                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
                 >
                   CRO & Landing Pages
                 </a>
@@ -127,7 +127,7 @@ export function Footer() {
               <li>
                 <a
                   href="/services#brand-content"
-                  className="block py-2.5 text-muted hover:text-fg transition-colors"
+                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
                 >
                   Email & SMS Marketing
                 </a>
@@ -135,7 +135,7 @@ export function Footer() {
               <li>
                 <a
                   href="/services#conversion-websites"
-                  className="block py-2.5 text-muted hover:text-fg transition-colors"
+                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
                 >
                   Web Design & Development
                 </a>
@@ -143,7 +143,7 @@ export function Footer() {
               <li>
                 <a
                   href="/services#brand-identity"
-                  className="block py-2.5 text-muted hover:text-fg transition-colors"
+                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
                 >
                   Branding & Visual Direction
                 </a>
@@ -166,7 +166,7 @@ export function Footer() {
                 </div>
               </div>
 
-              <p className="mt-1 text-[14px] text-muted">
+              <p className="mt-1 text-[14px] text-muted-foreground">
                 Join our free community & receive weekly growth strategies.
               </p>
 
@@ -177,11 +177,11 @@ export function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email"
-                  className="flex-1 rounded-xl border border-line bg-surface-2 px-4 py-3.5 text-[14px] text-fg placeholder:text-muted focus:outline-none focus:border-fg transition-colors"
+                  className="flex-1 rounded-xl border border-line bg-surface-2 px-4 py-3.5 text-[14px] text-fg placeholder:text-muted-foreground focus:outline-none focus:border-fg transition-colors"
                 />
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl btn-shiny-blue px-6 py-3.5 text-[14px] font-bold text-white transition-all shrink-0 cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl btn-shiny px-6 py-3.5 text-[14px] font-bold text-white transition-all shrink-0 cursor-pointer"
                 >
                   {isSubmitted ? (
                     <>
@@ -197,13 +197,13 @@ export function Footer() {
                 </button>
               </form>
 
-              <p className="mt-3 text-[12px] text-muted">
+              <p className="mt-3 text-[12px] text-muted-foreground">
                 No spam. We respect your privacy.
               </p>
             </div>
 
             {/* Direct Contact Links */}
-            <div className="flex flex-col gap-2.5 text-[14px] text-muted pt-2">
+            <div className="flex flex-col gap-2.5 text-[14px] text-muted-foreground pt-2">
               <a
                 href={`mailto:${siteMeta.contact.email}`}
                 className="inline-flex items-center gap-2 hover:text-fg transition-colors"
@@ -220,7 +220,7 @@ export function Footer() {
                 <span>{siteMeta.contact.phoneDisplay}</span>
               </a>
 
-              <div className="inline-flex items-start gap-2 text-muted text-[13px] mt-1">
+              <div className="inline-flex items-start gap-2 text-muted-foreground text-[13px] mt-1">
                 <MapPin size={15} className="text-fg shrink-0 mt-0.5" />
                 <span>{siteMeta.contact.office}</span>
               </div>
@@ -229,16 +229,16 @@ export function Footer() {
         </div>
 
         {/* Legal & Copyright Row */}
-        <div className="mt-16 sm:mt-20 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#71717A]">
+        <div className="mt-16 sm:mt-20 pt-8 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-muted-foreground">
           <p>© {new Date().getFullYear()} brandit. Ventures Pty Ltd. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="/contact" className="hover:text-white transition-colors">
+            <a href="/contact" className="hover:text-fg transition-colors">
               Privacy Policy
             </a>
-            <a href="/contact" className="hover:text-white transition-colors">
+            <a href="/contact" className="hover:text-fg transition-colors">
               Terms & Conditions
             </a>
-            <a href="/contact" className="hover:text-white transition-colors">
+            <a href="/contact" className="hover:text-fg transition-colors">
               Earnings Disclaimer
             </a>
           </div>
@@ -254,7 +254,7 @@ export function Footer() {
             aria-hidden="true"
             className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-36 w-2/3 rounded-full bg-white/[0.03] blur-[80px]"
           />
-          <span className="relative block font-display font-black tracking-[-0.06em] text-[clamp(72px,17vw,250px)] leading-[0.76] uppercase select-none bg-gradient-to-b from-white/20 via-white/5 to-transparent bg-clip-text text-transparent drop-shadow-[0_0_45px_rgba(255,255,255,0.05)]">
+          <span className="footer-watermark relative block font-display font-black tracking-[-0.06em] text-[clamp(72px,17vw,250px)] leading-[0.76] uppercase select-none bg-clip-text text-transparent">
             brandit.
           </span>
         </div>
