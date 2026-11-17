@@ -216,11 +216,31 @@ export function ServicesContent({ data }: ServicesContentProps) {
   const servicesReveal = useReveal();
   const faqReveal = useReveal();
 
+  const resolveServiceSlug = (requestedSlug: string) => {
+    const directMatch = coreServices.find((service) => service.slug === requestedSlug);
+    if (directMatch) return directMatch.slug;
+
+    const canonicalIndex = canonicalServices.findIndex(
+      (service) => service.slug === requestedSlug,
+    );
+    if (canonicalIndex >= 0) {
+      const canonicalService = canonicalServices[canonicalIndex];
+      const titleMatch = coreServices.find(
+        (service) =>
+          service.title.trim().toLowerCase() === canonicalService?.title.trim().toLowerCase(),
+      );
+      return titleMatch?.slug || coreServices[canonicalIndex]?.slug || null;
+    }
+
+    return null;
+  };
+
   // On first load only: read hash to pre-select a service, then smooth-scroll
   useEffect(() => {
-    const requestedSlug = window.location.hash.slice(1);
-    if (requestedSlug && coreServices.some((s) => s.slug === requestedSlug)) {
-      setSelectedServiceSlug(requestedSlug);
+    const requestedSlug = decodeURIComponent(window.location.hash.slice(1));
+    const resolvedSlug = requestedSlug ? resolveServiceSlug(requestedSlug) : null;
+    if (resolvedSlug) {
+      setSelectedServiceSlug(resolvedSlug);
       // slight delay so layout is ready
       window.setTimeout(() => {
         document.getElementById("all-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
