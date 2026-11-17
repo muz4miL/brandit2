@@ -591,6 +591,8 @@ export interface ShowcaseItemDoc {
   // For Landing Pages
   client?: string;
   url?: string;
+  projectUrl?: string;
+  previewImg?: string;
   highlight?: string;
   description?: string;
   stats?: { label: string; value: string }[];

@@ -135,7 +135,7 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
     sender: "VOLTEX ACTIVE",
     subject: "The Recon Drop Is Live ⚡",
     tag: "LIMITED EDITION",
-    heroImg: "/images/case-studies/voltex-thumb.webp",
+    heroImg: "/images/work/work-ad-sneaker.jpg",
     heading: "NO RESTOCKS. THE RECON DROP.",
     subheading: "Engineered for speed, durability, and relentless focus. Only 250 units worldwide.",
     ctaText: "SECURE YOUR DROP >",
@@ -149,15 +149,15 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
   {
     id: "email-2",
     category: "emails",
-    title: "Aura Coffee Reserve",
-    sender: "AURA COFFEE",
-    subject: "Your Private Reserve Roast ☕",
-    tag: "SINGLE ORIGIN",
-    heroImg: "/images/case-studies/apex-hero.webp",
-    heading: "Welcome to Pure Craft Coffee",
-    subheading: "Handcrafted Italian roast. Freshly packed within 24 hours of small-batch roasting.",
-    ctaText: "EXPLORE THE ROAST >",
-    accentColor: "#FFFFFF",
+    title: "Temple & Grace Luxury",
+    sender: "TEMPLE & GRACE",
+    subject: "Handcrafted Luxury Just For You ✨",
+    tag: "FINE JEWELRY",
+    heroImg: "/images/work/work-identity-halo.jpg",
+    heading: "Welcome to Temple & Grace",
+    subheading: "Handcrafted pieces. Honest pricing. Lifetime care. Discover the signature collection.",
+    ctaText: "BOOK A SHOWROOM VISIT >",
+    accentColor: "#C59B27",
     theme: "light",
     sortOrder: 1,
     isActive: true,
@@ -169,10 +169,10 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
     category: "emails",
     title: "Luminate Clinic Special",
     sender: "LUMINATE CLINIC",
-    subject: "Save $250 On Winter HydraGlow ✨",
+    subject: "Save $299 On Winter HydraGlow ✨",
     tag: "SPECIAL OFFER",
-    heroImg: "/images/case-studies/pulse-hero.webp",
-    heading: "Save $250 Before Our Offer Ends!",
+    heroImg: "/images/work/work-package-skin.jpg",
+    heading: "Save $299 Before Our Offer Ends!",
     subheading: "Bespoke clinical dermatology and restorative medical aesthetics for lasting skin radiance.",
     ctaText: "CLAIM WINTER SPECIAL >",
     accentColor: "#0284C7",
@@ -189,7 +189,7 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
     sender: "RISE BAKERY",
     subject: "Fresh Sourdough & Pastries At Your Door 🥐",
     tag: "MORNING DROP",
-    heroImg: "/images/case-studies/apex-detail-1.webp",
+    heroImg: "/images/work/work-package-rise.jpg",
     heading: "Baked At 4 AM. Delivered At 7 AM.",
     subheading: "Warm butter croissants, rustic sourdough, and artisan jams delivered straight to your home.",
     ctaText: "ORDER BREAKFAST BOX >",
@@ -207,7 +207,7 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
     sender: "VOYARA STAYS",
     subject: "Exclusive Villas Across 8 Countries 🌴",
     tag: "VIP RETREAT",
-    heroImg: "/images/case-studies/voltex-detail-1.webp",
+    heroImg: "/images/work/work-ads-travel.jpg",
     heading: "Invest in Memories. Grow Your Escape.",
     subheading: "Private oceanfront sanctuaries with dedicated concierges and chef dining.",
     ctaText: "DISCOVER DESTINATIONS >",
@@ -226,6 +226,8 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
     title: "Commercial Asset Funnel",
     client: "HAVEN ASSETS",
     url: "havenassets.com/yields",
+    projectUrl: "/case-studies/apex",
+    previewImg: "/images/work/work-campaign-home.jpg",
     highlight: "High-Yield Portfolio Acquisition",
     description: "Proven performance marketing and direct-response lead generation for prime commercial holdings.",
     stats: [
@@ -246,6 +248,8 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
     title: "Gamified Fintech App",
     client: "WINBACK APP",
     url: "winback.io/daily-drop",
+    projectUrl: "/case-studies/halo",
+    previewImg: "/images/work/service-web.jpg",
     highlight: "Daily Rewards & Gamified Fintech",
     description: "All without changing the way you shop or carrying extra cards. Backed by top tier banks.",
     stats: [
@@ -266,6 +270,8 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
     title: "Luxury Fitness Studio",
     client: "PULSE FITNESS",
     url: "pulsefitness.com/join",
+    projectUrl: "/case-studies/pulse",
+    previewImg: "/images/work/work-identity-pulse.jpg",
     highlight: "Premium Boutique Studio",
     description: "Personal training, recovery saunas, and science-backed conditioning under one luxury roof.",
     stats: [
@@ -286,6 +292,8 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
     title: "Utility Comparison Engine",
     client: "SAVER COMPARISON",
     url: "savesmart.com/compare",
+    projectUrl: "/case-studies/zest",
+    previewImg: "/images/work/work-social-juice.jpg",
     highlight: "Utility Comparison Engine",
     description: "Instant tariff matching for electricity, high-speed fiber broadband, and solar incentives.",
     stats: [
@@ -306,6 +314,8 @@ export const INITIAL_SHOWCASE_ITEMS: Omit<ShowcaseItemDoc, "_id">[] = [
     title: "Nutrition Transformation Funnel",
     client: "EQU NUTRITION",
     url: "equhealth.com/programs",
+    projectUrl: "/case-studies/voltex",
+    previewImg: "/images/work/service-cro.jpg",
     highlight: "Lifestyle Transformation",
     description: "Dietician-led flexible dieting, metabolic health plans, and community accountability.",
     stats: [
@@ -332,6 +342,59 @@ export async function ensureShowcaseDefaults() {
 
   if (itemCount === 0) {
     await showcaseItems.insertMany(INITIAL_SHOWCASE_ITEMS as any);
+  } else {
+    // Auto-heal: update any legacy broken image references to guaranteed valid paths
+    await showcaseItems.updateMany(
+      { heroImg: { $regex: "case-studies" } },
+      {
+        $set: {
+          heroImg: "/images/work/work-identity-halo.jpg",
+          updatedAt: new Date().toISOString(),
+        },
+      },
+    );
+    await showcaseItems.updateOne(
+      { id: "email-1" },
+      { $set: { heroImg: "/images/work/work-ad-sneaker.jpg" } },
+    );
+    await showcaseItems.updateOne(
+      { id: "email-2" },
+      { $set: { heroImg: "/images/work/work-identity-halo.jpg" } },
+    );
+    await showcaseItems.updateOne(
+      { id: "email-3" },
+      { $set: { heroImg: "/images/work/work-package-skin.jpg" } },
+    );
+    await showcaseItems.updateOne(
+      { id: "email-4" },
+      { $set: { heroImg: "/images/work/work-package-rise.jpg" } },
+    );
+    await showcaseItems.updateOne(
+      { id: "email-5" },
+      { $set: { heroImg: "/images/work/work-ads-travel.jpg" } },
+    );
+
+    // Update landing page preview images and project links
+    await showcaseItems.updateOne(
+      { id: "landing-1" },
+      { $set: { previewImg: "/images/work/work-campaign-home.jpg", projectUrl: "/case-studies/apex" } },
+    );
+    await showcaseItems.updateOne(
+      { id: "landing-2" },
+      { $set: { previewImg: "/images/work/service-web.jpg", projectUrl: "/case-studies/halo" } },
+    );
+    await showcaseItems.updateOne(
+      { id: "landing-3" },
+      { $set: { previewImg: "/images/work/work-identity-pulse.jpg", projectUrl: "/case-studies/pulse" } },
+    );
+    await showcaseItems.updateOne(
+      { id: "landing-4" },
+      { $set: { previewImg: "/images/work/work-social-juice.jpg", projectUrl: "/case-studies/zest" } },
+    );
+    await showcaseItems.updateOne(
+      { id: "landing-5" },
+      { $set: { previewImg: "/images/work/service-cro.jpg", projectUrl: "/case-studies/voltex" } },
+    );
   }
 
   if (settingsCount === 0) {

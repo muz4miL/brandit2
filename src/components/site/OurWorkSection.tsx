@@ -13,6 +13,8 @@ import voyaraImg from "@/assets/work-ads-travel.jpg";
 import homeImg from "@/assets/work-campaign-home.jpg";
 import identityImg from "@/assets/service-identity.jpg";
 import creativeImg from "@/assets/service-creative.jpg";
+import croImg from "@/assets/service-cro.jpg";
+import webImg from "@/assets/service-web.jpg";
 import { SectionBadge } from "./SectionBadge";
 
 export type TabKey = "ads" | "emails" | "landing" | "ugc";
@@ -68,99 +70,116 @@ export const UGC_VIDEOS: VideoMediaItem[] = [
   },
 ];
 
-interface EmailCardData {
+export interface EmailCardData {
   id: string;
   sender: string;
   subject: string;
   tag: string;
+  subnav?: string[];
   heroImg: any;
   heading: string;
   subheading: string;
   ctaText: string;
   accentColor: string;
   theme: "dark" | "light";
+  footerText?: string;
 }
 
-const EMAILS_DATA: EmailCardData[] = [
+export const EMAILS_DATA: EmailCardData[] = [
   {
     id: "voltex",
     sender: "VOLTEX ACTIVE",
     subject: "The Recon Drop Is Live ⚡",
     tag: "LIMITED EDITION",
+    subnav: ["DROP 004", "MEN", "WOMEN", "GEAR"],
     heroImg: voltexImg,
     heading: "NO RESTOCKS. THE RECON DROP.",
     subheading: "Engineered for speed, durability, and relentless focus. Only 250 units worldwide.",
     ctaText: "SECURE YOUR DROP >",
     accentColor: "#EF4444",
     theme: "dark",
+    footerText: "Worldwide tracked express dispatch • Unsubscribe",
   },
   {
-    id: "aura",
-    sender: "AURA COFFEE",
-    subject: "Your Private Reserve Roast ☕",
-    tag: "SINGLE ORIGIN",
-    heroImg: identityImg,
-    heading: "Welcome to Pure Craft Coffee",
-    subheading: "Handcrafted Italian roast. Freshly packed within 24 hours of small-batch roasting.",
-    ctaText: "EXPLORE THE ROAST >",
-    accentColor: "#FFFFFF",
+    id: "temple",
+    sender: "TEMPLE & GRACE",
+    subject: "Handcrafted Luxury Just For You ✨",
+    tag: "FINE JEWELRY",
+    subnav: ["Engagement", "Wedding", "Bracelets", "Diamonds"],
+    heroImg: haloImg,
+    heading: "Welcome to Temple & Grace",
+    subheading: "Handcrafted pieces. Honest pricing. Lifetime care. Discover the signature solitaire series.",
+    ctaText: "BOOK A SHOWROOM VISIT >",
+    accentColor: "#C59B27",
     theme: "light",
+    footerText: "Complimentary private showroom champagne consultation • Unsubscribe",
   },
   {
     id: "luminate",
-    sender: "LUMINATE CLINIC",
-    subject: "Save $250 On Winter HydraGlow ✨",
+    sender: "HAIR & SKIN SCIENCE",
+    subject: "Save $299 On Winter HydraGlow ✨",
     tag: "SPECIAL OFFER",
+    subnav: ["Dermatology", "Aesthetics", "HydraGlow", "Clinics"],
     heroImg: skinImg,
-    heading: "Save $250 Before Our Offer Ends!",
-    subheading: "Bespoke clinical dermatology and restorative medical aesthetics for lasting skin radiance.",
+    heading: "Save $299 Before Our Offer Ends!",
+    subheading: "Prepare for the season by looking and feeling your best with bespoke clinical restorative treatments.",
     ctaText: "CLAIM WINTER SPECIAL >",
     accentColor: "#0284C7",
     theme: "light",
+    footerText: "Doctor-led clinical treatments across 14 locations • Unsubscribe",
   },
   {
     id: "rise",
     sender: "RISE BAKERY",
     subject: "Fresh Sourdough & Pastries At Your Door 🥐",
     tag: "MORNING DROP",
+    subnav: ["Sourdough", "Croissants", "Pastries", "Coffee"],
     heroImg: riseImg,
     heading: "Baked At 4 AM. Delivered At 7 AM.",
-    subheading: "Warm butter croissants, rustic sourdough, and artisan jams delivered straight to your home.",
+    subheading: "Warm butter croissants, rustic sourdough loaves, and artisan preserves delivered straight to your door.",
     ctaText: "ORDER BREAKFAST BOX >",
     accentColor: "#D97706",
     theme: "light",
+    footerText: "Guaranteed oven-warm morning door delivery • Unsubscribe",
   },
   {
     id: "voyara",
-    sender: "VOYARA STAYS",
+    sender: "VOYARA LUXURY STAYS",
     subject: "Exclusive Villas Across 8 Countries 🌴",
     tag: "VIP RETREAT",
+    subnav: ["Private Villas", "Sanctuaries", "Concierge", "Dining"],
     heroImg: voyaraImg,
     heading: "Invest in Memories. Grow Your Escape.",
-    subheading: "Private oceanfront sanctuaries with dedicated concierges and chef dining.",
+    subheading: "Private oceanfront sanctuaries with dedicated concierges, personal infinity pools, and chef dining.",
     ctaText: "DISCOVER DESTINATIONS >",
     accentColor: "#FFFFFF",
     theme: "dark",
+    footerText: "Curated 5-star private residences worldwide • Unsubscribe",
   },
 ];
 
-interface LandingCardData {
+export interface LandingCardData {
   id: string;
   client: string;
   url: string;
+  projectUrl: string;
+  previewImg: any;
   title: string;
   highlight: string;
   description: string;
   stats: { label: string; value: string }[];
   tag: string;
   bgGradient: string;
+  accentColor: string;
 }
 
-const LANDING_DATA: LandingCardData[] = [
+export const LANDING_DATA: LandingCardData[] = [
   {
     id: "capital",
     client: "HAVEN ASSETS",
     url: "havenassets.com/yields",
+    projectUrl: "/case-studies/apex",
+    previewImg: homeImg,
     title: "Get your commercial assets leased faster, for stronger yields.",
     highlight: "High-Yield Portfolio Acquisition",
     description: "Proven performance marketing and direct-response lead generation for prime commercial holdings.",
@@ -171,11 +190,14 @@ const LANDING_DATA: LandingCardData[] = [
     ],
     tag: "COMMERCIAL B2B",
     bgGradient: "from-[#111116] via-[#161622] to-[#0d0d12]",
+    accentColor: "#FBBF24",
   },
   {
     id: "rewards",
     client: "WINBACK APP",
     url: "winback.io/daily-drop",
+    projectUrl: "/case-studies/halo",
+    previewImg: webImg,
     title: "Win all your daily expenses back. Up to $150k.",
     highlight: "Daily Rewards & Gamified Fintech",
     description: "All without changing the way you shop or carrying extra cards. Backed by top tier banks.",
@@ -186,11 +208,14 @@ const LANDING_DATA: LandingCardData[] = [
     ],
     tag: "CONSUMER APP",
     bgGradient: "from-[#0a1e12] via-[#0f2d1b] to-[#09150e]",
+    accentColor: "#34D399",
   },
   {
     id: "pulse-gym",
     client: "PULSE FITNESS",
     url: "pulsefitness.com/join",
+    projectUrl: "/case-studies/pulse",
+    previewImg: pulseImg,
     title: "Move Better. Feel Stronger. Train Without Limits.",
     highlight: "Premium Boutique Studio",
     description: "Personal training, recovery saunas, and science-backed conditioning under one luxury roof.",
@@ -201,11 +226,14 @@ const LANDING_DATA: LandingCardData[] = [
     ],
     tag: "HEALTH & FITNESS",
     bgGradient: "from-[#16102a] via-[#211640] to-[#120a22]",
+    accentColor: "#A78BFA",
   },
   {
     id: "energymatch",
     client: "SAVER COMPARISON",
     url: "savesmart.com/compare",
+    projectUrl: "/case-studies/zest",
+    previewImg: zestImg,
     title: "Save Smart. Compare Better. Reduce Utility Bills.",
     highlight: "Utility Comparison Engine",
     description: "Instant tariff matching for electricity, high-speed fiber broadband, and solar incentives.",
@@ -216,11 +244,14 @@ const LANDING_DATA: LandingCardData[] = [
     ],
     tag: "LEAD GENERATION",
     bgGradient: "from-[#1b1c11] via-[#2d2e14] to-[#14150c]",
+    accentColor: "#F59E0B",
   },
   {
     id: "equ",
     client: "EQU NUTRITION",
     url: "equhealth.com/programs",
+    projectUrl: "/case-studies/voltex",
+    previewImg: croImg,
     title: "Ready for real results? We’re your pocket nutrition coach.",
     highlight: "Lifestyle Transformation",
     description: "Dietician-led flexible dieting, metabolic health plans, and community accountability.",
@@ -231,6 +262,7 @@ const LANDING_DATA: LandingCardData[] = [
     ],
     tag: "E-COMMERCE & COACHING",
     bgGradient: "from-[#1e1310] via-[#321c16] to-[#160c09]",
+    accentColor: "#F43F5E",
   },
 ];
 
@@ -286,7 +318,7 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
       <div className="absolute -right-[2.5px] top-[65px] h-[28px] w-[2.5px] rounded-r-sm bg-gradient-to-b from-[#e8e8ea] via-[#c8c8d0] to-[#8a8a90] sm:top-[78px] sm:h-[34px] md:top-[90px] md:h-[38px]" />
 
       {/* Phone outer frame: titanium silver border */}
-      <div className="relative h-full w-full rounded-[24px] bg-gradient-to-b from-[#e8e8ea] via-[#c8c8d0] to-[#8a8a90] p-[2px] shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_50px_rgba(0,0,0,0.65)] sm:rounded-[28px] md:rounded-[32px]">
+      <div className="relative h-full w-full rounded-[24px] bg-gradient-to-b from-[#e8e8ea] via-[#c8c8d0] to-[#8a8a90] p-[2px] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_50px_rgba(0,0,0,0.65)] shadow-[0_12px_32px_rgba(20,20,20,0.08),0_2px_8px_rgba(20,20,20,0.04)] sm:rounded-[28px] md:rounded-[32px]">
         {/* Thin black bezel padding */}
         <div className="relative h-full w-full rounded-[22px] bg-[#0c0c0e] p-[3px] sm:rounded-[26px] sm:p-[4px] md:rounded-[30px] md:p-[4.5px]">
           {/* Inner screen radius with overflow hidden */}
@@ -331,124 +363,164 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
 }
 
 /* -------------------------------------------------------------
-   EMAIL CARD MOCKUP (Used for Emails tab)
+   EMAIL CARD MOCKUP (Full Authentic Email Design)
+   Matches Defiant Digital layout: Header, Nav, Hero, Offer, CTA, Footer
 ------------------------------------------------------------- */
 function EmailCard({ item }: { item: EmailCardData }) {
   const isDark = item.theme === "dark";
+  const heroSrc = typeof item.heroImg === "string" ? item.heroImg : item.heroImg?.src || "";
 
   return (
-    <div className="relative h-[340px] w-[210px] shrink-0 select-none overflow-hidden rounded-[26px] border border-white/10 bg-[#0d0d10] p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] sm:h-[400px] sm:w-[245px] md:h-[460px] md:w-[280px]">
-      <div
-        className={`relative flex h-full w-full flex-col justify-between overflow-hidden rounded-[20px] p-4 sm:p-5 ${
-          isDark
-            ? "bg-[#131318] text-white"
-            : "bg-[#FAFAFA] text-[#09090B]"
-        }`}
-      >
-        {/* Header: Sender & Tag */}
-        <div>
-          <div className="flex items-center justify-between border-b pb-2.5 border-current/10">
-            <span className="font-display text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider">
-              {item.sender}
-            </span>
-            <span
-              className="rounded-full px-2 py-0.5 text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-white"
-              style={{ backgroundColor: item.accentColor }}
-            >
-              {item.tag}
-            </span>
+    <div
+      className={`relative h-[430px] w-[260px] sm:h-[480px] sm:w-[290px] md:h-[530px] md:w-[320px] shrink-0 select-none overflow-hidden rounded-[24px] sm:rounded-[28px] border border-line dark:border-white/10 dark:shadow-[0_20px_50px_rgba(0,0,0,0.65)] shadow-[0_12px_32px_rgba(20,20,20,0.08),0_2px_8px_rgba(20,20,20,0.04)] flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02] p-4 sm:p-5 ${
+        isDark ? "bg-[#0B0B0F] text-[#F4F4F5]" : "bg-[#FFFFFF] text-[#141414]"
+      }`}
+    >
+      {/* Top Header & Subnav */}
+      <div>
+        <div className="flex items-center justify-between pb-2 border-b border-current/10">
+          <span className="font-display text-[11px] sm:text-[12px] font-black tracking-widest uppercase">
+            {item.sender}
+          </span>
+          <span
+            className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white"
+            style={{ backgroundColor: item.accentColor }}
+          >
+            {item.tag}
+          </span>
+        </div>
+
+        {/* Subnav links row */}
+        {item.subnav && item.subnav.length > 0 && (
+          <div className="flex items-center justify-between py-1.5 border-b border-current/10 text-[9px] sm:text-[10px] tracking-wider opacity-60 font-mono uppercase">
+            {item.subnav.map((link, idx) => (
+              <span key={idx}>
+                {link}
+                {idx < item.subnav!.length - 1 && <span className="mx-1">•</span>}
+              </span>
+            ))}
           </div>
+        )}
 
-          {/* Subject Line */}
-          <p className="mt-2 text-[11px] sm:text-[12px] font-medium opacity-70 truncate">
-            {item.subject}
-          </p>
+        {/* Subject Line Pill */}
+        <div className="mt-2.5 flex items-center gap-1.5 text-[10px] sm:text-[11px] font-medium opacity-70 truncate">
+          <span>{item.subject}</span>
+        </div>
 
-          {/* Hero Visual */}
-          <div className="relative mt-2.5 aspect-[16/10] w-full overflow-hidden rounded-[14px]">
-            <img
-              src={typeof item.heroImg === "string" ? item.heroImg : item.heroImg?.src || ""}
-              alt={item.heading}
-              className="h-full w-full object-cover"
-              loading="lazy"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-          </div>
+        {/* Hero Image */}
+        <div className="relative mt-2 aspect-[16/10] w-full overflow-hidden rounded-[14px] bg-neutral-900 border border-current/10">
+          <img
+            src={heroSrc}
+            alt={item.heading}
+            className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+            loading="lazy"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+        </div>
 
-          {/* Heading */}
-          <h4 className="mt-3 font-display text-[15px] sm:text-[18px] font-extrabold leading-[1.1] tracking-tight">
+        {/* Heading & Subheading */}
+        <div className="mt-3">
+          <h4 className="font-display text-[16px] sm:text-[18px] md:text-[20px] font-black leading-[1.12] tracking-tight">
             {item.heading}
           </h4>
-
-          {/* Subheading */}
           <p className="mt-1.5 text-[11px] sm:text-[12px] leading-relaxed opacity-75 line-clamp-2">
             {item.subheading}
           </p>
         </div>
+      </div>
 
-        {/* Action Button & Footer */}
-        <div className="mt-3 pt-2.5 border-t border-current/10">
-          <div
-            className="flex h-[36px] sm:h-[38px] w-full items-center justify-center rounded-full text-[11px] font-bold text-white shadow-md transition-transform duration-200 hover:scale-[1.02]"
-            style={{ backgroundColor: item.accentColor }}
-          >
-            <span>{item.ctaText}</span>
-          </div>
+      {/* Action Button & Email Footer */}
+      <div className="pt-2">
+        <div
+          className="flex h-[38px] sm:h-[42px] w-full items-center justify-center rounded-full text-[11px] sm:text-[12px] font-extrabold uppercase tracking-wider text-white shadow-md transition-transform duration-200 hover:scale-[1.02] cursor-pointer"
+          style={{ backgroundColor: item.accentColor }}
+        >
+          <span>{item.ctaText}</span>
         </div>
+        <p className="mt-2 text-center text-[9px] opacity-45 truncate font-mono">
+          {item.footerText || "Worldwide express tracked delivery • Unsubscribe"}
+        </p>
       </div>
     </div>
   );
 }
 
 /* -------------------------------------------------------------
-   LANDING PAGE CARD MOCKUP (Used for Landing Pages tab)
+   LANDING PAGE CARD MOCKUP (Full Responsive Site UI Mockup)
+   Matches Defiant Digital layout: Browser Chrome, Header, Hero, Stats, Link
 ------------------------------------------------------------- */
 function LandingPageCard({ item }: { item: LandingCardData }) {
+  const previewSrc = typeof item.previewImg === "string" ? item.previewImg : item.previewImg?.src || "";
+
   return (
-    <div className="relative h-[340px] w-[220px] shrink-0 select-none overflow-hidden rounded-[26px] border border-white/10 bg-[#0e0e12] shadow-[0_20px_50px_rgba(0,0,0,0.6)] sm:h-[400px] sm:w-[255px] md:h-[460px] md:w-[290px] flex flex-col">
-      {/* Browser chrome header with macOS-style dots */}
-      <div className="flex h-10 items-center justify-between border-b border-white/10 bg-[#16161c] px-4">
+    <a
+      href={item.projectUrl || "/case-studies"}
+      aria-label={`View landing page for ${item.client}`}
+      className="group relative h-[430px] w-[260px] sm:h-[480px] sm:w-[290px] md:h-[530px] md:w-[320px] shrink-0 select-none overflow-hidden rounded-[24px] sm:rounded-[28px] border border-line dark:border-white/10 dark:shadow-[0_20px_50px_rgba(0,0,0,0.65)] shadow-[0_12px_32px_rgba(20,20,20,0.08),0_2px_8px_rgba(20,20,20,0.04)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:border-fg/40 bg-[#0E0E12] text-white"
+    >
+      {/* Browser Chrome Header (macOS window controls + URL) */}
+      <div className="flex h-9 sm:h-10 shrink-0 items-center justify-between border-b border-white/10 bg-[#15151C] px-3.5 sm:px-4">
         <div className="flex items-center gap-1.5">
-          <div className="h-2.5 w-2.5 rounded-full bg-[#FF5F56]" />
-          <div className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
-          <div className="h-2.5 w-2.5 rounded-full bg-[#27C93F]" />
+          <div className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#FF5F56]" />
+          <div className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#FFBD2E]" />
+          <div className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#27C93F]" />
         </div>
-        <div className="flex h-6 items-center rounded-md bg-black/40 px-3 text-[10px] text-neutral-400 font-mono">
+        <div className="flex h-5 sm:h-6 items-center rounded-md bg-black/50 px-2 sm:px-3 text-[9px] sm:text-[10px] text-neutral-300 font-mono truncate max-w-[140px] sm:max-w-[170px]">
           https://{item.url}
         </div>
-        <div className="w-6" />
+        <ArrowUpRight size={13} className="text-neutral-400 group-hover:text-white transition-colors" />
       </div>
 
-      {/* Screen Content */}
-      <div
-        className={`flex-1 p-5 sm:p-6 flex flex-col justify-between bg-gradient-to-b ${item.bgGradient}`}
-      >
+      {/* Screen Content: Rich Website UI Layout */}
+      <div className={`flex-1 p-3.5 sm:p-4 flex flex-col justify-between bg-gradient-to-b ${item.bgGradient}`}>
         <div>
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-wider text-white uppercase backdrop-blur-md">
-            <Sparkles size={11} className="text-white" />
-            <span>{item.tag}</span>
+          {/* Mini website navbar */}
+          <div className="flex items-center justify-between border-b border-white/10 pb-2">
+            <span className="font-display text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-white">
+              {item.client}
+            </span>
+            <div className="flex items-center gap-1">
+              <span className="rounded-full px-2 py-0.5 text-[8px] font-bold uppercase tracking-wider text-black bg-white">
+                LIVE
+              </span>
+            </div>
           </div>
 
-          <p className="mt-3 text-[11px] font-semibold uppercase tracking-widest text-neutral-400">
-            {item.highlight}
-          </p>
+          {/* Full-width site UI hero preview */}
+          <div className="relative mt-2.5 aspect-[16/10] w-full overflow-hidden rounded-[12px] border border-white/10 bg-neutral-900 shadow-md">
+            <img
+              src={previewSrc}
+              alt={item.title}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="absolute bottom-2 left-2 right-2">
+              <span className="inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-0.5 text-[8px] font-semibold text-white/90 backdrop-blur-md">
+                <Sparkles size={9} style={{ color: item.accentColor }} />
+                <span>{item.tag}</span>
+              </span>
+            </div>
+          </div>
 
-          <h4 className="mt-2 font-display text-[18px] sm:text-[22px] font-extrabold leading-[1.12] tracking-tight text-white">
-            {item.title}
-          </h4>
-
-          <p className="mt-3 text-[12px] sm:text-[13px] leading-relaxed text-neutral-300">
-            {item.description}
-          </p>
+          {/* Headline & Subcopy */}
+          <div className="mt-2.5">
+            <h4 className="font-display text-[14px] sm:text-[16px] md:text-[17px] font-extrabold leading-[1.15] tracking-tight text-white line-clamp-2">
+              {item.title}
+            </h4>
+            <p className="mt-1 text-[10px] sm:text-[11px] leading-relaxed text-neutral-300 line-clamp-2">
+              {item.description}
+            </p>
+          </div>
 
           {/* Key Metrics Grid */}
-          <div className="mt-6 grid grid-cols-3 gap-2 border-t border-white/10 pt-4">
+          <div className="mt-3 grid grid-cols-3 gap-1.5 border-t border-white/10 pt-2.5">
             {item.stats.map((s, idx) => (
-              <div key={idx} className="rounded-xl bg-black/35 p-2 text-center border border-white/5">
-                <span className="block font-display text-[15px] sm:text-[17px] font-extrabold text-white">
+              <div key={idx} className="rounded-lg bg-black/40 p-1.5 text-center border border-white/5">
+                <span className="block font-display text-[12px] sm:text-[14px] font-black text-white" style={{ color: idx === 0 ? item.accentColor : undefined }}>
                   {s.value}
                 </span>
-                <span className="block text-[9px] sm:text-[10px] font-medium text-neutral-400 mt-0.5">
+                <span className="block text-[8px] font-medium text-neutral-400 mt-0.5 truncate">
                   {s.label}
                 </span>
               </div>
@@ -456,18 +528,18 @@ function LandingPageCard({ item }: { item: LandingCardData }) {
           </div>
         </div>
 
-        {/* Floating pill action */}
-        <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
-          <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">
-            {item.client}
+        {/* Bottom Interactive Link */}
+        <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-2.5">
+          <span className="text-[10px] font-mono font-medium text-neutral-400 uppercase tracking-wider">
+            {item.highlight}
           </span>
-          <div className="inline-flex items-center gap-1.5 text-[12px] font-bold text-white hover:text-neutral-300 hover:underline">
-            <span>View Funnel</span>
-            <ArrowUpRight size={14} />
+          <div className="inline-flex items-center gap-1 text-[11px] font-bold text-white group-hover:underline">
+            <span>View Site</span>
+            <ArrowUpRight size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -550,35 +622,56 @@ export function OurWorkSection() {
     dynamicItems.filter((i) => i.category === "emails" && i.isActive).length > 0
       ? dynamicItems
           .filter((i) => i.category === "emails" && i.isActive)
-          .map((i) => ({
-            id: i.id,
-            sender: i.sender || "BRAND",
-            subject: i.subject || "",
-            tag: i.tag || "FEATURED",
-            heroImg: i.heroImg || identityImg,
-            heading: i.heading || "",
-            subheading: i.subheading || "",
-            ctaText: i.ctaText || "LEARN MORE >",
-            accentColor: i.accentColor || "#FFFFFF",
-            theme: i.theme || "dark",
-          }))
+          .map((i, idx) => {
+            const fallback = EMAILS_DATA[idx % EMAILS_DATA.length]!;
+            const rawHero = i.heroImg;
+            const validHero =
+              rawHero && typeof rawHero === "string" && !rawHero.includes("case-studies")
+                ? rawHero
+                : fallback.heroImg;
+            return {
+              id: i.id,
+              sender: i.sender || fallback.sender,
+              subject: i.subject || fallback.subject,
+              tag: i.tag || fallback.tag,
+              subnav: i.subnav || fallback.subnav,
+              heroImg: validHero,
+              heading: i.heading || fallback.heading,
+              subheading: i.subheading || fallback.subheading,
+              ctaText: i.ctaText || fallback.ctaText,
+              accentColor: i.accentColor || fallback.accentColor,
+              theme: (i.theme as "dark" | "light") || fallback.theme,
+              footerText: i.footerText || fallback.footerText,
+            };
+          })
       : EMAILS_DATA;
 
   const landingItems: LandingCardData[] =
     dynamicItems.filter((i) => i.category === "landing" && i.isActive).length > 0
       ? dynamicItems
           .filter((i) => i.category === "landing" && i.isActive)
-          .map((i) => ({
-            id: i.id,
-            client: i.client || "CLIENT",
-            url: i.url || "",
-            title: i.title || "",
-            highlight: i.highlight || "",
-            description: i.description || "",
-            stats: Array.isArray(i.stats) && i.stats.length > 0 ? i.stats : [{ label: "Growth", value: "100%" }],
-            tag: i.tag || "CASE STUDY",
-            bgGradient: i.bgGradient || "from-[#111116] via-[#161622] to-[#0d0d12]",
-          }))
+          .map((i, idx) => {
+            const fallback = LANDING_DATA[idx % LANDING_DATA.length]!;
+            const rawPreview = i.previewImg;
+            const validPreview =
+              rawPreview && typeof rawPreview === "string" && !rawPreview.includes("case-studies")
+                ? rawPreview
+                : fallback.previewImg;
+            return {
+              id: i.id,
+              client: i.client || fallback.client,
+              url: i.url || fallback.url,
+              projectUrl: i.projectUrl || fallback.projectUrl,
+              previewImg: validPreview,
+              title: i.title || fallback.title,
+              highlight: i.highlight || fallback.highlight,
+              description: i.description || fallback.description,
+              stats: Array.isArray(i.stats) && i.stats.length > 0 ? i.stats : fallback.stats,
+              tag: i.tag || fallback.tag,
+              bgGradient: i.bgGradient || fallback.bgGradient,
+              accentColor: i.accentColor || fallback.accentColor,
+            };
+          })
       : LANDING_DATA;
 
   if (dynamicSettings?.sectionEnabled === false) return null;
