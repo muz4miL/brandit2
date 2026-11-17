@@ -680,12 +680,8 @@ body,
   perspective: 1000px;
 }
 
-.showcase-muted {
-  color: var(--muted-foreground) !important;
-}
-
-.showcase-row + .showcase-cta .showcase-muted {
-  color: var(--muted-foreground) !important;
+.showcase-secondary {
+  color: color-mix(in srgb, var(--foreground) 68%, var(--background)) !important;
 }
 
 @keyframes services-logo-left {

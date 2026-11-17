@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+"use client";
+
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowUpRight } from "lucide-react";
+import type { ShowcaseItemDoc, ShowcaseSettingsDoc } from "@/server/types";
 
 export type TabKey = "ads" | "emails" | "landing" | "ugc";
 
-export const SHOWCASE_DATA: Record<TabKey, string[]> = {
+const FALLBACK_VIDEOS: Record<TabKey, string[]> = {
   ads: [
     "/videos/ads/13014537_2160_3840_24fps.mp4",
     "/videos/ads/17084724_1080_1920_29fps.mp4",
@@ -18,12 +21,13 @@ export const SHOWCASE_DATA: Record<TabKey, string[]> = {
 
 interface PhoneCardProps {
   videoSrc: string;
+  posterUrl?: string | undefined;
   index: number;
   isDuplicate?: boolean;
   isSectionNear: boolean;
 }
 
-function PhoneCard({ videoSrc, index, isDuplicate, isSectionNear }: PhoneCardProps) {
+function PhoneCard({ videoSrc, posterUrl, index, isDuplicate, isSectionNear }: PhoneCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -34,7 +38,7 @@ function PhoneCard({ videoSrc, index, isDuplicate, isSectionNear }: PhoneCardPro
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!prefersReduced) {
         video.muted = true;
-        video.play().catch(() => {});
+        void video.play().catch(() => {});
       }
     } else {
       video.pause();
@@ -72,11 +76,12 @@ function PhoneCard({ videoSrc, index, isDuplicate, isSectionNear }: PhoneCardPro
             {/* Video element */}
             <video
               ref={videoRef}
-              src={`${videoSrc}#t=0.1`}
+              src={videoSrc}
+              poster={posterUrl}
               muted
               loop
               playsInline
-              preload={isSectionNear ? "metadata" : "none"}
+              preload="metadata"
               disablePictureInPicture
               controls={false}
               draggable={false}
@@ -90,8 +95,8 @@ function PhoneCard({ videoSrc, index, isDuplicate, isSectionNear }: PhoneCardPro
   );
 }
 
-const TABS: { id: TabKey; label: string; active?: boolean }[] = [
-  { id: "ads", label: "Ads Creative", active: true },
+const TABS: { id: TabKey; label: string }[] = [
+  { id: "ads", label: "Ads Creative" },
   { id: "emails", label: "Emails" },
   { id: "landing", label: "Landing Pages" },
   { id: "ugc", label: "UGC" },
@@ -102,6 +107,33 @@ export default function CreativeShowcase() {
   const [tooltipTab, setTooltipTab] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [isSectionNear, setIsSectionNear] = useState(false);
+  const [items, setItems] = useState<ShowcaseItemDoc[]>([]);
+  const [settings, setSettings] = useState<ShowcaseSettingsDoc | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/showcase", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Unable to load showcase");
+        return response.json() as Promise<{
+          items: ShowcaseItemDoc[];
+          settings: ShowcaseSettingsDoc;
+        }>;
+      })
+      .then((data) => {
+        if (!cancelled) {
+          setItems(data.items);
+          setSettings(data.settings);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setItems([]);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -118,30 +150,48 @@ export default function CreativeShowcase() {
     return () => observer.disconnect();
   }, []);
 
-  const activeVideos = SHOWCASE_DATA[activeTab] || SHOWCASE_DATA.ads;
+  const availableTabs = TABS;
+  const safeActiveTab = availableTabs.some((tab) => tab.id === activeTab)
+    ? activeTab
+    : (availableTabs[0]?.id ?? "ads");
+  const activeItems = items.filter((item) => item.category === safeActiveTab);
+  const activeVideos: { videoUrl: string; posterUrl?: string }[] = activeItems.length
+    ? activeItems
+        .filter((item) => item.videoUrl)
+        .map((item) => ({ videoUrl: item.videoUrl!, posterUrl: item.posterUrl }))
+    : (FALLBACK_VIDEOS[safeActiveTab].length ? FALLBACK_VIDEOS[safeActiveTab] : FALLBACK_VIDEOS.ads).map(
+        (videoUrl) => ({ videoUrl }),
+      );
+  const marqueeVideos = Array.from(
+    { length: Math.max(6, activeVideos.length * 2) },
+    (_, index) => activeVideos[index % activeVideos.length]!,
+  );
+
+  if (settings?.sectionEnabled === false) return null;
 
   return (
     <section
       ref={sectionRef}
       id="creative"
       aria-label="Our work"
-      className="relative w-full overflow-x-hidden bg-[#000000] pt-16 pb-16 md:pt-24 md:pb-20 select-none"
+      className="relative w-full select-none overflow-x-hidden bg-panel pb-16 pt-16 text-fg md:pb-20 md:pt-24"
+      style={{ "--showcase-duration": `${Math.max(12, settings?.marqueeSpeedSeconds ?? 32)}s` } as CSSProperties}
     >
       <div className="mx-auto flex max-w-[1440px] flex-col items-center px-4 text-center">
         {/* Pill badge at top */}
         <div className="inline-flex h-10 items-center justify-center rounded-full border border-white/[0.08] bg-gradient-to-b from-[#1a1a1a] to-[#050505] px-6 shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.2)] md:h-[54px] md:w-[336px] md:px-0">
-          <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-white/90 md:text-[11px]">
-            OUR WORK
+          <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-fg/90 md:text-[11px]">
+            {settings?.sectionBadge ?? "OUR WORK"}
           </span>
         </div>
 
         {/* Heading */}
         <h2 className="mt-12 flex flex-col items-center text-center md:mt-16">
-          <span className="font-display text-[clamp(44px,7vw,96px)] font-bold tracking-[-0.04em] text-[#d4d4d4] leading-[0.95]">
-            Creative that
+          <span className="font-display text-[clamp(44px,7vw,96px)] font-bold leading-[0.95] tracking-[-0.04em] text-fg">
+            {settings?.headingPrefix ?? "Creative that"}
           </span>
-          <span className="font-serif text-[clamp(48px,7.5vw,104px)] font-normal italic tracking-[-0.03em] text-[#e5e5e5] leading-[0.95]">
-            Converts
+          <span className="font-serif text-[clamp(48px,7.5vw,104px)] font-normal italic leading-[0.95] tracking-[-0.03em] text-fg">
+            {settings?.headingItalic ?? "Converts"}
           </span>
         </h2>
 
@@ -149,11 +199,10 @@ export default function CreativeShowcase() {
         <div
           role="tablist"
           aria-label="Creative categories"
-          className="mt-10 inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-[#0b0b0d] p-1.5 md:mt-12 md:gap-2 md:p-2"
+          className="mt-10 inline-flex items-center gap-1.5 rounded-full border border-line bg-surface p-1.5 md:mt-12 md:gap-2 md:p-2"
         >
-          {TABS.map((tab) => {
-            const isAds = tab.id === "ads";
-            const isActive = activeTab === tab.id;
+          {availableTabs.map((tab) => {
+            const isActive = safeActiveTab === tab.id;
 
             return (
               <div key={tab.id} className="relative">
@@ -161,31 +210,27 @@ export default function CreativeShowcase() {
                   type="button"
                   role="tab"
                   aria-selected={isActive}
-                  aria-disabled={!isAds}
+                  aria-disabled={false}
                   onClick={(e) => {
-                    if (!isAds) {
-                      e.preventDefault();
-                      setTooltipTab(tab.id);
-                    } else {
-                      setActiveTab("ads");
-                      setTooltipTab(null);
-                    }
+                    e.preventDefault();
+                    setActiveTab(tab.id);
+                    setTooltipTab(null);
                   }}
                   onMouseEnter={() => {
-                    if (!isAds) setTooltipTab(tab.id);
+                    setTooltipTab(null);
                   }}
                   onMouseLeave={() => setTooltipTab(null)}
                   className={`relative rounded-full px-5 py-2 text-[14px] md:px-7 md:py-2.5 md:text-[15px] transition-colors ${
                     isActive
-                      ? "bg-[#d4d4d4] font-semibold text-[#111111]"
-                      : "cursor-not-allowed bg-[#050505] font-medium text-white/90 hover:text-white"
+                      ? "bg-primary font-semibold text-primary-foreground"
+                      : "showcase-secondary bg-surface-2 font-medium hover:text-fg"
                   }`}
                 >
                   {tab.label}
                 </button>
 
                 {/* Coming Soon Tooltip for inactive tabs */}
-                {!isAds && tooltipTab === tab.id && (
+                {false && tooltipTab === tab.id && (
                   <div
                     role="tooltip"
                     className="pointer-events-none absolute -top-10 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/10 bg-[#222226] px-2.5 py-1 text-[11px] font-medium text-white shadow-lg animate-in fade-in zoom-in-95 duration-150"
@@ -205,10 +250,11 @@ export default function CreativeShowcase() {
         <div className="showcase-track flex w-max will-change-transform">
           {/* Set 1: primary accessible phones */}
           <div className="flex shrink-0 items-center gap-8 pr-8 md:gap-12 md:pr-12">
-            {activeVideos.map((videoSrc, idx) => (
+            {marqueeVideos.map((video, idx) => (
               <PhoneCard
                 key={`s1-${idx}`}
-                videoSrc={videoSrc}
+                videoSrc={video.videoUrl}
+                posterUrl={video.posterUrl}
                 index={idx}
                 isSectionNear={isSectionNear}
               />
@@ -220,10 +266,11 @@ export default function CreativeShowcase() {
             className="flex shrink-0 items-center gap-8 pr-8 md:gap-12 md:pr-12"
             aria-hidden="true"
           >
-            {activeVideos.map((videoSrc, idx) => (
+            {marqueeVideos.map((video, idx) => (
               <PhoneCard
                 key={`s2-${idx}`}
-                videoSrc={videoSrc}
+                videoSrc={video.videoUrl}
+                posterUrl={video.posterUrl}
                 index={idx}
                 isDuplicate
                 isSectionNear={isSectionNear}
@@ -234,13 +281,13 @@ export default function CreativeShowcase() {
       </div>
 
       {/* Bottom CTA Bar */}
-      <div className="mx-auto mt-14 flex w-full max-w-[1100px] flex-col items-center justify-between gap-8 px-4 md:mt-20 md:flex-row md:gap-6">
+      <div className="showcase-cta mx-auto mt-14 flex w-full max-w-[1100px] flex-col items-center justify-between gap-8 px-4 md:mt-20 md:flex-row md:gap-6">
         {/* Left: "Want more inspiration?" */}
         <div className="text-center md:text-right">
-          <p className="font-serif text-[28px] not-italic leading-[1.05] tracking-tight text-[#e5e5e5] md:text-[34px]">
+          <p className="font-serif text-[28px] not-italic leading-[1.05] tracking-tight text-fg md:text-[34px]">
             Want more
             <br />
-            inspiration?
+            <span className="showcase-secondary">inspiration?</span>
           </p>
         </div>
 
@@ -279,11 +326,11 @@ export default function CreativeShowcase() {
               />
             </svg>
             {/* 4.9 | 5★ badge */}
-            <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.08] bg-[#111114] px-2.5 py-0.5 text-[11px] font-semibold text-white/90">
+            <span className="inline-flex items-center gap-1 rounded-full border border-line bg-surface px-2.5 py-0.5 text-[11px] font-semibold text-fg/90">
               4.9 | 5<span className="text-[#FBBF24]">★</span>
             </span>
           </div>
-          <p className="mt-1.5 text-[13px] text-white/85 md:text-[14px]">
+          <p className="showcase-secondary mt-1.5 text-[13px] md:text-[14px]">
             Discover why 300+ Brands Choose Brand It.
           </p>
         </div>
