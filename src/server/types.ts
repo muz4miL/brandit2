@@ -417,11 +417,13 @@ export interface SpCoreServiceDoc {
   _id?: ObjectId | string;
   slug: string;
   title: string;
+  serifLine?: string;
   includedIn: string;
   summary: string;
   bullets: string[];
   imageUrl: string;
   imageAlt: string;
+  enquireHref?: string;
   sortOrder: number;
   visible: boolean;
   createdAt: Date;
@@ -609,4 +611,3 @@ export interface ShowcaseSettingsDoc {
   sectionEnabled: boolean;
   updatedAt: string;
 }
-

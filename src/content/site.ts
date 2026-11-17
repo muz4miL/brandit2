@@ -245,6 +245,100 @@ export interface ServiceDetail {
   proofCaseStudyId?: string;
 }
 
+export interface CanonicalService {
+  id: string;
+  slug: string;
+  title: string;
+  serifLine: string;
+  summary: string;
+  bullets: string[];
+  image: any;
+  enquireHref: string;
+}
+
+export const canonicalServices: CanonicalService[] = [
+  {
+    id: "meta-instagram-ads",
+    slug: "meta-ads",
+    title: "Meta",
+    serifLine: "Ads",
+    summary: "Turn attention into qualified demand with disciplined Meta and Instagram campaigns built around your offer.",
+    bullets: ["Audience and offer research", "Campaign architecture and testing", "Creative direction and iteration", "Plain-language performance reporting"],
+    image: serviceAds,
+    enquireHref: "/contact?service=meta-ads",
+  },
+  {
+    id: "google-youtube-ads",
+    slug: "google-ads",
+    title: "Google & YouTube",
+    serifLine: "Ads",
+    summary: "Capture high-intent searches and video demand with campaigns that connect spend to revenue.",
+    bullets: ["Search and YouTube account structure", "Keyword and audience strategy", "Conversion tracking and optimisation", "Weekly priorities tied to performance"],
+    image: serviceIdentity,
+    enquireHref: "/contact?service=google-ads",
+  },
+  {
+    id: "tiktok-vertical-video",
+    slug: "tiktok-vertical-video",
+    title: "TikTok &",
+    serifLine: "Vertical Video",
+    summary: "Build a steady stream of platform-native vertical creative that earns attention without feeling like an advert.",
+    bullets: ["Concepts made for the feed", "Hooks, scripts, and shot lists", "Editing for retention and clarity", "Creative testing roadmap"],
+    image: serviceSocial,
+    enquireHref: "/contact?service=tiktok-vertical-video",
+  },
+  {
+    id: "performance-creative",
+    slug: "performance-creative",
+    title: "Performance",
+    serifLine: "Creative",
+    summary: "Give every campaign stronger assets with creative designed to make the value obvious and the next step easy.",
+    bullets: ["Ad concepts and visual systems", "Copy and design variations", "Landing-to-ad message alignment", "Iteration based on real results"],
+    image: zest,
+    enquireHref: "/contact?service=performance-creative",
+  },
+  {
+    id: "cro-landing-pages",
+    slug: "cro-landing-pages",
+    title: "CRO & Landing",
+    serifLine: "Pages",
+    summary: "Remove friction from the journey between click and enquiry with focused, measurable conversion improvements.",
+    bullets: ["Conversion audits and prioritisation", "High-intent landing page structure", "Clearer proof, offers, and CTAs", "Testing plan for continuous gains"],
+    image: rise,
+    enquireHref: "/contact?service=cro-landing-pages",
+  },
+  {
+    id: "email-sms-marketing",
+    slug: "email-sms",
+    title: "Email & SMS",
+    serifLine: "Marketing",
+    summary: "Turn owned attention into repeat revenue with useful, timely email and SMS journeys.",
+    bullets: ["Welcome and nurture journeys", "Campaign planning and copy", "Segmentation and personalisation", "Reporting that improves each send"],
+    image: servicePackages,
+    enquireHref: "/contact?service=email-sms",
+  },
+  {
+    id: "web-design-development",
+    slug: "web-design-development",
+    title: "Web Design &",
+    serifLine: "Development",
+    summary: "Create a fast, credible digital home that makes your offer clear and guides the right visitors to act.",
+    bullets: ["Conversion-led information architecture", "Responsive visual design", "Fast, accessible implementation", "Analytics and SEO-ready foundations"],
+    image: rise,
+    enquireHref: "/contact?service=web-design-development",
+  },
+  {
+    id: "branding-visual-direction",
+    slug: "branding-visual-direction",
+    title: "Branding &",
+    serifLine: "Visual Direction",
+    summary: "Make the business feel as credible as the ambition with a recognisable visual system built to scale.",
+    bullets: ["Positioning and visual direction", "Identity and design language", "Campaign-ready brand assets", "Practical usage guidance"],
+    image: serviceIdentity,
+    enquireHref: "/contact?service=branding-visual-direction",
+  },
+];
+
 export const services: ServiceDetail[] = [
   {
     id: "marketing-consultancy",
