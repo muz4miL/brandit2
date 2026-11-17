@@ -6,7 +6,6 @@ import { BrandIntro } from "@/components/site/BrandIntro";
 import { ServiceCards } from "@/components/site/ServiceCards";
 import { WhoItsFor } from "@/components/site/WhoItsFor";
 import { OurWorkSection } from "@/components/site/OurWorkSection";
-import CreativeShowcase from "@/components/CreativeShowcase";
 import { Leadership } from "@/components/site/Leadership";
 import Testimonials from "@/components/site/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -30,7 +29,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#08080B] text-white">
+    <div className="min-h-screen bg-bg text-fg">
       {/* Navigation */}
       <Header />
 
@@ -52,13 +51,10 @@ export default function HomePage() {
         {/* Section 5 — Packages (Kickstart, Accelerate, Authority) */}
         <WhoItsFor />
 
-        {/* Section 6 — Selected Proof / Our Work */}
+        {/* Section 6 — Selected Proof / Creative Library */}
         <OurWorkSection />
 
-        {/* Section 7 — Creative Library */}
-        <CreativeShowcase />
-
-        {/* Section 8 — Executive Leadership */}
+        {/* Section 7 — Executive Leadership */}
         <Leadership />
 
         {/* Section 9 — Testimonials */}

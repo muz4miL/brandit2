@@ -267,8 +267,12 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
 
   const handleLoadedMetadata = () => {
     const video = videoRef.current;
-    if (video && video.duration) {
-      video.currentTime = (index * 1.8 + (isDuplicate ? 1.1 : 0)) % video.duration;
+    if (video && video.duration && !isNaN(video.duration) && video.duration > 0) {
+      try {
+        video.currentTime = (index * 1.8 + (isDuplicate ? 1.1 : 0)) % video.duration;
+      } catch {
+        // Ignore seek error if browser restricts before play
+      }
     }
   };
 
@@ -292,6 +296,17 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
               <div className="h-[3.5px] w-[3.5px] rounded-full bg-[#0d1b2a] shadow-[inset_0_0_2px_#415a77] ring-1 ring-[#1b263b]/70 md:h-[4.5px] md:w-[4.5px]" />
             </div>
 
+            {/* Poster fallback image rendered behind video - ALWAYS VISIBLE FROM MILLISECOND 0 */}
+            {item.poster && (
+              <img
+                src={item.poster}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-full w-full object-cover z-0 pointer-events-none"
+                loading="eager"
+              />
+            )}
+
             {/* Video element with instant poster & faststart */}
             <video
               ref={videoRef}
@@ -306,7 +321,7 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
               controls={false}
               draggable={false}
               onLoadedMetadata={handleLoadedMetadata}
-              className="h-full w-full object-cover transform-gpu"
+              className="relative z-10 h-full w-full object-cover transform-gpu"
             />
           </div>
         </div>
@@ -509,14 +524,26 @@ export function OurWorkSection() {
     dynamicItems.filter((i) => i.category === "ads" && i.isActive).length > 0
       ? dynamicItems
           .filter((i) => i.category === "ads" && i.isActive)
-          .map((i) => ({ video: i.videoUrl, poster: i.posterUrl || "" }))
+          .map((i, idx) => {
+            const fallback = ADS_VIDEOS[idx % ADS_VIDEOS.length]!;
+            return {
+              video: i.videoUrl || fallback.video,
+              poster: i.posterUrl || fallback.poster,
+            };
+          })
       : ADS_VIDEOS;
 
   const ugcItems: VideoMediaItem[] =
     dynamicItems.filter((i) => i.category === "ugc" && i.isActive).length > 0
       ? dynamicItems
           .filter((i) => i.category === "ugc" && i.isActive)
-          .map((i) => ({ video: i.videoUrl, poster: i.posterUrl || "" }))
+          .map((i, idx) => {
+            const fallback = UGC_VIDEOS[idx % UGC_VIDEOS.length]!;
+            return {
+              video: i.videoUrl || fallback.video,
+              poster: i.posterUrl || fallback.poster,
+            };
+          })
       : UGC_VIDEOS;
 
   const emailItems: EmailCardData[] =
@@ -586,7 +613,7 @@ export function OurWorkSection() {
         <div
           role="tablist"
           aria-label="Work categories"
-          className="mt-8 sm:mt-10 lg:mt-12 inline-flex items-center gap-1 sm:gap-2 rounded-full border border-line bg-surface p-1.5 sm:p-2 backdrop-blur-md"
+          className="mt-8 sm:mt-10 lg:mt-12 inline-flex items-center gap-1 sm:gap-2 rounded-full border border-line bg-surface p-1.5 sm:p-2 backdrop-blur-md shadow-sm"
         >
           {TABS.map((tab) => {
             const isActive = activeTab === tab.id;
@@ -598,10 +625,10 @@ export function OurWorkSection() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-[13px] sm:text-[15px] font-medium transition-all duration-300 ${
+                className={`relative rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-[13px] sm:text-[15px] font-semibold transition-all duration-200 cursor-pointer select-none ${
                   isActive
-                    ? "bg-primary text-primary-foreground font-semibold shadow-md"
-                    : "text-muted hover:text-fg hover:bg-surface-2"
+                    ? "bg-primary text-primary-foreground shadow-md"
+                    : "text-muted-foreground hover:text-fg hover:bg-surface-2"
                 }`}
               >
                 {tab.label}
@@ -732,7 +759,7 @@ export function OurWorkSection() {
           <p className="font-display text-[26px] sm:text-[30px] font-bold leading-[1.05] tracking-tight text-fg">
             Want more
           </p>
-          <p className="font-serif text-[28px] sm:text-[34px] italic font-normal leading-[1.05] tracking-tight text-muted mt-0.5">
+          <p className="font-serif text-[28px] sm:text-[34px] italic font-normal leading-[1.05] tracking-tight text-fg/80 dark:text-neutral-300 mt-0.5">
             inspiration?
           </p>
         </div>
@@ -741,7 +768,7 @@ export function OurWorkSection() {
         <a
           href="/case-studies#creative-library"
           aria-label="Go to Creative Library"
-          className="group inline-flex h-[56px] sm:h-[62px] items-center justify-center gap-3 rounded-full bg-primary px-8 sm:px-10 text-[16px] sm:text-[18px] font-bold text-primary-foreground transition-all duration-300 hover:opacity-90 hover:scale-105 shadow-xl select-none"
+          className="group inline-flex h-[56px] sm:h-[62px] items-center justify-center gap-3 rounded-full bg-primary px-8 sm:px-10 text-[16px] sm:text-[18px] font-bold text-primary-foreground transition-all duration-300 hover:opacity-90 hover:scale-105 shadow-xl select-none cursor-pointer"
         >
           <span>Go to Creative Library</span>
           <ArrowUpRight
@@ -777,7 +804,7 @@ export function OurWorkSection() {
               4.9 | 5<span className="text-[#FBBF24]">★</span>
             </span>
           </div>
-          <p className="mt-1.5 text-[13px] text-muted">
+          <p className="mt-1.5 text-[13px] text-muted-foreground font-medium">
             Discover why 14+ Businesses Choose brandit.
           </p>
         </div>
