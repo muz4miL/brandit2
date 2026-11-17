@@ -181,7 +181,14 @@ export default function AboutExperience({ stats, members }: Props) {
       {/* ─── HERO ─── */}
       <section className={styles.hero} data-hero aria-labelledby="about-title">
         <picture className={styles.heroArt} data-hero-art>
-          <img src="/aboutHero.jfif" alt="" width={1366} height={768} fetchPriority="high" />
+          <img
+            src="/aboutHero.jfif"
+            alt="brandit. digital creative agency - strategic thinking and brand execution"
+            title="brandit. About Story"
+            width={1366}
+            height={768}
+            fetchPriority="high"
+          />
         </picture>
         <div className={styles.heroShade} />
         <div className={styles.heroInner}>
@@ -307,7 +314,8 @@ export default function AboutExperience({ stats, members }: Props) {
                             <div className={`${styles.floatWrapper} ${isPaused ? styles.paused : ""}`}>
                               <img
                                 src={item.image}
-                                alt=""
+                                alt={`brandit. principle - ${item.label}`}
+                                title={`brandit. Approach: ${item.label}`}
                                 width={240}
                                 height={240}
                                 className={styles.sculptureImg}
@@ -345,7 +353,8 @@ export default function AboutExperience({ stats, members }: Props) {
                 <div className={`${styles.floatWrapper} ${isPaused ? styles.paused : ""}`}>
                   <img
                     src={selected.image}
-                    alt=""
+                    alt={`brandit. principle - ${selected.label}`}
+                    title={`brandit. Strategy: ${selected.label}`}
                     width={300}
                     height={300}
                     className={styles.sculptureImg}
@@ -379,7 +388,8 @@ export default function AboutExperience({ stats, members }: Props) {
                   <>
                     <img
                       src={member.image}
-                      alt={member.name}
+                      alt={`${member.name} — ${member.role} at brandit.`}
+                      title={`${member.name} — ${member.role}`}
                       className="h-full w-full object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
                       loading="lazy"
                     />

@@ -67,7 +67,6 @@ export function OnboardingSection({
   const displayChecklist = checklistItems && checklistItems.length > 0 ? checklistItems : DEFAULT_CHECKLIST_ITEMS;
   const displayTimeline = timelineSteps && timelineSteps.length > 0 ? timelineSteps : DEFAULT_TIMELINE_STEPS;
 
-  // Scroll tracking across the timeline
   const { scrollYProgress } = useScroll({
     target: timelineRef,
     offset: ["start 60%", "end 60%"],
@@ -82,7 +81,6 @@ export function OnboardingSection({
   const progressScaleY = shouldReduceMotion ? scrollYProgress : smoothProgress;
   const cometTopPercent = useTransform(progressScaleY, (v) => `${Math.max(0, Math.min(100, v * 100))}%`);
 
-  // Calculate active step based on scroll progress
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
       const stepCount = displayTimeline.length || 4;
@@ -94,30 +92,41 @@ export function OnboardingSection({
 
   const currentActiveIndex = hoveredStep !== null ? hoveredStep : activeStep;
 
-  // Map 4 phases to the 3 checklist items
-  // Phase 0 -> Item 0 | Phase 1 & 2 -> Item 1 | Phase 3 -> Item 2
   const activeChecklistIndex =
     currentActiveIndex === 0 ? 0 : currentActiveIndex <= 2 ? 1 : 2;
 
   return (
     <section
-      className="relative py-24 sm:py-32 bg-[#060608] border-t border-b border-white/[0.05] select-none"
-      style={{ overflowX: "clip" }}
+      className="relative py-24 sm:py-32 select-none"
+      style={{
+        background: "var(--section-bg)",
+        borderTop: "1px solid var(--section-border)",
+        borderBottom: "1px solid var(--section-border)",
+        overflowX: "clip",
+      }}
     >
-      {/* 1. Ambient luxury gold radial glows */}
+      {/* Ambient gold radial glows — dark mode only */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 right-1/4 h-[550px] w-[550px] rounded-full bg-[#D4AF37]/[0.035] blur-[160px]"
+        className="dark:block hidden pointer-events-none absolute -top-40 right-1/4 h-[550px] w-[550px] rounded-full blur-[160px]"
+        style={{ background: "rgba(209,173,105,0.035)" }}
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 left-10 h-[500px] w-[500px] rounded-full bg-[#B8860B]/[0.03] blur-[150px]"
+        className="dark:block hidden pointer-events-none absolute -bottom-40 left-10 h-[500px] w-[500px] rounded-full blur-[150px]"
+        style={{ background: "rgba(184,134,11,0.03)" }}
+      />
+      {/* Light mode warm ambient */}
+      <div
+        aria-hidden="true"
+        className="dark:hidden pointer-events-none absolute -top-40 right-1/4 h-[550px] w-[550px] rounded-full blur-[180px]"
+        style={{ background: "rgba(152,113,59,0.06)" }}
       />
 
-      {/* 2. 3% Film Grain SVG Noise Filter */}
+      {/* Film Grain */}
       <svg
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.03] mix-blend-overlay"
+        className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.025] mix-blend-overlay"
       >
         <filter id="noiseFilter-onboarding">
           <feTurbulence
@@ -132,28 +141,38 @@ export function OnboardingSection({
 
       <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* LEFT COLUMN: Sticky storytelling panel */}
+          {/* LEFT COLUMN */}
           <div className="lg:col-span-5 lg:sticky lg:top-[112px] lg:self-start space-y-6">
             <div>
-              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#E6B93C] block">
+              <span
+                className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] block"
+                style={{ color: "var(--gold)" }}
+              >
                 CLIENT ONBOARDING
               </span>
 
-              <h2 className="mt-3 font-display text-[clamp(28px,3.8vw,46px)] font-extrabold tracking-[-0.04em] text-[#F5F2EC] leading-[1.1]">
+              <h2
+                className="mt-3 font-display text-[clamp(28px,3.8vw,46px)] font-extrabold tracking-[-0.04em] leading-[1.1]"
+                style={{ color: "var(--foreground)" }}
+              >
                 The first two weeks{" "}
                 <span
-                  className={`${instrumentSerif.className} italic font-normal text-[#F5F2EC] text-[1.12em] tracking-normal`}
+                  className={`${instrumentSerif.className} italic font-normal text-[1.12em] tracking-normal`}
+                  style={{ color: "var(--gold)" }}
                 >
                   set the tone
                 </span>
               </h2>
 
-              <p className="mt-4 text-[14.5px] sm:text-[15.5px] leading-relaxed text-neutral-400">
+              <p
+                className="mt-4 text-[14.5px] sm:text-[15.5px] leading-relaxed"
+                style={{ color: "var(--muted-foreground)" }}
+              >
                 No guesswork. No black holes. A clear plan from day one.
               </p>
             </div>
 
-            {/* Checklist Items reacting dynamically to active phase */}
+            {/* Checklist Items */}
             <div className="pt-2 space-y-3.5">
               {displayChecklist.slice(0, 3).map((item, i) => {
                 const isItemActive = activeChecklistIndex === i;
@@ -167,11 +186,19 @@ export function OnboardingSection({
                     }`}
                   >
                     <div
-                      className={`mt-0.5 h-6 w-6 flex items-center justify-center rounded-full shrink-0 transition-all duration-300 ${
+                      className="mt-0.5 h-6 w-6 flex items-center justify-center rounded-full shrink-0 transition-all duration-300"
+                      style={
                         isItemActive
-                          ? "bg-[#D4AF37]/20 border border-[#D4AF37]/60 shadow-[0_0_12px_rgba(212,175,55,0.35)]"
-                          : "bg-white/[0.04] border border-white/10"
-                      }`}
+                          ? {
+                              background: "var(--gold-bg)",
+                              border: "1px solid var(--gold-border)",
+                              boxShadow: "0 0 12px var(--gold-bg)",
+                            }
+                          : {
+                              background: "var(--section-elevated)",
+                              border: "1px solid var(--section-border)",
+                            }
+                      }
                     >
                       <svg
                         width="13"
@@ -182,7 +209,7 @@ export function OnboardingSection({
                       >
                         <motion.path
                           d="M4 12.5L9.5 18L20 6.5"
-                          stroke={isItemActive ? "#D4AF37" : "#A1A1AA"}
+                          stroke={isItemActive ? "var(--gold)" : "var(--muted-foreground)"}
                           strokeWidth="2.75"
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -204,16 +231,14 @@ export function OnboardingSection({
 
                     <div>
                       <h3
-                        className={`font-display font-bold text-[14.5px] leading-snug transition-colors duration-300 ${
-                          isItemActive ? "text-white" : "text-neutral-400"
-                        }`}
+                        className="font-display font-bold text-[14.5px] leading-snug transition-colors duration-300"
+                        style={{ color: isItemActive ? "var(--foreground)" : "var(--muted-foreground)" }}
                       >
                         {item.title}
                       </h3>
                       <p
-                        className={`mt-0.5 text-[13px] leading-relaxed transition-colors duration-300 ${
-                          isItemActive ? "text-neutral-300" : "text-neutral-500"
-                        }`}
+                        className="mt-0.5 text-[13px] leading-relaxed transition-colors duration-300"
+                        style={{ color: isItemActive ? "var(--muted-foreground)" : "var(--muted-foreground)", opacity: isItemActive ? 1 : 0.6 }}
                       >
                         {item.desc}
                       </p>
@@ -224,9 +249,12 @@ export function OnboardingSection({
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Scrolling phase cards with gold timeline track */}
+          {/* RIGHT COLUMN */}
           <div className="lg:col-span-7 space-y-4">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#E6B93C] block mb-6">
+            <span
+              className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] block mb-6"
+              style={{ color: "var(--gold)" }}
+            >
               WHAT HAPPENS WHEN YOU JOIN
             </span>
 
@@ -234,40 +262,48 @@ export function OnboardingSection({
               {/* Unfilled vertical track */}
               <div
                 aria-hidden="true"
-                className="absolute left-0 top-6 bottom-6 w-[2px] -translate-x-1/2 bg-white/[0.08] pointer-events-none"
+                className="absolute left-0 top-6 bottom-6 w-[2px] -translate-x-1/2 pointer-events-none"
+                style={{ background: "var(--section-border)" }}
               />
 
-              {/* Faint 6px blur glow duplicate underneath filled portion */}
+              {/* Blur glow duplicate */}
               <motion.div
                 aria-hidden="true"
                 style={{
                   scaleY: progressScaleY,
                   transformOrigin: "top",
-                  background: "var(--gold-metal)",
+                  background: "var(--gold)",
                 }}
                 className="absolute left-0 top-6 bottom-6 w-[2px] -translate-x-1/2 blur-[6px] opacity-70 pointer-events-none"
               />
 
-              {/* Progress/filled portion using --gold-metal with glow */}
+              {/* Filled progress portion */}
               <motion.div
                 aria-hidden="true"
                 style={{
                   scaleY: progressScaleY,
                   transformOrigin: "top",
-                  background: "var(--gold-metal)",
+                  background: "var(--gold)",
+                  boxShadow: "0 0 14px var(--gold-border), 0 0 22px var(--gold-bg)",
                 }}
-                className="absolute left-0 top-6 bottom-6 w-[2px] -translate-x-1/2 shadow-[0_0_14px_rgba(212,175,55,0.7),0_0_22px_rgba(212,175,55,0.4)] pointer-events-none z-10"
+                className="absolute left-0 top-6 bottom-6 w-[2px] -translate-x-1/2 pointer-events-none z-10"
               />
 
-              {/* Glowing gold "comet" dot riding the leading edge */}
+              {/* Comet dot */}
               <motion.div
                 aria-hidden="true"
+                className="absolute left-0 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full border-2 pointer-events-none z-30 transition-transform duration-100"
                 style={{
-                  top: cometTopPercent,
+                  top: cometTopPercent as any,
+                  background: "var(--section-surface)",
+                  borderColor: "var(--gold)",
+                  boxShadow: "0 0 16px var(--gold), 0 0 24px var(--gold-bg)",
                 }}
-                className="absolute left-0 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#FFF1B8] border-2 border-[#D4AF37] shadow-[0_0_16px_rgba(212,175,55,0.95),0_0_24px_rgba(212,175,55,0.6)] pointer-events-none z-30 transition-transform duration-100"
               >
-                <span className="animate-ping absolute inset-0 rounded-full bg-[#E6B93C] opacity-75" />
+                <span
+                  className="animate-ping absolute inset-0 rounded-full opacity-75"
+                  style={{ background: "var(--gold)" }}
+                />
               </motion.div>
 
               {displayTimeline.map((step, index) => (

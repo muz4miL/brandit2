@@ -73,6 +73,7 @@ export const getSiteContentFn = createServerFn({ method: "GET" }).handler(async 
             whatsappLink: settingsDoc.whatsappLink,
             socialLinks: settingsDoc.socialLinks,
             globalSeo: settingsDoc.globalSeo,
+            founder: settingsDoc.founder ?? null,
           }
         : null,
       services: servicesDocs,

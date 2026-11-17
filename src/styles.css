@@ -85,6 +85,17 @@
   --gold-text: linear-gradient(90deg, #ffffff 0%, #a1a1aa 50%, #ffffff 100%);
   --gold-metal: linear-gradient(135deg, #ffffff 0%, #d4d4d8 50%, #ffffff 100%);
   --gold-glow: 0 0 18px rgba(255, 255, 255, 0.12);
+  /* Champagne Gold accent — dark mode */
+  --gold: #D1AD69;
+  --gold-muted: #99958D;
+  --gold-bg: rgba(209, 173, 105, 0.10);
+  --gold-border: rgba(209, 173, 105, 0.38);
+  --gold-text-solid: #F4EBD0;
+  --gold-shine-color: rgba(255, 245, 200, 0.55);
+  --section-bg: #090909;
+  --section-surface: #121212;
+  --section-elevated: #1B1B1B;
+  --section-border: #292722;
 }
 
 :root[data-theme="light"] {
@@ -127,6 +138,17 @@
   --gold-text: linear-gradient(90deg, #141414 0%, #5f5b54 50%, #141414 100%);
   --gold-metal: linear-gradient(135deg, #141414 0%, #5f5b54 50%, #141414 100%);
   --gold-glow: 0 12px 32px rgba(20, 20, 20, 0.08);
+  /* Warm Gold accent — light mode */
+  --gold: #98713B;
+  --gold-muted: #77736B;
+  --gold-bg: rgba(152, 113, 59, 0.10);
+  --gold-border: rgba(152, 113, 59, 0.35);
+  --gold-text-solid: #6B4E20;
+  --gold-shine-color: rgba(152, 113, 59, 0.3);
+  --section-bg: #F5F3EF;
+  --section-surface: #FFFFFF;
+  --section-elevated: #ECE9E2;
+  --section-border: #E2DACE;
 }
 
 @media (min-width: 768px) {
@@ -761,46 +783,41 @@ body,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--gold-metal);
-  color: #1A1203 !important;
+  background-color: var(--gold-bg);
+  border: 1px solid var(--gold-border);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba(255, 241, 184, 0.45);
-  box-shadow: 0 0 14px rgba(212, 175, 55, 0.32), inset 0 1px 0 rgba(255, 241, 184, 0.5);
-  border: 1px solid rgba(255, 241, 184, 0.45);
 }
 
 .gold-pill-badge span,
 .gold-pill-text {
   position: relative;
   z-index: 2;
-  color: #1A1203 !important;
+  color: var(--gold) !important;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba(255, 241, 184, 0.45);
   -webkit-background-clip: unset !important;
   background-clip: unset !important;
   background: none !important;
 }
 
-/* Transparent/dark fill status pills with readable gold text */
+/* Transparent fill status pills with gold text */
 .gold-status-pill {
   position: relative;
   display: inline-flex;
   align-items: center;
-  background-color: rgba(212, 175, 55, 0.10);
-  border: 1px solid rgba(212, 175, 55, 0.40);
-  box-shadow: inset 0 1px 0 rgba(255, 241, 184, 0.25);
-  color: #F7E08A;
+  background-color: var(--gold-bg);
+  border: 1px solid var(--gold-border);
+  color: var(--gold);
 }
 
 .gold-circle-node {
   position: relative;
-  border: 1.5px solid transparent;
-  background: linear-gradient(#0A0A0F, #0A0A0F) padding-box, var(--gold-metal) border-box;
-  box-shadow: var(--gold-glow);
+  border: 1.5px solid var(--gold-border);
+  background-color: var(--section-elevated);
+  box-shadow: 0 0 10px var(--gold-bg);
 }
 
 .gold-card-hover {
@@ -808,8 +825,8 @@ body,
 }
 
 .gold-card-hover:hover {
-  border-color: rgba(212, 175, 55, 0.35) !important;
-  box-shadow: 0 0 40px rgba(212, 175, 55, 0.08), 0 20px 50px rgba(0, 0, 0, 0.65) !important;
+  border-color: var(--gold-border) !important;
+  box-shadow: 0 0 32px var(--gold-bg), 0 12px 40px rgba(0, 0, 0, 0.18) !important;
 }
 
 /* Step 3: Reusable .gold-shine utility */
@@ -835,7 +852,7 @@ body,
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: linear-gradient(115deg, transparent 40%, rgba(255, 245, 200, 0.55) 50%, transparent 60%);
+  background-image: linear-gradient(115deg, transparent 40%, var(--gold-shine-color) 50%, transparent 60%);
   background-size: 250% 100%;
   background-repeat: no-repeat;
   animation: gold-shine-sweep 8s ease-in-out infinite;

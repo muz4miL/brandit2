@@ -363,82 +363,71 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
 }
 
 /* -------------------------------------------------------------
-   EMAIL CARD MOCKUP (Full Authentic Email Design)
-   Matches Defiant Digital layout: Header, Nav, Hero, Offer, CTA, Footer
+   EMAIL CARD (Editorial Luxury Minimal Shiny Card)
+   Clean, glossy showcase: Large creative visual, brand badge, zero buttons
 ------------------------------------------------------------- */
+function getReadableTextColor(backgroundColor: string) {
+  const hex = backgroundColor.replace("#", "");
+  if (hex.length !== 6) return "#FFFFFF";
+
+  const red = Number.parseInt(hex.slice(0, 2), 16);
+  const green = Number.parseInt(hex.slice(2, 4), 16);
+  const blue = Number.parseInt(hex.slice(4, 6), 16);
+  const luminance = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
+
+  return luminance > 0.62 ? "#111111" : "#FFFFFF";
+}
+
 function EmailCard({ item }: { item: EmailCardData }) {
-  const isDark = item.theme === "dark";
   const heroSrc = typeof item.heroImg === "string" ? item.heroImg : item.heroImg?.src || "";
+  const badgeTextColor = getReadableTextColor(item.accentColor);
 
   return (
     <div
-      className={`relative h-[430px] w-[260px] sm:h-[480px] sm:w-[290px] md:h-[530px] md:w-[320px] shrink-0 select-none overflow-hidden rounded-[24px] sm:rounded-[28px] border border-line dark:border-white/10 dark:shadow-[0_20px_50px_rgba(0,0,0,0.65)] shadow-[0_12px_32px_rgba(20,20,20,0.08),0_2px_8px_rgba(20,20,20,0.04)] flex flex-col justify-between transition-transform duration-300 hover:scale-[1.02] p-4 sm:p-5 ${
-        isDark ? "bg-[#0B0B0F] text-[#F4F4F5]" : "bg-[#FFFFFF] text-[#141414]"
-      }`}
+      className="group relative h-[430px] w-[260px] sm:h-[480px] sm:w-[290px] md:h-[530px] md:w-[320px] shrink-0 select-none overflow-hidden rounded-[24px] sm:rounded-[28px] border border-line dark:border-white/10 dark:shadow-[0_20px_50px_rgba(0,0,0,0.65)] shadow-[0_12px_32px_rgba(20,20,20,0.08),0_2px_8px_rgba(20,20,20,0.04)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:border-fg/30 p-3.5 sm:p-4.5 bg-surface text-fg"
     >
-      {/* Top Header & Subnav */}
-      <div>
-        <div className="flex items-center justify-between pb-2 border-b border-current/10">
-          <span className="font-display text-[11px] sm:text-[12px] font-black tracking-widest uppercase">
-            {item.sender}
-          </span>
-          <span
-            className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white"
-            style={{ backgroundColor: item.accentColor }}
-          >
-            {item.tag}
-          </span>
-        </div>
+      {/* Shiny top hairline reflection */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 dark:via-white/25 to-transparent"
+      />
 
-        {/* Subnav links row */}
-        {item.subnav && item.subnav.length > 0 && (
-          <div className="flex items-center justify-between py-1.5 border-b border-current/10 text-[9px] sm:text-[10px] tracking-wider opacity-60 font-mono uppercase">
-            {item.subnav.map((link, idx) => (
-              <span key={idx}>
-                {link}
-                {idx < item.subnav!.length - 1 && <span className="mx-1">•</span>}
-              </span>
-            ))}
-          </div>
-        )}
+      {/* Top Header: Brand pill + Category Tag */}
+      <div className="flex items-center justify-between pb-2.5 border-b border-line">
+        <span className="font-display text-[11px] sm:text-[12px] font-black tracking-widest uppercase text-fg">
+          {item.sender}
+        </span>
+        <span
+          className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider shadow-sm"
+          style={{ backgroundColor: item.accentColor || "#D1AD69", color: badgeTextColor }}
+        >
+          {item.tag || "CREATIVE"}
+        </span>
+      </div>
 
-        {/* Subject Line Pill */}
-        <div className="mt-2.5 flex items-center gap-1.5 text-[10px] sm:text-[11px] font-medium opacity-70 truncate">
-          <span>{item.subject}</span>
-        </div>
+      {/* Main Creative Visual Showcase: Generous, crisp, high-end display */}
+      <div className="relative flex-1 w-full my-2.5 overflow-hidden rounded-[18px] bg-surface-2 border border-line/60">
+        <img
+          src={heroSrc}
+          alt={item.heading || item.subject}
+          className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          loading="lazy"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
 
-        {/* Hero Image */}
-        <div className="relative mt-2 aspect-[16/10] w-full overflow-hidden rounded-[14px] bg-neutral-900 border border-current/10">
-          <img
-            src={heroSrc}
-            alt={item.heading}
-            className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-            loading="lazy"
-          />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-        </div>
-
-        {/* Heading & Subheading */}
-        <div className="mt-3">
-          <h4 className="font-display text-[16px] sm:text-[18px] md:text-[20px] font-black leading-[1.12] tracking-tight">
-            {item.heading}
-          </h4>
-          <p className="mt-1.5 text-[11px] sm:text-[12px] leading-relaxed opacity-75 line-clamp-2">
-            {item.subheading}
-          </p>
+        {/* Hover subtle glow icon in top right */}
+        <div className="absolute top-2.5 right-2.5 grid h-7 w-7 place-items-center rounded-full bg-black/60 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <ArrowUpRight size={13} className="stroke-[2.5]" />
         </div>
       </div>
 
-      {/* Action Button & Email Footer */}
-      <div className="pt-2">
-        <div
-          className="flex h-[38px] sm:h-[42px] w-full items-center justify-center rounded-full text-[11px] sm:text-[12px] font-extrabold uppercase tracking-wider text-white shadow-md transition-transform duration-200 hover:scale-[1.02] cursor-pointer"
-          style={{ backgroundColor: item.accentColor }}
-        >
-          <span>{item.ctaText}</span>
-        </div>
-        <p className="mt-2 text-center text-[9px] opacity-45 truncate font-mono">
-          {item.footerText || "Worldwide express tracked delivery • Unsubscribe"}
+      {/* Minimal Bottom Caption: Title & Subtle Subject (Zero Buttons, Zero Unsubscribe Clutter!) */}
+      <div className="pt-1">
+        <h4 className="font-display text-[14px] sm:text-[16px] font-extrabold leading-[1.18] tracking-tight text-fg line-clamp-1">
+          {item.heading}
+        </h4>
+        <p className="mt-0.5 text-[11px] sm:text-[11.5px] text-muted-foreground line-clamp-1 font-mono">
+          {item.subject}
         </p>
       </div>
     </div>

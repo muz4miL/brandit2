@@ -41,6 +41,7 @@ export default function ReadyToScale() {
               <img
                 src="/banner/bannerHero.jfif"
                 alt="Ready to scale? Make your next move with brandit."
+                title="Ready to Scale — brandit. Digital Creative Agency"
                 className="h-full w-full object-cover object-left-top sm:object-[center_top] select-none"
                 loading="lazy"
               />

@@ -17,10 +17,39 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
+    keywords: [
+      "services and packages",
+      "performance creative",
+      "Meta ads management",
+      "Google ads agency",
+      "TikTok vertical video",
+      "CRO landing pages",
+      "email marketing",
+      "web design development",
+      "branding and visual direction",
+      "brandit packages",
+    ],
+    authors: [{ name: "brandit.", url: "https://brandit.agency/services" }],
+    publisher: "brandit. Digital Creative Agency",
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+    alternates: {
+      canonical: "/services",
+    },
     openGraph: {
       title,
       description,
       type: "website",
+      url: "https://brandit.agency/services",
       ...(ogImage ? { images: [{ url: ogImage }] } : {}),
     },
     twitter: {

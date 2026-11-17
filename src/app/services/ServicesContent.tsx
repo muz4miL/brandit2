@@ -207,6 +207,7 @@ export function ServicesContent({ data }: ServicesContentProps) {
       : defaultFaqs;
 
   const [selectedServiceSlug, setSelectedServiceSlug] = useState(coreServices[0]?.slug || "");
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const [heroEntered, setHeroEntered] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
@@ -214,21 +215,19 @@ export function ServicesContent({ data }: ServicesContentProps) {
   const servicesReveal = useReveal();
   const faqReveal = useReveal();
 
+  // On first load only: read hash to pre-select a service, then smooth-scroll
   useEffect(() => {
-    const syncServiceFromHash = () => {
-      const requestedSlug = window.location.hash.slice(1);
-      if (coreServices.some((service) => service.slug === requestedSlug)) {
-        setSelectedServiceSlug(requestedSlug);
-        window.setTimeout(() => {
-          document.getElementById("all-services")?.scrollIntoView({ block: "start" });
-        }, 0);
-      }
-    };
-
-    syncServiceFromHash();
-    window.addEventListener("hashchange", syncServiceFromHash);
-    return () => window.removeEventListener("hashchange", syncServiceFromHash);
-  }, [coreServices]);
+    const requestedSlug = window.location.hash.slice(1);
+    if (requestedSlug && coreServices.some((s) => s.slug === requestedSlug)) {
+      setSelectedServiceSlug(requestedSlug);
+      // slight delay so layout is ready
+      window.setTimeout(() => {
+        document.getElementById("all-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
+    }
+    // intentionally only runs once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const selectedService =
     coreServices.find((service) => service.slug === selectedServiceSlug) || coreServices[0];
@@ -236,10 +235,19 @@ export function ServicesContent({ data }: ServicesContentProps) {
     0,
     coreServices.findIndex((service) => service.slug === selectedService?.slug),
   );
+
+  // Animate content out → swap → animate in, NO scroll
   const selectService = (slug: string) => {
-    setSelectedServiceSlug(slug);
-    window.history.pushState(null, "", `/services#${slug}`);
+    if (slug === selectedServiceSlug) return;
+    setIsTransitioning(true);
+    window.history.replaceState(null, "", `/services#${slug}`);
+    // short fade-out, then swap content
+    window.setTimeout(() => {
+      setSelectedServiceSlug(slug);
+      setIsTransitioning(false);
+    }, 160);
   };
+
   const cycleService = (direction: -1 | 1) => {
     const nextIndex = (selectedServiceIndex + direction + coreServices.length) % coreServices.length;
     const next = coreServices[nextIndex];
@@ -295,55 +303,111 @@ export function ServicesContent({ data }: ServicesContentProps) {
             ref={heroRef}
             id="services-hero"
             aria-label="Services & Packages Hero"
-            className="services-hero-panel relative mx-auto flex min-h-[520px] w-full select-none flex-col items-center justify-center overflow-hidden rounded-[36px] border border-line bg-panel px-4 py-14 text-center shadow-2xl sm:rounded-[44px] sm:px-6 sm:py-16 md:rounded-[52px] md:px-8 lg:h-[calc(100vh-180px)] lg:min-h-[580px] lg:max-h-[640px]"
+            className="services-hero-panel relative mx-auto flex min-h-[520px] w-full select-none flex-col items-center justify-center overflow-hidden rounded-[36px] px-4 py-14 text-center sm:rounded-[44px] sm:px-6 sm:py-16 md:rounded-[52px] md:px-8 lg:h-[calc(100vh-180px)] lg:min-h-[580px] lg:max-h-[640px]"
+            style={{
+              background: "var(--section-surface)",
+              border: "1px solid var(--section-border)",
+              boxShadow: "0 24px 70px rgba(0,0,0,0.08)",
+            }}
           >
+            {/* Background art & ambient luxury lighting */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-              <picture>
-                <img
-                  ref={heroImageRef}
-                  src="/servicesHero.png"
-                  alt=""
-                  aria-hidden="true"
-                  className={`services-hero-art h-[calc(100%+56px)] -translate-y-7 w-full object-cover object-center transition-transform duration-1000 ease-out will-change-transform motion-reduce:transform-none ${heroEntered ? "scale-100" : "scale-105"}`}
-                  loading="eager"
-                />
-              </picture>
-              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-panel/80 via-panel/35 to-panel/90" />
-              <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,var(--panel)_90%)] opacity-70" />
-              <div aria-hidden="true" className="services-hero-grain absolute inset-0 z-10 mix-blend-overlay opacity-[0.05]" />
+              {/* 1. Top-right warm champagne gold radial glow */}
+              <div
+                aria-hidden="true"
+                className="absolute -top-24 -right-24 h-[580px] w-[580px] rounded-full blur-[140px] pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle, var(--gold-bg) 0%, transparent 70%)",
+                  opacity: 0.95,
+                }}
+              />
+
+              {/* 2. Bottom-left delicate silk glow */}
+              <div
+                aria-hidden="true"
+                className="absolute -bottom-28 -left-28 h-[500px] w-[500px] rounded-full blur-[150px] pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle, var(--gold-bg) 0%, transparent 70%)",
+                  opacity: 0.6,
+                }}
+              />
+
+              {/* 3. The 3D artwork image */}
+              {/* Dark Mode: Right-biased with deep dark vignette */}
+              <img
+                ref={heroImageRef}
+                src="/servicesHero.png"
+                alt="brandit. creative performance and digital strategy visual sculpture"
+                title="brandit. Services & Packages Visual"
+                className={`dark:block hidden services-hero-art h-[calc(100%+56px)] -translate-y-7 w-full object-cover object-[70%_center] opacity-40 transition-transform duration-1000 ease-out will-change-transform motion-reduce:transform-none ${
+                  heroEntered ? "scale-100" : "scale-105"
+                }`}
+                style={{
+                  maskImage: "radial-gradient(ellipse 75% 70% at 70% 50%, black 20%, transparent 85%)",
+                  WebkitMaskImage: "radial-gradient(ellipse 75% 70% at 70% 50%, black 20%, transparent 85%)",
+                }}
+                loading="eager"
+              />
+
+              {/* Light Mode: Delicate architectural sculpture watermark on right side */}
+              <img
+                src="/servicesHero.png"
+                alt="brandit. creative performance and digital strategy visual sculpture"
+                title="brandit. Services & Packages Visual"
+                className={`dark:hidden block services-hero-art h-[calc(100%+56px)] -translate-y-7 w-full object-cover object-[80%_center] opacity-[0.18] mix-blend-multiply transition-transform duration-1000 ease-out will-change-transform motion-reduce:transform-none ${
+                  heroEntered ? "scale-100" : "scale-105"
+                }`}
+                style={{
+                  maskImage: "radial-gradient(ellipse 65% 60% at 80% 45%, black 20%, transparent 75%)",
+                  WebkitMaskImage: "radial-gradient(ellipse 65% 60% at 80% 45%, black 20%, transparent 75%)",
+                }}
+                loading="eager"
+              />
+
+              {/* Center reading spotlight in Light Mode (guarantees pure contrast) */}
+              <div
+                aria-hidden="true"
+                className="dark:hidden absolute inset-0 pointer-events-none"
+                style={{
+                  background: "radial-gradient(ellipse 70% 60% at 50% 50%, var(--section-surface) 40%, transparent 100%)",
+                  opacity: 0.8,
+                }}
+              />
+
+              {/* Dark mode deep vignette */}
+              <div
+                aria-hidden="true"
+                className="dark:block hidden absolute inset-0 bg-gradient-to-b from-[#090909]/75 via-transparent to-[#090909]/85 pointer-events-none"
+              />
+
+              {/* Film Grain */}
+              <div aria-hidden="true" className="services-hero-grain absolute inset-0 z-10 mix-blend-overlay opacity-[0.03] pointer-events-none" />
             </div>
 
             <div className="relative z-10 flex flex-col items-center max-w-4xl">
-              <div
-                style={{ transitionDelay: heroEntered ? "0ms" : "0ms" }}
-                className={`inline-flex items-center gap-2 rounded-full border border-line bg-surface/40 px-4 py-1.5 backdrop-blur-md transition-all duration-700 ease-out ${heroEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-              >
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-                <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-fg/80 sm:text-[12px]">
-                  {hero.eyebrow}
-                </span>
-              </div>
-
               <h1
-                style={{ transitionDelay: heroEntered ? "80ms" : "0ms" }}
-                className={`mt-4 select-none font-display text-[clamp(40px,5.8vw,86px)] font-extrabold leading-[0.96] tracking-[-0.04em] text-fg transition-all duration-700 ease-out sm:mt-5 ${heroEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                style={{ transitionDelay: heroEntered ? "80ms" : "0ms", color: "var(--foreground)" }}
+                className={`select-none font-display text-[clamp(42px,6vw,90px)] font-extrabold leading-[0.95] tracking-[-0.04em] transition-all duration-700 ease-out ${heroEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
               >
                 <span className="block">{hero.headingLine1}</span>
-                <span className="mt-0.5 block font-serif font-normal italic tracking-[-0.025em] text-fg/75">
+                <span
+                  className="mt-1 block font-serif font-normal italic tracking-[-0.025em]"
+                  style={{ color: "var(--foreground)", opacity: 0.82 }}
+                >
                   {hero.headingLineItalic}
                 </span>
               </h1>
 
               <p
-                style={{ transitionDelay: heroEntered ? "160ms" : "0ms" }}
-                className={`mt-3 max-w-[600px] font-sans text-[15px] leading-relaxed text-muted-foreground transition-all duration-700 ease-out sm:mt-4 sm:text-[17px] ${heroEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                style={{ transitionDelay: heroEntered ? "160ms" : "0ms", color: "var(--muted-foreground)" }}
+                className={`mt-3.5 max-w-[580px] font-sans text-[15px] sm:text-[17px] leading-relaxed transition-all duration-700 ease-out ${heroEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
               >
                 {hero.subCopy}
               </p>
 
               <div
                 style={{ transitionDelay: heroEntered ? "240ms" : "0ms" }}
-                className={`mt-7 sm:mt-8 flex flex-col items-center gap-5 w-full transition-all duration-700 ease-out ${heroEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                className={`mt-8 sm:mt-9 flex flex-col items-center gap-4 w-full transition-all duration-700 ease-out ${heroEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
               >
                 <HeroButton
                   href={hero.ctaHref || "/contact"}
@@ -353,27 +417,38 @@ export function ServicesContent({ data }: ServicesContentProps) {
                 />
                 <a
                   href="#packages"
-                  className="group inline-flex cursor-pointer items-center gap-1.5 text-[13px] font-medium text-muted-foreground transition-colors duration-200 hover:text-fg focus-visible:outline-none focus-visible:text-fg"
+                  className="group inline-flex cursor-pointer items-center gap-1.5 text-[12.5px] font-mono tracking-wide transition-colors duration-200 hover:text-fg focus-visible:outline-none focus-visible:text-fg"
+                  style={{ color: "var(--muted-foreground)" }}
                 >
                   <span>{hero.exploreLabel || "Explore packages"}</span>
                   <ChevronDown size={13} className="transition-transform duration-200 group-hover:translate-y-0.5" />
                 </a>
               </div>
             </div>
-            <div className="pointer-events-none absolute bottom-5 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1.5 text-[9px] font-medium uppercase tracking-[0.24em] text-muted-foreground sm:flex">
-              <span>Scroll</span>
-              <span className="h-8 w-px origin-top animate-pulse bg-gradient-to-b from-white/70 to-transparent" />
+
+            {/* Scroll indicator */}
+            <div
+              className="pointer-events-none absolute bottom-5 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1.5 text-[9px] font-medium uppercase tracking-[0.24em] sm:flex"
+              style={{ color: "var(--muted-foreground)" }}
+            >
+              <span className="h-6 w-px origin-top animate-pulse bg-gradient-to-b from-current to-transparent" />
             </div>
           </section>
           <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-4 pt-5 text-center sm:flex-row sm:justify-between sm:gap-6 sm:pt-6">
-            <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+            <span
+              className="font-mono text-[9.5px] font-semibold uppercase tracking-[0.24em]"
+              style={{ color: "var(--muted-foreground)" }}
+            >
               Built for ambitious teams
             </span>
-            <div className="flex items-center gap-4 text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground sm:gap-7">
+            <div
+              className="flex items-center gap-4 text-[10.5px] font-mono font-medium uppercase tracking-[0.18em] sm:gap-7"
+              style={{ color: "var(--muted-foreground)" }}
+            >
               <span>Strategy</span>
-              <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
+              <span className="h-1 w-1 rounded-full" style={{ background: "var(--gold)" }} />
               <span>Identity</span>
-              <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
+              <span className="h-1 w-1 rounded-full" style={{ background: "var(--gold)" }} />
               <span>Digital</span>
             </div>
           </div>
@@ -473,7 +548,7 @@ export function ServicesContent({ data }: ServicesContentProps) {
             </div>
 
             {selectedService && (
-              <div className="mt-3 grid min-h-[420px] overflow-hidden rounded-[24px] border border-line bg-surface shadow-2xl lg:grid-cols-[55%_45%]">
+              <div className={`mt-3 grid min-h-[420px] overflow-hidden rounded-[24px] border border-line bg-surface shadow-2xl lg:grid-cols-[55%_45%] transition-opacity duration-150 ${isTransitioning ? "opacity-0 scale-[0.995]" : "opacity-100 scale-100"} transition-all`}>
                 <div className="order-2 flex flex-col justify-between p-6 sm:p-10 lg:order-1">
                   <div>
                     <span className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
@@ -513,9 +588,21 @@ export function ServicesContent({ data }: ServicesContentProps) {
                     const fallbackImg = serviceImageMap[selectedService.slug] || serviceIdentity;
                     const imgSrc = selectedService.imageUrl?.trim() ? selectedService.imageUrl : fallbackImg;
                     return typeof imgSrc === "string" ? (
-                      <img src={imgSrc} alt={selectedService.imageAlt || selectedService.title} className="h-full w-full object-cover" />
+                      <img
+                        src={imgSrc}
+                        alt={selectedService.imageAlt || selectedService.title}
+                        title={selectedService.imageAlt || selectedService.title}
+                        className="h-full w-full object-cover"
+                      />
                     ) : (
-                      <Image src={imgSrc} alt={selectedService.imageAlt || selectedService.title} fill sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover" />
+                      <Image
+                        src={imgSrc}
+                        alt={selectedService.imageAlt || selectedService.title}
+                        title={selectedService.imageAlt || selectedService.title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 45vw"
+                        className="object-cover"
+                      />
                     );
                   })()}
                 </div>

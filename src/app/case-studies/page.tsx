@@ -21,6 +21,19 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: {
       canonical: "/case-studies",
     },
+    keywords: [
+      "case studies",
+      "creative agency portfolio",
+      "growth case studies",
+      "performance marketing results",
+      "e-commerce case studies",
+    ],
+    authors: [{ name: "brandit.", url: "https://brandit.agency/case-studies" }],
+    publisher: "brandit. Digital Creative Agency",
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }
 

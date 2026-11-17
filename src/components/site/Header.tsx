@@ -116,7 +116,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
             : "border-b border-transparent bg-bg",
       )}
     >
-      {/* Mobile Top Bar (< 920px): Logo pinned LEFT, Hamburger pinned FAR RIGHT */}
+      {/* Mobile Top Bar (< 920px): Logo pinned LEFT, theme toggle + menu pinned RIGHT */}
       <div className="flex h-full w-full items-center justify-between px-5 min-[920px]:hidden">
         <a
           href="/"
@@ -126,25 +126,28 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
           <Wordmark variant="theme" glow className="text-[24px] sm:text-[27px] w-auto" />
         </a>
 
-        <button
-          ref={mobileToggleRef}
-          type="button"
-          className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] text-fg transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-primary"
-          aria-expanded={isMobileOpen}
-          aria-controls="mobile-navigation-drawer"
-          aria-label={isMobileOpen ? "Close navigation menu" : "Open navigation menu"}
-          onClick={() => setIsMobileOpen((o) => !o)}
-        >
-          {isMobileOpen ? (
-            <X size={24} className="stroke-[2.2] text-fg" />
-          ) : (
-            <div className="flex flex-col gap-[5px] w-[22px]">
-              <span className="block h-[2px] w-full bg-fg rounded-full" />
-              <span className="block h-[2px] w-full bg-fg rounded-full" />
-              <span className="block h-[2px] w-full bg-fg rounded-full" />
-            </div>
-          )}
-        </button>
+        <div className="flex items-center gap-1">
+          <ThemeToggle className="h-10 w-10 shrink-0" />
+          <button
+            ref={mobileToggleRef}
+            type="button"
+            className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] text-fg transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-primary"
+            aria-expanded={isMobileOpen}
+            aria-controls="mobile-navigation-drawer"
+            aria-label={isMobileOpen ? "Close navigation menu" : "Open navigation menu"}
+            onClick={() => setIsMobileOpen((o) => !o)}
+          >
+            {isMobileOpen ? (
+              <X size={24} className="stroke-[2.2] text-fg" />
+            ) : (
+              <div className="flex flex-col gap-[5px] w-[22px]">
+                <span className="block h-[2px] w-full bg-fg rounded-full" />
+                <span className="block h-[2px] w-full bg-fg rounded-full" />
+                <span className="block h-[2px] w-full bg-fg rounded-full" />
+              </div>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Desktop Top Bar (>= 920px) */}
@@ -291,82 +294,61 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
         >
           <div className="mx-auto max-w-[1440px] rounded-[28px] border border-line bg-surface/95 backdrop-blur-2xl p-5 lg:p-6 shadow-[0_20px_70px_rgba(0,0,0,0.5)] text-fg">
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_320px]">
-              {/* Left: canonical 4 x 2 service tile grid */}
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {/* Left: clean 4×2 service tile grid — no tags, no description clutter */}
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
                 {eightServices.map((item) => (
                   <a
                     key={item.id}
                     href={`/services#${item.slug}`}
                     onClick={() => setIsServicesOpen(false)}
-                    className="group relative flex min-h-[145px] flex-col justify-end overflow-hidden rounded-[14px] border border-line bg-surface-2 p-3.5 text-left transition-all duration-200 hover:border-fg/30 focus-visible:outline-2 focus-visible:outline-primary"
+                    className="group relative flex min-h-[110px] flex-col justify-end overflow-hidden rounded-[12px] border border-line bg-surface-2 p-3 text-left transition-all duration-250 hover:border-fg/25 hover:shadow-md focus-visible:outline-2 focus-visible:outline-primary"
                   >
                     <img
                       src={item.image.src || item.image}
                       alt=""
                       aria-hidden="true"
-                      className="absolute inset-0 h-full w-full object-cover opacity-65 transition-transform duration-500 group-hover:scale-105"
+                      className="absolute inset-0 h-full w-full object-cover opacity-55 transition-transform duration-500 group-hover:scale-[1.06] group-hover:opacity-70"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-panel via-panel/55 to-transparent" />
-                    <div className="relative z-10">
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="font-display text-[15px] font-extrabold leading-tight tracking-tight text-fg">
-                          {item.title}
-                          <span className="block font-serif text-[18px] font-normal italic text-fg/80">{item.serifLine}</span>
-                        </span>
-                        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-fg/10 text-fg opacity-0 transition-all group-hover:bg-fg group-hover:text-bg group-hover:opacity-100">
-                          <ArrowUpRight size={14} className="stroke-[2.5]" />
-                        </span>
-                      </div>
-                      <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </div>
-
-                    {/* Visible Tag Row */}
-                    <div className="relative z-10 mt-2 flex flex-wrap gap-1.5 border-t border-line pt-2">
-                      {item.visibleTags.slice(0, 2).map((tag, idx) => (
-                        <span
-                          key={idx}
-                          className="rounded-md border border-line bg-surface/70 px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                    <div className="absolute inset-0 bg-gradient-to-t from-panel/90 via-panel/40 to-transparent" />
+                    <div className="relative z-10 flex items-end justify-between gap-2">
+                      <span className="font-display text-[13.5px] font-extrabold leading-tight tracking-tight text-fg">
+                        {item.title}
+                        <span className="block font-serif text-[15px] font-normal italic text-fg/75 leading-snug">{item.serifLine}</span>
+                      </span>
+                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-fg/10 text-fg opacity-0 transition-all duration-200 group-hover:bg-fg group-hover:text-bg group-hover:opacity-100">
+                        <ArrowUpRight size={12} className="stroke-[2.5]" />
+                      </span>
                     </div>
                   </a>
                 ))}
               </div>
 
-              {/* Right: The 3 Packages Preview Column */}
-              <div className="relative flex flex-col justify-between overflow-hidden rounded-2xl bg-panel border border-line p-6 text-fg shadow-xl">
-                <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-line bg-fg/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-fg">
-                    <span>Packages for Every Stage</span>
-                  </div>
+              {/* Right: Packages column — minimal, editorial */}
+              <div className="relative flex flex-col justify-between overflow-hidden rounded-2xl bg-panel border border-line p-5 text-fg">
+                <div className="space-y-3">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                    Packages
+                  </span>
 
-                  <h3 className="mt-4 font-display text-2xl font-bold leading-tight tracking-tight text-fg xl:text-[26px]">
-                    Kickstart · Accelerate · Authority
+                  <h3 className="font-display text-[22px] font-bold leading-tight tracking-tight text-fg">
+                    Kickstart<br />
+                    <span className="font-serif italic font-normal text-[20px]">Accelerate</span><br />
+                    Authority
                   </h3>
 
-                  <p className="mt-3 text-[14px] leading-relaxed text-muted-foreground">
-                    From setting up your online presence in 3 weeks to complete custom market dominance.
+                  <p className="text-[12.5px] leading-relaxed text-muted-foreground">
+                    {siteMeta.trustBarSummary}
                   </p>
                 </div>
 
-                <div className="relative z-10 flex flex-col gap-3 mt-6">
-                  <div className="flex items-center justify-between border-t border-line pt-3 text-[12px] text-muted-foreground">
-                    <span>{siteMeta.trustBarSummary}</span>
-                  </div>
-
-                  <a
-                    href="/services#packages"
-                    onClick={() => setIsServicesOpen(false)}
-                    className="flex h-[46px] w-full items-center justify-center gap-2 rounded-full bg-primary font-bold text-primary-foreground transition-transform hover:scale-[1.02] shadow-[0_0_18px_rgba(255,255,255,0.08)]"
-                  >
-                    <span>Compare All Packages</span>
-                    <ArrowUpRight size={16} className="stroke-[2.5]" />
-                  </a>
-                </div>
+                <a
+                  href="/services#packages"
+                  onClick={() => setIsServicesOpen(false)}
+                  className="mt-5 flex h-[42px] w-full items-center justify-center gap-2 rounded-full bg-primary font-bold text-[13px] text-primary-foreground transition-transform hover:scale-[1.02]"
+                >
+                  <span>Compare Packages</span>
+                  <ArrowUpRight size={14} className="stroke-[2.5]" />
+                </a>
               </div>
             </div>
           </div>
@@ -463,19 +445,16 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
             Contact
           </a>
 
-          {/* Mobile Theme Toggle & CTA */}
-          <div className="flex items-center gap-3 mt-1">
-            <ThemeToggle className="h-[50px] w-[50px] shrink-0" />
-            <a
-              href="/contact"
-              onClick={() => setIsMobileOpen(false)}
-              className="flex-1 flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-primary px-5 text-[15px] font-bold text-primary-foreground transition-transform active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-            >
-              <span className="font-display font-black text-[16px]">b.</span>
-              <span>Get Started</span>
-              <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />
-            </a>
-          </div>
+          {/* Mobile CTA */}
+          <a
+            href="/contact"
+            onClick={() => setIsMobileOpen(false)}
+            className="mt-1 flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-primary px-5 text-[15px] font-bold text-primary-foreground transition-transform active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+          >
+            <span className="font-display font-black text-[16px]">b.</span>
+            <span>Get Started</span>
+            <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />
+          </a>
         </nav>
       )}
     </header>

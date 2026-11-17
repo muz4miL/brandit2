@@ -26,7 +26,7 @@ export function TimelineStep({
   stepRef,
 }: TimelineStepProps) {
   const shouldReduceMotion = useReducedMotion();
-  const isHero = index === 1; // 02 Kickoff Call is larger/taller bento hero
+  const isHero = index === 1;
   const numeral = `0${index + 1}`;
 
   return (
@@ -54,42 +54,74 @@ export function TimelineStep({
             ? "opacity-100"
             : "opacity-40"
           : isActive
-            ? "opacity-100 scale-100 filter-none"
-            : "opacity-40 scale-[0.97] blur-[1px] hover:opacity-80 hover:scale-[0.985] hover:blur-none"
+          ? "opacity-100 scale-100 filter-none"
+          : "opacity-40 scale-[0.97] blur-[1px] hover:opacity-80 hover:scale-[0.985] hover:blur-none"
       }`}
     >
-      {/* Node Marker on the Timeline Track */}
+      {/* Node marker on the timeline track */}
       <div className="absolute left-0 top-6 -translate-x-1/2 flex items-center justify-center z-20">
         {isActive ? (
-          /* Active pulsing ring node */
-          <div className="relative h-6 w-6 rounded-full flex items-center justify-center bg-white/10 border-[1.5px] border-white shadow-[0_0_16px_rgba(255,255,255,0.35)] transition-all duration-500">
-            <span className="gold-pulse-ring absolute inset-0 rounded-full border border-white/40" />
-            <div className="h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.65)]" />
+          <div
+            className="relative h-6 w-6 rounded-full flex items-center justify-center transition-all duration-500"
+            style={{
+              background: "var(--section-elevated)",
+              border: "1.5px solid var(--gold)",
+              boxShadow: "0 0 16px var(--gold-bg)",
+            }}
+          >
+            <span
+              className="gold-pulse-ring absolute inset-0 rounded-full border"
+              style={{ borderColor: "var(--gold-border)" }}
+            />
+            <div
+              className="h-2.5 w-2.5 rounded-full"
+              style={{
+                background: "var(--gold)",
+                boxShadow: "0 0 10px var(--gold)",
+              }}
+            />
           </div>
         ) : isPassed ? (
-          /* Passed filled gold node */
-          <div className="h-5 w-5 rounded-full flex items-center justify-center bg-white border-[1.5px] border-white shadow-[0_0_10px_rgba(255,255,255,0.35)] transition-all duration-500">
-            <div className="h-2 w-2 rounded-full bg-black" />
+          <div
+            className="h-5 w-5 rounded-full flex items-center justify-center transition-all duration-500"
+            style={{
+              background: "var(--gold)",
+              border: "1.5px solid var(--gold)",
+              boxShadow: "0 0 10px var(--gold-border)",
+            }}
+          >
+            <div
+              className="h-2 w-2 rounded-full"
+              style={{ background: "var(--section-bg)" }}
+            />
           </div>
         ) : (
-          /* Upcoming dim node */
-          <div className="h-5 w-5 rounded-full flex items-center justify-center bg-neutral-900 border border-white/20 transition-all duration-500">
-            <div className="h-2 w-2 rounded-full bg-neutral-600" />
+          <div
+            className="h-5 w-5 rounded-full flex items-center justify-center transition-all duration-500"
+            style={{
+              background: "var(--section-elevated)",
+              border: "1px solid var(--section-border)",
+            }}
+          >
+            <div
+              className="h-2 w-2 rounded-full"
+              style={{ background: "var(--section-border)" }}
+            />
           </div>
         )}
       </div>
 
-      {/* Day label badge: Day 1 · Phase 01 */}
+      {/* Day label badge */}
       <div className="flex items-center gap-2 mb-2.5">
         <span
           className={`font-mono text-[11px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-md gold-pill-badge gold-shine ${
             index === 0
               ? "gold-shine-d1"
               : index === 1
-                ? "gold-shine-d2"
-                : index === 2
-                  ? "gold-shine-d3"
-                  : "gold-shine-d4"
+              ? "gold-shine-d2"
+              : index === 2
+              ? "gold-shine-d3"
+              : "gold-shine-d4"
           }`}
         >
           <span className="gold-pill-text">
@@ -105,28 +137,36 @@ export function TimelineStep({
         isHero={isHero}
         className={
           isHero
-            ? "ring-1 ring-white/30 shadow-[0_0_30px_rgba(255,255,255,0.06)]"
+            ? "ring-1 shadow-[0_0_30px_var(--gold-bg)]"
             : ""
+        }
+        style={
+          isHero
+            ? { "--ring-color": "var(--gold-border)" } as React.CSSProperties
+            : {}
         }
       >
         <div className="flex items-start justify-between gap-4">
           <div>
             <h3
-              className={`font-display font-extrabold text-[#F5F2EC] tracking-[-0.03em] ${
+              className={`font-display font-extrabold tracking-[-0.03em] ${
                 isHero
                   ? "text-[21px] sm:text-[24px]"
                   : "text-[18px] sm:text-[20px]"
               }`}
+              style={{ color: "var(--foreground)" }}
             >
               {step.title}
             </h3>
-            <p className="mt-2 text-[14px] sm:text-[15px] leading-relaxed text-neutral-400 max-w-xl">
+            <p
+              className="mt-2 text-[14px] sm:text-[15px] leading-relaxed max-w-xl"
+              style={{ color: "var(--muted-foreground)" }}
+            >
               {step.desc}
             </p>
           </div>
         </div>
 
-        {/* Mini Visual Component */}
         <StepVisual stepIndex={index} />
       </SpotlightCard>
     </motion.div>

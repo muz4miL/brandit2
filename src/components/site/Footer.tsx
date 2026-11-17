@@ -2,21 +2,47 @@
 
 import { useState, type FormEvent } from "react";
 import { Wordmark } from "./Wordmark";
-import { ArrowRight, Mail, Phone, MapPin, CheckCircle2 } from "lucide-react";
-import { siteMeta } from "@/content/site";
+import { ArrowRight, Mail, Phone, MapPin, CheckCircle2, Loader2 } from "lucide-react";
+import { siteMeta, canonicalServices } from "@/content/site";
 
 export function Footer() {
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setEmail("");
-      setIsSubmitted(false);
-    }, 4000);
+    if (!email || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          sourcePage: typeof window !== "undefined" ? window.location.pathname : "/footer",
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setIsSubmitted(true);
+        setEmail("");
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 5000);
+      } else {
+        setErrorMessage(data.error || "Could not submit. Please try again.");
+      }
+    } catch {
+      setErrorMessage("Network error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -84,70 +110,16 @@ export function Footer() {
               Services
             </h4>
             <ul className="flex flex-col divide-y divide-line text-[15px] sm:text-[16px]">
-              <li>
-                <a
-                  href="/services#creative-performance"
-                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
-                >
-                  Performance Creative
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/services#paid-social"
-                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
-                >
-                  Meta & Instagram Ads
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/services#paid-search"
-                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
-                >
-                  Google & YouTube Ads
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/services#creative-performance"
-                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
-                >
-                  TikTok & Vertical Video
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/services#conversion-websites"
-                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
-                >
-                  CRO & Landing Pages
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/services#brand-content"
-                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
-                >
-                  Email & SMS Marketing
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/services#conversion-websites"
-                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
-                >
-                  Web Design & Development
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/services#brand-identity"
-                  className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
-                >
-                  Branding & Visual Direction
-                </a>
-              </li>
+              {canonicalServices.map((svc) => (
+                <li key={svc.slug}>
+                  <a
+                    href={`/services#${svc.slug}`}
+                    className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
+                  >
+                    {svc.title} {svc.serifLine}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -175,15 +147,22 @@ export function Footer() {
                   type="email"
                   required
                   value={email}
+                  disabled={isSubmitting || isSubmitted}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email"
-                  className="flex-1 rounded-xl border border-line bg-surface-2 px-4 py-3.5 text-[14px] text-fg placeholder:text-muted-foreground focus:outline-none focus:border-fg transition-colors"
+                  className="flex-1 rounded-xl border border-line bg-surface-2 px-4 py-3.5 text-[14px] text-fg placeholder:text-muted-foreground focus:outline-none focus:border-fg transition-colors disabled:opacity-60"
                 />
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl btn-shiny px-6 py-3.5 text-[14px] font-bold text-white transition-all shrink-0 cursor-pointer"
+                  disabled={isSubmitting || isSubmitted}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl btn-shiny px-6 py-3.5 text-[14px] font-bold text-white transition-all shrink-0 cursor-pointer disabled:opacity-80"
                 >
-                  {isSubmitted ? (
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin text-white" />
+                      <span>Joining...</span>
+                    </>
+                  ) : isSubmitted ? (
                     <>
                       <CheckCircle2 size={16} className="text-white" />
                       <span>Joined!</span>
@@ -196,6 +175,12 @@ export function Footer() {
                   )}
                 </button>
               </form>
+
+              {errorMessage && (
+                <p className="mt-2 text-[12px] text-red-500 font-medium">
+                  {errorMessage}
+                </p>
+              )}
 
               <p className="mt-3 text-[12px] text-muted-foreground">
                 No spam. We respect your privacy.

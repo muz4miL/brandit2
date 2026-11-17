@@ -1,9 +1,16 @@
 "use client";
 
-import React, { useRef, useState, useCallback } from "react";
+import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { StepVisual } from "./StepVisual";
+import { Phone, FileText, Rocket } from "lucide-react";
 import type { HowItWorksStep } from "./types";
+
+const STEP_ICONS = [Phone, FileText, Rocket];
+const STEP_CTAS = [
+  { label: "Book a Call", href: "/contact" },
+  { label: "View Plan", href: "/contact" },
+  { label: "Let's Build", href: "/contact" },
+];
 
 interface JourneyStepProps {
   step: HowItWorksStep;
@@ -12,132 +19,133 @@ interface JourneyStepProps {
 
 export function JourneyStep({ step, index }: JourneyStepProps) {
   const shouldReduceMotion = useReducedMotion();
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [coords, setCoords] = useState<{ x: number; y: number } | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    setCoords({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  }, []);
-
-  // Delay for the glowing node as the 1.2s line sweeps across
-  const nodeDelay = 0.15 + index * 0.4;
+  const Icon = STEP_ICONS[index] ?? Phone;
+  const cta = STEP_CTAS[index] ?? STEP_CTAS[0];
 
   return (
     <motion.li
       initial={
         shouldReduceMotion
           ? { opacity: 0 }
-          : { opacity: 0, y: 24, filter: "blur(6px)" }
+          : { opacity: 0, y: 20 }
       }
       whileInView={
         shouldReduceMotion
           ? { opacity: 1 }
-          : { opacity: 1, y: 0, filter: "blur(0px)" }
+          : { opacity: 1, y: 0 }
       }
-      viewport={{ once: true, amount: 0.25 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{
-        duration: 0.7,
-        delay: index * 0.15,
+        duration: 0.6,
+        delay: index * 0.14,
         ease: [0.22, 1, 0.36, 1],
       }}
       className="relative flex flex-col list-none"
     >
-      {/* Time Label Above Node */}
-      <div className="mb-2.5 flex items-center justify-between">
+      {/* Time label above node */}
+      <div className="mb-3 flex items-center gap-2">
         <span
-          className={`font-mono text-[11px] font-bold tracking-[0.12em] uppercase px-3 py-1 rounded-md gold-pill-badge gold-shine ${
-            index === 0
-              ? "gold-shine-d1"
-              : index === 1
-                ? "gold-shine-d2"
-                : "gold-shine-d3"
-          }`}
+          className="font-mono text-[10.5px] font-bold tracking-[0.14em] uppercase px-2.5 py-1 rounded-md gold-shine gold-pill-badge"
+          style={{ animationDelay: `${index * 1}s` }}
         >
           <span className="gold-pill-text">{step.timeLabel}</span>
         </span>
       </div>
 
-      {/* Numbered Glowing Node (01, 02, 03) */}
-      <div className="relative mb-5 flex items-center">
-        <motion.div
-          initial={
-            shouldReduceMotion
-              ? { scale: 1, opacity: 1 }
-              : { scale: 0.85, opacity: 0.4 }
-          }
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: nodeDelay, ease: "easeOut" }}
-          className={`relative z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#0A0A0F] gold-circle-node gold-shine ${
-            index === 0
-              ? "gold-shine-d1"
-              : index === 1
-                ? "gold-shine-d2"
-                : "gold-shine-d3"
-          }`}
+      {/* Circular numbered node */}
+      <motion.div
+        initial={shouldReduceMotion ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.45, delay: 0.1 + index * 0.14, ease: "easeOut" }}
+        className="mb-5 flex items-center"
+      >
+        <div
+          className="relative flex h-10 w-10 items-center justify-center rounded-full"
+          style={{
+            border: "1.5px solid var(--gold-border)",
+            background: "var(--section-elevated)",
+            boxShadow: "0 0 12px var(--gold-bg)",
+          }}
         >
-          <span className="font-mono text-xs font-bold gold-text-gradient">
+          <span
+            className="font-mono text-[12px] font-bold"
+            style={{ color: "var(--gold)" }}
+          >
             {step.stepNumber}
           </span>
+          {/* Pulse ring on first step */}
           {index === 0 && (
-            <span className="absolute inset-0 rounded-full border border-white/40 gold-pulse-ring pointer-events-none" />
+            <span
+              className="gold-pulse-ring absolute inset-0 rounded-full"
+              style={{ border: "1px solid var(--gold-border)" }}
+            />
           )}
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
 
-      {/* Step Card with 24px radius, hairline border & cursor spotlight */}
+      {/* Card */}
       <div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          setCoords(null);
+        className="group relative flex-1 rounded-[20px] p-6 sm:p-7 flex flex-col justify-between gold-card-hover hover:-translate-y-1 overflow-hidden"
+        style={{
+          border: "1px solid var(--section-border)",
+          background: "var(--section-surface)",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
         }}
-        className="group relative flex-1 rounded-[24px] border border-white/[0.08] bg-[#0A0A0F]/85 backdrop-blur-xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden gold-card-hover hover:-translate-y-1 flex flex-col justify-between"
       >
-        {/* Hairline top gradient highlight */}
+        {/* Top hairline gold accent */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute top-0 left-0 w-28 h-px bg-gradient-to-r from-[rgba(212,175,55,0.8)] via-[rgba(247,224,138,0.5)] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-        />
-
-        {/* Soft Cursor Spotlight Glow */}
-        <div
-          aria-hidden="true"
-          className={`pointer-events-none absolute inset-0 transition-opacity duration-300 ${
-            isHovered && coords ? "opacity-100" : "opacity-0"
-          }`}
+          className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-60 group-hover:opacity-100 transition-opacity duration-300"
           style={{
-            background: coords
-              ? `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(212, 175, 55, 0.08), transparent 80%), radial-gradient(140px circle at ${coords.x}px ${coords.y}px, rgba(255, 241, 184, 0.04), transparent 70%)`
-              : "none",
+            background: "linear-gradient(90deg, var(--gold) 0%, transparent 60%)",
           }}
         />
 
-        {/* Card Body */}
-        <div className="relative z-10">
-          <h3 className="font-display font-extrabold text-[19px] sm:text-[21px] text-[#F5F2EC] tracking-[-0.03em] leading-snug">
+        <div className="relative z-10 flex flex-col gap-4">
+          {/* Icon */}
+          <div
+            className="flex h-10 w-10 items-center justify-center rounded-xl"
+            style={{
+              background: "var(--gold-bg)",
+              border: "1px solid var(--gold-border)",
+            }}
+          >
+            <Icon size={18} style={{ color: "var(--gold)" }} strokeWidth={1.75} />
+          </div>
+
+          {/* Title */}
+          <h3
+            className="font-display font-extrabold text-[18px] sm:text-[20px] tracking-[-0.03em] leading-snug"
+            style={{ color: "var(--foreground)" }}
+          >
             {step.title}
           </h3>
-          <p className="mt-2.5 text-[13.5px] sm:text-[14px] leading-relaxed text-neutral-400">
+
+          {/* Description */}
+          <p
+            className="text-[13.5px] sm:text-[14px] leading-relaxed"
+            style={{ color: "var(--muted-foreground)" }}
+          >
             {step.desc}
           </p>
         </div>
 
-        {/* Specialized Mini Visual */}
-        <div className="relative z-10">
-          <StepVisual stepIndex={index} />
+        {/* CTA link */}
+        <div
+          className="relative z-10 mt-5 pt-4 flex items-center justify-between"
+          style={{ borderTop: "1px solid var(--section-border)" }}
+        >
+          <a
+            href={cta!.href}
+            className="inline-flex items-center gap-1.5 text-[13px] font-semibold transition-opacity duration-200 hover:opacity-70"
+            style={{ color: "var(--gold)" }}
+          >
+            {cta!.label}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7v10" />
+            </svg>
+          </a>
         </div>
       </div>
     </motion.li>

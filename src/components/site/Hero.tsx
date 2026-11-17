@@ -47,7 +47,8 @@ export async function Hero() {
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-[#000000] via-[#000000]/60 to-transparent" />
           <img
             src="/flatinghero.png"
-            alt="brandit. visual showcase"
+            alt="brandit. digital creative agency visual showcase"
+            title="brandit. Visual Showcase"
             className="h-full w-full object-cover object-[70%_center] select-none"
             loading="eager"
           />
@@ -87,22 +88,26 @@ export async function Hero() {
               >
                 <img
                   src="/Line1-Logos-V2-scaled.png"
-                  alt=""
+                  alt="brandit partner brand logos line 1"
+                  title="Partner Logos"
                   className="h-[26px] w-auto max-w-none opacity-45 shrink-0"
                 />
                 <img
                   src="/Line2-Logos-v3-scaled.png"
-                  alt=""
+                  alt="brandit partner brand logos line 2"
+                  title="Partner Logos"
                   className="h-[24px] w-auto max-w-none opacity-45 shrink-0"
                 />
                 <img
                   src="/Line1-Logos-V2-scaled.png"
-                  alt=""
+                  alt="brandit partner brand logos line 1 repeated"
+                  title="Partner Logos"
                   className="h-[26px] w-auto max-w-none opacity-45 shrink-0"
                 />
                 <img
                   src="/Line2-Logos-v3-scaled.png"
-                  alt=""
+                  alt="brandit partner brand logos line 2 repeated"
+                  title="Partner Logos"
                   className="h-[24px] w-auto max-w-none opacity-45 shrink-0"
                 />
               </div>

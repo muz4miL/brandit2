@@ -35,21 +35,55 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env["SITE_URL"] || "http://localhost:3000"),
+  metadataBase: new URL(process.env["SITE_URL"] || "https://brandit.agency"),
   title: {
     default: "brandit. | Digital Creative Agency",
     template: "%s | brandit.",
   },
   description:
     "brandit. is a digital creative agency that puts your brand in front of the right customers, with a purpose behind every move. Book a free strategy call.",
+  keywords: [
+    "digital creative agency",
+    "performance marketing agency",
+    "brand identity",
+    "Meta ads agency",
+    "Google ads agency",
+    "TikTok creative",
+    "CRO landing pages",
+    "creative performance",
+    "growth marketing",
+    "brandit",
+  ],
+  authors: [{ name: "brandit.", url: "https://brandit.agency" }],
+  creator: "brandit. Digital Creative Agency",
+  publisher: "brandit.",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "brandit. | Digital Creative Agency",
     description:
       "brandit. is a digital creative agency that puts your brand in front of the right customers, with a purpose behind every move. Book a free strategy call.",
     type: "website",
+    siteName: "brandit.",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
+    title: "brandit. | Digital Creative Agency",
+    description:
+      "brandit. is a digital creative agency that puts your brand in front of the right customers, with a purpose behind every move. Book a free strategy call.",
   },
   icons: {
     icon: [{ url: "/brandit-favicon.png?v=2", type: "image/png" }],

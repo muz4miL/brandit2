@@ -16,6 +16,24 @@ export const metadata: Metadata = {
   title: "brandit. | Digital Creative Agency",
   description:
     "brandit. is a digital creative agency that puts your brand in front of the right customers, with a purpose behind every move. Book a free strategy call.",
+  keywords: [
+    "digital creative agency",
+    "performance marketing agency",
+    "brand identity",
+    "Meta ads agency",
+    "Google ads agency",
+    "CRO landing pages",
+    "growth marketing",
+  ],
+  authors: [{ name: "brandit.", url: "https://brandit.agency" }],
+  publisher: "brandit. Digital Creative Agency",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "brandit. | Digital Creative Agency",
     description:

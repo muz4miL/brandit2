@@ -45,38 +45,40 @@ export function SpotlightCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`group relative rounded-[24px] border transition-all duration-400 ease-out gold-card-hover ${
-        isActive
-          ? "border-[rgba(212,175,55,0.45)] shadow-[0_0_35px_rgba(212,175,55,0.1),0_20px_50px_rgba(0,0,0,0.65)]"
-          : "border-white/[0.04] shadow-[0_12px_30px_rgba(0,0,0,0.4)]"
-      } bg-[#0A0A0F]/90 backdrop-blur-xl overflow-hidden ${
+      className={`group relative rounded-[24px] border transition-all duration-400 ease-out overflow-hidden ${
         isHero ? "p-7 sm:p-9" : "p-6 sm:p-7"
       } ${className}`}
-      style={
-        {
-          "--mouse-x": coords ? `${coords.x}px` : "50%",
-          "--mouse-y": coords ? `${coords.y}px` : "50%",
-        } as React.CSSProperties
-      }
+      style={{
+        background: "var(--section-surface)",
+        borderColor: isActive ? "var(--gold-border)" : "var(--section-border)",
+        boxShadow: isActive
+          ? "0 0 35px var(--gold-bg), 0 20px 50px rgba(0,0,0,0.25)"
+          : "0 12px 30px rgba(0,0,0,0.12)",
+        ["--mouse-x" as any]: coords ? `${coords.x}px` : "50%",
+        ["--mouse-y" as any]: coords ? `${coords.y}px` : "50%",
+      }}
       {...props}
     >
-      {/* Hairline gradient top highlight */}
+      {/* Hairline top highlight */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, var(--section-border), transparent)" }}
       />
 
-      {/* Top-left hairline metallic gold accent */}
+      {/* Top-left gold hairline accent */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-0 left-0 w-32 h-px bg-gradient-to-r from-[rgba(212,175,55,0.8)] via-[rgba(247,224,138,0.5)] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+        className="pointer-events-none absolute top-0 left-0 w-32 h-px opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ background: "linear-gradient(to right, var(--gold), transparent)" }}
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-0 left-0 w-px h-28 bg-gradient-to-b from-[rgba(212,175,55,0.7)] to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+        className="pointer-events-none absolute top-0 left-0 w-px h-28 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ background: "linear-gradient(to bottom, var(--gold), transparent)" }}
       />
 
-      {/* Mouse Cursor Spotlight Glow */}
+      {/* Mouse spotlight glow */}
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 transition-opacity duration-300 ${
@@ -84,36 +86,35 @@ export function SpotlightCard({
         }`}
         style={{
           background: coords
-            ? `radial-gradient(320px circle at ${coords.x}px ${coords.y}px, rgba(212, 175, 55, 0.08), transparent 80%), radial-gradient(180px circle at ${coords.x}px ${coords.y}px, rgba(255, 241, 184, 0.04), transparent 70%)`
+            ? `radial-gradient(320px circle at ${coords.x}px ${coords.y}px, var(--gold-bg), transparent 80%)`
             : "none",
         }}
       />
 
-      {/* Hero Ambient subtle gradient if hero */}
+      {/* Hero ambient glow */}
       {isHero && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-20 w-72 h-72 rounded-full bg-[#D4AF37]/[0.035] blur-3xl"
+          className="pointer-events-none absolute -right-20 -top-20 w-72 h-72 rounded-full blur-3xl"
+          style={{ background: "var(--gold-bg)" }}
         />
       )}
 
-      {/* Large Ghost Numeral (01, 02, 03, 04) - Stroke only in rgba(212,175,55,0.18), brightening on active/hover */}
+      {/* Ghost numeral */}
       {numeral && (
         <span
           aria-hidden="true"
           className="pointer-events-none absolute right-6 top-4 select-none font-mono text-5xl sm:text-6xl font-black tracking-tighter transition-all duration-300"
           style={{
             WebkitTextStroke: isActive
-              ? "1px rgba(212, 175, 55, 0.55)"
+              ? "1px var(--gold-border)"
               : isHovered
-                ? "1px rgba(212, 175, 55, 0.42)"
-                : "1px rgba(212, 175, 55, 0.18)",
+              ? "1px var(--gold-border)"
+              : "1px var(--section-border)",
             color: "transparent",
             textShadow: isActive
-              ? "0 0 30px rgba(212, 175, 55, 0.28)"
-              : isHovered
-                ? "0 0 24px rgba(212, 175, 55, 0.18)"
-                : "0 0 16px rgba(212, 175, 55, 0.05)",
+              ? "0 0 30px var(--gold-bg)"
+              : "none",
           }}
         >
           {numeral}
