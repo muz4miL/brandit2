@@ -206,6 +206,22 @@ export function ServicesPageTab({ initialContent, onNotice }: ServicesPageTabPro
     });
   };
 
+  const uploadCoreServiceImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("altText", editingCoreService?.imageAlt || editingCoreService?.title || "Service image");
+
+    const response = await fetch("/api/admin/media/upload", {
+      method: "POST",
+      body: formData,
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success || !result.url) {
+      throw new Error(result.error || "Image upload failed");
+    }
+    setEditingCoreService((current) => (current ? { ...current, imageUrl: result.url } : current));
+  };
+
   return (
     <div className="space-y-6">
       {/* Top Header */}
@@ -1782,7 +1798,7 @@ export function ServicesPageTab({ initialContent, onNotice }: ServicesPageTabPro
                                 0{idx + 1}
                               </span>
                               <h4 className="font-display font-bold text-white text-sm">
-                                {svc.title}
+                                {svc.title} {svc.serifLine && <span className="font-serif font-normal italic text-neutral-300">{svc.serifLine}</span>}
                               </h4>
                               <span className="text-[10px] font-mono text-neutral-400">
                                 ({svc.includedIn})
@@ -2026,6 +2042,26 @@ export function ServicesPageTab({ initialContent, onNotice }: ServicesPageTabPro
                       placeholder="https://... or /image.jpg"
                       className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white"
                     />
+                    <label className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] font-semibold text-neutral-300 hover:bg-white/[0.08]">
+                      <span>Upload image</span>
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp,image/avif"
+                        className="sr-only"
+                        onChange={(event) => {
+                          const file = event.target.files?.[0];
+                          if (!file) return;
+                          startTransition(async () => {
+                            try {
+                              await uploadCoreServiceImage(file);
+                              onNotice("Image uploaded.");
+                            } catch (error) {
+                              onNotice(error instanceof Error ? error.message : "Image upload failed", "error");
+                            }
+                          });
+                        }}
+                      />
+                    </label>
                   </div>
 
                   <div>

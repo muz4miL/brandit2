@@ -544,12 +544,12 @@ export function ServicesContent({ data }: ServicesContentProps) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-line">
-                  {["One senior team", "Clear priorities", "Creative that performs", "Fast, focused delivery", "Plain-language reporting", "Built to compound"].map((label) => (
-                    <tr key={label}>
-                      <th className="sticky left-0 bg-surface p-4 font-semibold text-fg">{label}</th>
+                  {comparisonRows.slice(0, 6).map((row) => (
+                    <tr key={row.feature}>
+                      <th className="sticky left-0 bg-surface p-4 font-semibold text-fg">{row.feature}</th>
                       <td className="bg-surface-2 p-4"><CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" /></td>
-                      <td className="p-4 text-muted-foreground"><X className="h-5 w-5" /></td>
-                      <td className="p-4 text-muted-foreground"><X className="h-5 w-5" /></td>
+                      <td className="p-4 text-muted-foreground"><span className="sr-only">{row.kickstart}</span><X className="h-5 w-5" /></td>
+                      <td className="p-4 text-muted-foreground"><span className="sr-only">{row.authority}</span><X className="h-5 w-5" /></td>
                     </tr>
                   ))}
                 </tbody>
