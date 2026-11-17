@@ -103,7 +103,7 @@ export const EMAILS_DATA: EmailCardData[] = [
   {
     id: "temple",
     sender: "TEMPLE & GRACE",
-    subject: "Handcrafted Luxury Just For You ✨",
+    subject: "Handcrafted Luxury Just For You",
     tag: "FINE JEWELRY",
     subnav: ["Engagement", "Wedding", "Bracelets", "Diamonds"],
     heroImg: haloImg,
@@ -117,7 +117,7 @@ export const EMAILS_DATA: EmailCardData[] = [
   {
     id: "luminate",
     sender: "HAIR & SKIN SCIENCE",
-    subject: "Save $299 On Winter HydraGlow ✨",
+    subject: "Save $299 On Winter HydraGlow",
     tag: "SPECIAL OFFER",
     subnav: ["Dermatology", "Aesthetics", "HydraGlow", "Clinics"],
     heroImg: skinImg,

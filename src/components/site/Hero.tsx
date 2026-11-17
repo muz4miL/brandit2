@@ -115,8 +115,8 @@ export async function Hero() {
 
             {/* Central Glowing Brand Squircle in Pure White & Obsidian */}
             <div className="relative z-20 flex shrink-0 items-center justify-center py-2">
-              <div className="absolute -inset-1.5 rounded-[28px] bg-white/20 opacity-80 blur-md" />
-              <div className="relative grid h-[92px] w-[92px] place-items-center rounded-[26px] bg-white shadow-[0_0_40px_rgba(255,255,255,0.25)]">
+              <div className="hero-brand-badge-glow absolute -inset-1.5 rounded-[28px] bg-white/20 opacity-80 blur-md" />
+              <div className="hero-brand-badge relative grid h-[92px] w-[92px] place-items-center rounded-[26px] bg-white shadow-[0_0_40px_rgba(255,255,255,0.25)]">
                 <span className="font-display text-[54px] font-black leading-none text-black select-none pl-0.5">
                   b.
                 </span>

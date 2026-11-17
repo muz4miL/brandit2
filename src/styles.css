@@ -286,12 +286,14 @@ body,
   }
   html {
     scroll-padding-top: calc(var(--header-h) + 16px);
+    overflow-x: hidden;
   }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
   :focus-visible {
     outline: 2px solid var(--color-primary);
@@ -702,6 +704,30 @@ body,
   perspective: 1000px;
 }
 
+@media (max-width: 767px) {
+  .showcase-track {
+    width: 100% !important;
+    justify-content: center;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .showcase-track > div {
+    display: none;
+  }
+
+  .showcase-track > div:first-child {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding-right: 0;
+  }
+
+  .showcase-track > div:first-child > :not(:first-child) {
+    display: none;
+  }
+}
+
 .showcase-secondary {
   color: color-mix(in srgb, var(--foreground) 68%, var(--background)) !important;
 }
@@ -959,6 +985,15 @@ body,
 
 :root[data-theme="light"] .site-header [class*="border-white"] {
   border-color: var(--color-border) !important;
+}
+
+/* Keep the mobile hero mark crisp against the dark background. */
+:root[data-theme="dark"] .hero-brand-badge {
+  box-shadow: none;
+}
+
+:root[data-theme="dark"] .hero-brand-badge-glow {
+  display: none;
 }
 
 /* Legacy service-step utilities are kept for compatibility but render in the
