@@ -34,19 +34,27 @@ function detectFormat(buf: Buffer): string | null {
 export async function GET() {
   try {
     const session = await verifyAuth();
-    if (!session) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    if (!session)
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
     const { statsLogos } = await getCollections();
     const logos = await statsLogos.find({}).sort({ sortOrder: 1 }).toArray();
-    return NextResponse.json({ success: true, logos: logos.map((l) => ({ ...l, _id: String(l._id) })) });
+    return NextResponse.json({
+      success: true,
+      logos: logos.map((l) => ({ ...l, _id: String(l._id) })),
+    });
   } catch (err: unknown) {
-    return NextResponse.json({ success: false, error: err instanceof Error ? err.message : "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: err instanceof Error ? err.message : "Server error" },
+      { status: 500 },
+    );
   }
 }
 
 export async function POST(req: Request) {
   try {
     const session = await verifyAuth();
-    if (!session) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    if (!session)
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
 
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
@@ -57,19 +65,28 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: "No file provided" }, { status: 400 });
     }
     if (file.size > 2 * 1024 * 1024) {
-      return NextResponse.json({ success: false, error: "File exceeds 2 MB limit." }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: "File exceeds 2 MB limit." },
+        { status: 400 },
+      );
     }
 
     const { statsLogos } = await getCollections();
     const count = await statsLogos.countDocuments();
     if (count >= 20) {
-      return NextResponse.json({ success: false, error: "Maximum 20 logos allowed." }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: "Maximum 20 logos allowed." },
+        { status: 400 },
+      );
     }
 
     const rawBuffer = Buffer.from(await file.arrayBuffer());
     const fmt = detectFormat(rawBuffer);
     if (!fmt) {
-      return NextResponse.json({ success: false, error: "Unsupported file type. Use PNG, WebP, JPEG, or AVIF." }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: "Unsupported file type. Use PNG, WebP, JPEG, or AVIF." },
+        { status: 400 },
+      );
     }
 
     // Process with sharp: auto-trim, cap height 160px, convert to WebP
@@ -82,12 +99,19 @@ export async function POST(req: Request) {
       .withMetadata({ icc: undefined })
       .toBuffer({ resolveWithObject: true });
 
-    const contentHash = crypto.createHash("sha256").update(processed.data).digest("hex").slice(0, 24);
+    const contentHash = crypto
+      .createHash("sha256")
+      .update(processed.data)
+      .digest("hex")
+      .slice(0, 24);
 
     // Deduplicate
     const existing = await statsLogos.findOne({ contentHash });
     if (existing) {
-      return NextResponse.json({ success: false, error: "This logo has already been uploaded." }, { status: 409 });
+      return NextResponse.json(
+        { success: false, error: "This logo has already been uploaded." },
+        { status: 409 },
+      );
     }
 
     let imageUrl = "";
@@ -95,20 +119,30 @@ export async function POST(req: Request) {
     let warning: string | undefined;
 
     if (!meta.hasAlpha) {
-      warning = "This image has no transparency. For best results use a PNG or WebP with transparent background.";
+      warning =
+        "This image has no transparency. For best results use a PNG or WebP with transparent background.";
     }
 
-    // Try Vercel Blob first, fallback to local disk
+    // Vercel's filesystem is read-only and ephemeral. Use Blob in production,
+    // while retaining disk storage for local development.
     const filename = `stats-logos/${contentHash}.webp`;
-    try {
+    if (process.env["BLOB_READ_WRITE_TOKEN"]) {
       const blob = await put(filename, processed.data, {
         access: "public",
         contentType: "image/webp",
       });
       imageUrl = blob.url;
       storageKey = blob.pathname;
-    } catch {
-      // Fallback: local disk
+    } else if (process.env["VERCEL"] === "1") {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Logo uploads are not configured. Add a Vercel Blob store and BLOB_READ_WRITE_TOKEN.",
+        },
+        { status: 503 },
+      );
+    } else {
       const uploadDir = path.join(process.cwd(), "public", "uploads", "stats-logos");
       await fs.mkdir(uploadDir, { recursive: true });
       const diskFilename = `${contentHash}.webp`;
@@ -136,7 +170,9 @@ export async function POST(req: Request) {
     await statsLogos.insertOne(logo);
     return NextResponse.json({ success: true, logo, warning });
   } catch (err: unknown) {
-    return NextResponse.json({ success: false, error: err instanceof Error ? err.message : "Failed to upload" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: err instanceof Error ? err.message : "Failed to upload" },
+      { status: 500 },
+    );
   }
 }
-
