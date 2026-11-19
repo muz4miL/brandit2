@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Inter_Tight, Fraunces } from "next/font/google";
+import { Inter, Inter_Tight, Fraunces, Instrument_Serif } from "next/font/google";
 import "../styles.css";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { SmoothScroll } from "@/providers/SmoothScroll";
@@ -27,6 +27,14 @@ const fraunces = Fraunces({
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-serif",
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
   display: "swap",
 });
 
@@ -99,7 +107,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${interTight.variable} ${fraunces.variable} dark`}
+      className={`${inter.variable} ${interTight.variable} ${fraunces.variable} ${instrumentSerif.variable} dark`}
       suppressHydrationWarning
     >
       <head>

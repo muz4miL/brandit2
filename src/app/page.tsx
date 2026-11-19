@@ -58,7 +58,7 @@ export default function HomePage() {
 
       <main className="flex flex-col">
         {/* Section 1 — Hero */}
-        <div className="mx-auto w-full max-w-[1440px] px-3 sm:px-4 md:px-6 pt-2 pb-4">
+        <div className="mx-auto w-full max-w-[1660px] xl:max-w-[1720px] px-3 sm:px-4 lg:px-6 pt-2 sm:pt-3 lg:pt-4 pb-4">
           <Hero />
         </div>
 

@@ -19,12 +19,12 @@ export async function Hero() {
         {/* Left: Text, CTA & Partner Logos */}
         <div className="rise-in z-10 flex flex-col justify-center px-10 py-10 lg:px-14 xl:px-16 h-full">
           {/* Headline: We / Deliver / Growth */}
-          <h1 className="select-none text-[clamp(62px,6vw,108px)] font-extrabold leading-[0.88] tracking-[-0.055em] text-fg">
+          <h1 className="select-none text-[clamp(64px,6.8vw,118px)] font-extrabold leading-[0.88] tracking-[-0.055em] text-fg">
             <span className="block font-display">We</span>
-            <span className="-ml-1 block font-serif text-[1.07em] font-normal italic leading-[0.88] tracking-[-0.035em] text-fg">
+            <span className="-ml-1 block font-instrument text-[1.14em] font-normal italic leading-[0.88] tracking-[-0.03em] text-fg">
               Deliver
             </span>
-            <span className="block font-display">Growth.</span>
+            <span className="block font-display">Growth</span>
           </h1>
 
           {/* Button & Partner Logos on the same row directly below headline */}
@@ -62,14 +62,14 @@ export async function Hero() {
         <div className="my-auto flex flex-col items-center justify-center w-full">
           {/* Top Centered Headline */}
           <h1 className="select-none flex flex-col items-center">
-            <span className="block font-display text-[44px] font-extrabold leading-[0.88] tracking-[-0.055em] text-fg sm:text-[54px]">
+            <span className="block font-display text-[46px] font-extrabold leading-[0.88] tracking-[-0.055em] text-fg sm:text-[56px]">
               We
             </span>
-            <span className="-my-1 block font-serif text-[1.08em] font-normal italic leading-[0.88] tracking-[-0.035em] text-fg">
+            <span className="-my-1 block font-instrument text-[1.14em] font-normal italic leading-[0.88] tracking-[-0.03em] text-fg">
               Deliver
             </span>
-            <span className="block font-display text-[44px] font-extrabold leading-[0.88] tracking-[-0.055em] text-fg sm:text-[54px]">
-              Growth.
+            <span className="block font-display text-[46px] font-extrabold leading-[0.88] tracking-[-0.055em] text-fg sm:text-[56px]">
+              Growth
             </span>
           </h1>
 
