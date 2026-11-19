@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { StaticImageData } from "next/image";
 import { ArrowUpRight, ChevronUp, Star, ShieldCheck, Sparkles, ExternalLink } from "lucide-react";
 
 import haloImg from "@/assets/work-identity-halo.jpg";
@@ -75,14 +76,14 @@ export interface EmailCardData {
   sender: string;
   subject: string;
   tag: string;
-  subnav?: string[];
-  heroImg: any;
+  subnav?: string[] | undefined;
+  heroImg: StaticImageData | string;
   heading: string;
   subheading: string;
   ctaText: string;
   accentColor: string;
   theme: "dark" | "light";
-  footerText?: string;
+  footerText?: string | undefined;
 }
 
 export const EMAILS_DATA: EmailCardData[] = [
@@ -108,7 +109,8 @@ export const EMAILS_DATA: EmailCardData[] = [
     subnav: ["Engagement", "Wedding", "Bracelets", "Diamonds"],
     heroImg: haloImg,
     heading: "Welcome to Temple & Grace",
-    subheading: "Handcrafted pieces. Honest pricing. Lifetime care. Discover the signature solitaire series.",
+    subheading:
+      "Handcrafted pieces. Honest pricing. Lifetime care. Discover the signature solitaire series.",
     ctaText: "BOOK A SHOWROOM VISIT >",
     accentColor: "#C59B27",
     theme: "light",
@@ -122,7 +124,8 @@ export const EMAILS_DATA: EmailCardData[] = [
     subnav: ["Dermatology", "Aesthetics", "HydraGlow", "Clinics"],
     heroImg: skinImg,
     heading: "Save $299 Before Our Offer Ends!",
-    subheading: "Prepare for the season by looking and feeling your best with bespoke clinical restorative treatments.",
+    subheading:
+      "Prepare for the season by looking and feeling your best with bespoke clinical restorative treatments.",
     ctaText: "CLAIM WINTER SPECIAL >",
     accentColor: "#0284C7",
     theme: "light",
@@ -136,7 +139,8 @@ export const EMAILS_DATA: EmailCardData[] = [
     subnav: ["Sourdough", "Croissants", "Pastries", "Coffee"],
     heroImg: riseImg,
     heading: "Baked At 4 AM. Delivered At 7 AM.",
-    subheading: "Warm butter croissants, rustic sourdough loaves, and artisan preserves delivered straight to your door.",
+    subheading:
+      "Warm butter croissants, rustic sourdough loaves, and artisan preserves delivered straight to your door.",
     ctaText: "ORDER BREAKFAST BOX >",
     accentColor: "#D97706",
     theme: "light",
@@ -150,7 +154,8 @@ export const EMAILS_DATA: EmailCardData[] = [
     subnav: ["Private Villas", "Sanctuaries", "Concierge", "Dining"],
     heroImg: voyaraImg,
     heading: "Invest in Memories. Grow Your Escape.",
-    subheading: "Private oceanfront sanctuaries with dedicated concierges, personal infinity pools, and chef dining.",
+    subheading:
+      "Private oceanfront sanctuaries with dedicated concierges, personal infinity pools, and chef dining.",
     ctaText: "DISCOVER DESTINATIONS >",
     accentColor: "#FFFFFF",
     theme: "dark",
@@ -163,7 +168,7 @@ export interface LandingCardData {
   client: string;
   url: string;
   projectUrl: string;
-  previewImg: any;
+  previewImg: StaticImageData | string;
   title: string;
   highlight: string;
   description: string;
@@ -182,7 +187,8 @@ export const LANDING_DATA: LandingCardData[] = [
     previewImg: homeImg,
     title: "Get your commercial assets leased faster, for stronger yields.",
     highlight: "High-Yield Portfolio Acquisition",
-    description: "Proven performance marketing and direct-response lead generation for prime commercial holdings.",
+    description:
+      "Proven performance marketing and direct-response lead generation for prime commercial holdings.",
     stats: [
       { label: "Asset Volume", value: "$4.6M" },
       { label: "Avg Yield", value: "8.4%" },
@@ -200,7 +206,8 @@ export const LANDING_DATA: LandingCardData[] = [
     previewImg: webImg,
     title: "Win all your daily expenses back. Up to $150k.",
     highlight: "Daily Rewards & Gamified Fintech",
-    description: "All without changing the way you shop or carrying extra cards. Backed by top tier banks.",
+    description:
+      "All without changing the way you shop or carrying extra cards. Backed by top tier banks.",
     stats: [
       { label: "Users Active", value: "180k+" },
       { label: "Cash Rewarded", value: "$1.2M" },
@@ -218,7 +225,8 @@ export const LANDING_DATA: LandingCardData[] = [
     previewImg: pulseImg,
     title: "Move Better. Feel Stronger. Train Without Limits.",
     highlight: "Premium Boutique Studio",
-    description: "Personal training, recovery saunas, and science-backed conditioning under one luxury roof.",
+    description:
+      "Personal training, recovery saunas, and science-backed conditioning under one luxury roof.",
     stats: [
       { label: "Members", value: "1,400+" },
       { label: "Retention", value: "92%" },
@@ -236,7 +244,8 @@ export const LANDING_DATA: LandingCardData[] = [
     previewImg: zestImg,
     title: "Save Smart. Compare Better. Reduce Utility Bills.",
     highlight: "Utility Comparison Engine",
-    description: "Instant tariff matching for electricity, high-speed fiber broadband, and solar incentives.",
+    description:
+      "Instant tariff matching for electricity, high-speed fiber broadband, and solar incentives.",
     stats: [
       { label: "Avg Saved", value: "$420/yr" },
       { label: "Comparison Time", value: "45s" },
@@ -254,7 +263,8 @@ export const LANDING_DATA: LandingCardData[] = [
     previewImg: croImg,
     title: "Ready for real results? We’re your pocket nutrition coach.",
     highlight: "Lifestyle Transformation",
-    description: "Dietician-led flexible dieting, metabolic health plans, and community accountability.",
+    description:
+      "Dietician-led flexible dieting, metabolic health plans, and community accountability.",
     stats: [
       { label: "Kg Lost", value: "12,000+" },
       { label: "Coaches", value: "24" },
@@ -311,14 +321,14 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
   return (
     <div className="relative h-[260px] w-[136px] shrink-0 select-none sm:h-[310px] sm:w-[162px] md:h-[350px] md:w-[182px] lg:h-[370px] lg:w-[192px] transform-gpu">
       {/* Left side volume buttons */}
-      <div className="absolute -left-[2.5px] top-[60px] h-[18px] w-[2.5px] rounded-l-sm bg-gradient-to-b from-[#e8e8ea] via-[#c8c8d0] to-[#8a8a90] sm:top-[72px] sm:h-[22px] md:top-[82px] md:h-[24px]" />
-      <div className="absolute -left-[2.5px] top-[82px] h-[18px] w-[2.5px] rounded-l-sm bg-gradient-to-b from-[#e8e8ea] via-[#c8c8d0] to-[#8a8a90] sm:top-[98px] sm:h-[22px] md:top-[112px] md:h-[24px]" />
+      <div className="absolute -left-[2.5px] top-[60px] h-[18px] w-[2.5px] rounded-l-sm bg-neutral-600 sm:top-[72px] sm:h-[22px] md:top-[82px] md:h-[24px]" />
+      <div className="absolute -left-[2.5px] top-[82px] h-[18px] w-[2.5px] rounded-l-sm bg-neutral-600 sm:top-[98px] sm:h-[22px] md:top-[112px] md:h-[24px]" />
 
       {/* Right side power button */}
-      <div className="absolute -right-[2.5px] top-[65px] h-[28px] w-[2.5px] rounded-r-sm bg-gradient-to-b from-[#e8e8ea] via-[#c8c8d0] to-[#8a8a90] sm:top-[78px] sm:h-[34px] md:top-[90px] md:h-[38px]" />
+      <div className="absolute -right-[2.5px] top-[65px] h-[28px] w-[2.5px] rounded-r-sm bg-neutral-600 sm:top-[78px] sm:h-[34px] md:top-[90px] md:h-[38px]" />
 
-      {/* Phone outer frame: titanium silver border */}
-      <div className="relative h-full w-full rounded-[24px] bg-gradient-to-b from-[#e8e8ea] via-[#c8c8d0] to-[#8a8a90] p-[2px] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_20px_50px_rgba(0,0,0,0.65)] shadow-[0_12px_32px_rgba(20,20,20,0.08),0_2px_8px_rgba(20,20,20,0.04)] sm:rounded-[28px] md:rounded-[32px]">
+      {/* Phone outer frame: sleek dark titanium chassis matching Defiant */}
+      <div className="relative h-full w-full rounded-[24px] bg-gradient-to-b from-[#3a3a44] via-[#24242c] to-[#141418] p-[2px] shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_20px_50px_rgba(0,0,0,0.7)] sm:rounded-[28px] md:rounded-[32px]">
         {/* Thin black bezel padding */}
         <div className="relative h-full w-full rounded-[22px] bg-[#0c0c0e] p-[3px] sm:rounded-[26px] sm:p-[4px] md:rounded-[30px] md:p-[4.5px]">
           {/* Inner screen radius with overflow hidden */}
@@ -383,9 +393,7 @@ function EmailCard({ item }: { item: EmailCardData }) {
   const badgeTextColor = getReadableTextColor(item.accentColor);
 
   return (
-    <div
-      className="group relative h-[430px] w-[260px] sm:h-[480px] sm:w-[290px] md:h-[530px] md:w-[320px] shrink-0 select-none overflow-hidden rounded-[24px] sm:rounded-[28px] border border-line dark:border-white/10 dark:shadow-[0_20px_50px_rgba(0,0,0,0.65)] shadow-[0_12px_32px_rgba(20,20,20,0.08),0_2px_8px_rgba(20,20,20,0.04)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:border-fg/30 p-3.5 sm:p-4.5 bg-surface text-fg"
-    >
+    <div className="group relative h-[430px] w-[260px] sm:h-[480px] sm:w-[290px] md:h-[530px] md:w-[320px] shrink-0 select-none overflow-hidden rounded-[24px] sm:rounded-[28px] border border-line dark:border-white/10 dark:shadow-[0_20px_50px_rgba(0,0,0,0.65)] shadow-[0_12px_32px_rgba(20,20,20,0.08),0_2px_8px_rgba(20,20,20,0.04)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:border-fg/30 p-3.5 sm:p-4.5 bg-surface text-fg">
       {/* Shiny top hairline reflection */}
       <div
         aria-hidden="true"
@@ -439,7 +447,8 @@ function EmailCard({ item }: { item: EmailCardData }) {
    Matches Defiant Digital layout: Browser Chrome, Header, Hero, Stats, Link
 ------------------------------------------------------------- */
 function LandingPageCard({ item }: { item: LandingCardData }) {
-  const previewSrc = typeof item.previewImg === "string" ? item.previewImg : item.previewImg?.src || "";
+  const previewSrc =
+    typeof item.previewImg === "string" ? item.previewImg : item.previewImg?.src || "";
 
   return (
     <a
@@ -457,11 +466,16 @@ function LandingPageCard({ item }: { item: LandingCardData }) {
         <div className="flex h-5 sm:h-6 items-center rounded-md bg-black/50 px-2 sm:px-3 text-[9px] sm:text-[10px] text-neutral-300 font-mono truncate max-w-[140px] sm:max-w-[170px]">
           https://{item.url}
         </div>
-        <ArrowUpRight size={13} className="text-neutral-400 group-hover:text-white transition-colors" />
+        <ArrowUpRight
+          size={13}
+          className="text-neutral-400 group-hover:text-white transition-colors"
+        />
       </div>
 
       {/* Screen Content: Rich Website UI Layout */}
-      <div className={`flex-1 p-3.5 sm:p-4 flex flex-col justify-between bg-gradient-to-b ${item.bgGradient}`}>
+      <div
+        className={`flex-1 p-3.5 sm:p-4 flex flex-col justify-between bg-gradient-to-b ${item.bgGradient}`}
+      >
         <div>
           {/* Mini website navbar */}
           <div className="flex items-center justify-between border-b border-white/10 pb-2">
@@ -505,8 +519,14 @@ function LandingPageCard({ item }: { item: LandingCardData }) {
           {/* Key Metrics Grid */}
           <div className="mt-3 grid grid-cols-3 gap-1.5 border-t border-white/10 pt-2.5">
             {item.stats.map((s, idx) => (
-              <div key={idx} className="rounded-lg bg-black/40 p-1.5 text-center border border-white/5">
-                <span className="block font-display text-[12px] sm:text-[14px] font-black text-white" style={{ color: idx === 0 ? item.accentColor : undefined }}>
+              <div
+                key={idx}
+                className="rounded-lg bg-black/40 p-1.5 text-center border border-white/5"
+              >
+                <span
+                  className="block font-display text-[12px] sm:text-[14px] font-black text-white"
+                  style={{ color: idx === 0 ? item.accentColor : undefined }}
+                >
                   {s.value}
                 </span>
                 <span className="block text-[8px] font-medium text-neutral-400 mt-0.5 truncate">
@@ -524,7 +544,10 @@ function LandingPageCard({ item }: { item: LandingCardData }) {
           </span>
           <div className="inline-flex items-center gap-1 text-[11px] font-bold text-white group-hover:underline">
             <span>View Site</span>
-            <ArrowUpRight size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <ArrowUpRight
+              size={13}
+              className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
           </div>
         </div>
       </div>
@@ -542,14 +565,53 @@ const TABS: { id: TabKey; label: string }[] = [
   { id: "ugc", label: "UGC" },
 ];
 
+interface DynamicShowcaseItem {
+  id: string;
+  category: string;
+  isActive: boolean;
+  videoUrl?: string;
+  posterUrl?: string;
+  sender?: string;
+  subject?: string;
+  tag?: string;
+  subnav?: string[];
+  heroImg?: string;
+  heroImageUrl?: string;
+  heading?: string;
+  subheading?: string;
+  ctaText?: string;
+  accentColor?: string;
+  theme?: "dark" | "light";
+  footerText?: string;
+  client?: string;
+  url?: string;
+  projectUrl?: string;
+  previewImg?: string;
+  previewImageUrl?: string;
+  title?: string;
+  highlight?: string;
+  description?: string;
+  stats?: { label: string; value: string }[];
+  bgGradient?: string;
+}
+
+interface DynamicShowcaseSettings {
+  sectionEnabled?: boolean;
+  sectionBadge?: string;
+  badgeText?: string;
+  headingPrefix?: string;
+  headingItalic?: string;
+  marqueeSpeedSeconds?: number;
+}
+
 export function OurWorkSection() {
   const [activeTab, setActiveTab] = useState<TabKey>("ads");
   const sectionRef = useRef<HTMLElement>(null);
   const [isSectionNear, setIsSectionNear] = useState(false);
 
   // Dynamic CMS data
-  const [dynamicItems, setDynamicItems] = useState<any[]>([]);
-  const [dynamicSettings, setDynamicSettings] = useState<any>(null);
+  const [dynamicItems, setDynamicItems] = useState<DynamicShowcaseItem[]>([]);
+  const [dynamicSettings, setDynamicSettings] = useState<DynamicShowcaseSettings | null>(null);
 
   useEffect(() => {
     fetch("/api/showcase")
@@ -683,10 +745,10 @@ export function OurWorkSection() {
 
         {/* Section Heading: Creative that Converts */}
         <h2 className="mt-5 sm:mt-7 lg:mt-9 flex flex-col items-center text-center">
-          <span className="block font-display text-[34px] sm:text-[50px] lg:text-[clamp(50px,6vw,96px)] font-extrabold leading-[0.98] lg:leading-[0.95] tracking-[-0.04em] text-fg">
+          <span className="block font-display text-[42px] sm:text-[60px] lg:text-[clamp(60px,6.8vw,100px)] font-extrabold leading-[0.92] tracking-[-0.04em] text-fg">
             {headingPrefix}
           </span>
-          <span className="block font-serif text-[38px] sm:text-[54px] lg:text-[clamp(54px,6.5vw,104px)] font-normal italic leading-[0.98] lg:leading-[0.95] tracking-[-0.02em] text-fg mt-1">
+          <span className="block font-instrument text-[48px] sm:text-[72px] lg:text-[clamp(72px,8vw,118px)] font-normal italic leading-[0.88] tracking-[-0.02em] text-fg mt-1 sm:mt-2">
             {headingItalic}
           </span>
         </h2>
@@ -695,7 +757,7 @@ export function OurWorkSection() {
         <div
           role="tablist"
           aria-label="Work categories"
-          className="mt-8 sm:mt-10 lg:mt-12 inline-flex items-center gap-1 sm:gap-2 rounded-full border border-line bg-surface p-1.5 sm:p-2 backdrop-blur-md shadow-sm"
+          className="mt-8 sm:mt-10 lg:mt-12 inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-white/10 bg-[#0E0E14]/85 p-1.5 sm:p-2 backdrop-blur-md shadow-sm"
         >
           {TABS.map((tab) => {
             const isActive = activeTab === tab.id;
@@ -707,10 +769,10 @@ export function OurWorkSection() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-[13px] sm:text-[15px] font-semibold transition-all duration-200 cursor-pointer select-none ${
+                className={`relative rounded-full px-5 sm:px-6 py-2 sm:py-2.5 text-[13px] sm:text-[14.5px] font-semibold transition-all duration-200 cursor-pointer select-none ${
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-md"
-                    : "text-muted-foreground hover:text-fg hover:bg-surface-2"
+                    ? "bg-white text-black shadow-md font-bold"
+                    : "text-neutral-400 hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
                 {tab.label}
@@ -841,7 +903,7 @@ export function OurWorkSection() {
           <p className="font-display text-[26px] sm:text-[30px] font-bold leading-[1.05] tracking-tight text-fg">
             Want more
           </p>
-          <p className="font-serif text-[28px] sm:text-[34px] italic font-normal leading-[1.05] tracking-tight text-fg/80 dark:text-neutral-300 mt-0.5">
+          <p className="font-instrument text-[30px] sm:text-[38px] italic font-normal leading-[0.95] tracking-tight text-fg/90 dark:text-neutral-200 mt-0.5">
             inspiration?
           </p>
         </div>
