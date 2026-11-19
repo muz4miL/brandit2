@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import type { StaticImageData } from "next/image";
 import { ArrowRight } from "lucide-react";
 
 import creativeImg from "@/assets/service-creative.jpg";
@@ -18,7 +19,7 @@ interface ServiceCardItem {
   id: string;
   titleSans: string;
   titleSerif: string;
-  image: any;
+  image: StaticImageData | string;
   alt: string;
   link: string;
 }
@@ -166,16 +167,16 @@ export function ServiceCards() {
 
         {/* Section Headline */}
         <h2 className="mt-5 sm:mt-7 lg:mt-9 select-none text-center">
-          <span className="block font-display text-[34px] sm:text-[48px] lg:text-[clamp(48px,5.4vw,88px)] font-extrabold leading-[0.98] lg:leading-[0.96] tracking-[-0.04em] text-white">
+          <span className="block font-display text-[38px] sm:text-[54px] lg:text-[clamp(54px,6.2vw,96px)] font-extrabold leading-[0.92] tracking-[-0.04em] text-white">
             We Mastered
           </span>
-          <span className="block font-serif text-[36px] sm:text-[50px] lg:text-[clamp(50px,5.6vw,94px)] font-normal italic leading-[0.98] lg:leading-[0.96] tracking-[-0.02em] text-white mt-1">
+          <span className="block font-instrument text-[42px] sm:text-[62px] lg:text-[clamp(62px,7vw,110px)] font-normal italic leading-[0.88] tracking-[-0.02em] text-white mt-1 sm:mt-2">
             The Art & Science of Scale
           </span>
         </h2>
 
         {/* Subtitle */}
-        <p className="mt-4 sm:mt-6 max-w-[560px] text-center text-[15px] sm:text-[17px] lg:text-[19px] font-normal leading-[1.45] text-[#A1A1AA]">
+        <p className="mt-4 sm:mt-6 max-w-[560px] text-center text-[15px] sm:text-[17px] lg:text-[18px] font-normal leading-[1.45] text-neutral-400">
           Performance marketers, strategists and top-tier creatives under one roof.
         </p>
       </div>
@@ -215,15 +216,15 @@ export function ServiceCards() {
               />
 
               {/* Gradient Vignettes for supreme readability */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/75 via-black/30 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/80 via-black/35 to-transparent" />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
               {/* Card Typography at TOP LEFT */}
               <div className="relative z-10 p-5 sm:p-7 lg:p-8 flex flex-col items-start text-left">
-                <span className="font-display text-[24px] sm:text-[30px] lg:text-[36px] font-extrabold leading-[0.94] tracking-tight text-white drop-shadow-md">
+                <span className="font-display text-[26px] sm:text-[32px] lg:text-[38px] font-extrabold leading-[0.92] tracking-tight text-white drop-shadow-md">
                   {item.titleSans}
                 </span>
-                <span className="font-serif text-[26px] sm:text-[32px] lg:text-[38px] font-normal italic leading-[0.94] tracking-normal text-white drop-shadow-md mt-0.5">
+                <span className="font-instrument text-[30px] sm:text-[38px] lg:text-[44px] font-normal italic leading-[0.9] tracking-normal text-white/95 drop-shadow-md mt-0.5">
                   {item.titleSerif}
                 </span>
               </div>
@@ -231,7 +232,10 @@ export function ServiceCards() {
               {/* Circular dark action button at BOTTOM RIGHT */}
               <div className="absolute bottom-5 right-5 sm:bottom-6 sm:right-6 z-10">
                 <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:border-white group-hover:scale-110 shadow-lg">
-                  <ArrowRight size={17} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                  <ArrowRight
+                    size={17}
+                    className="transition-transform duration-300 group-hover:translate-x-0.5"
+                  />
                 </div>
               </div>
             </a>

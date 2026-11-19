@@ -350,12 +350,12 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/60 to-transparent" />
 
-                        {/* Top title with bold sans and Fraunces italic serif line */}
+                        {/* Top title with bold sans and Instrument Serif italic line */}
                         <div className="relative z-10">
                           <span className="block font-display text-[15px] font-extrabold leading-tight tracking-tight text-white">
                             {item.title}
                           </span>
-                          <span className="block font-serif text-[16px] font-normal italic text-neutral-300 leading-snug">
+                          <span className="block font-instrument text-[18px] font-normal italic text-neutral-300 leading-snug">
                             {item.serifLine}
                           </span>
                         </div>
@@ -398,7 +398,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                       {/* Headline with serif italic accent */}
                       <h3 className="font-display text-[26px] lg:text-[28px] font-extrabold leading-[1.08] tracking-tight text-white">
                         All the services{" "}
-                        <span className="font-serif italic font-normal text-white block mt-0.5">
+                        <span className="font-instrument italic font-normal text-white text-[1.08em] block mt-0.5">
                           you need to scale
                         </span>
                       </h3>

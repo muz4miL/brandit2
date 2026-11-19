@@ -107,7 +107,7 @@ export function Leadership() {
 
           <h2 className="mt-5 font-display text-[clamp(36px,5.2vw,72px)] font-extrabold tracking-[-0.03em] text-fg leading-[1.04] max-w-4xl">
             The system behind{" "}
-            <span className="font-serif italic font-normal text-fg">brandit.</span>
+            <span className="font-instrument italic font-normal text-fg">brandit.</span>
           </h2>
 
           <p className="mt-5 max-w-[760px] font-sans text-[16px] sm:text-[18px] text-muted-foreground leading-relaxed">
