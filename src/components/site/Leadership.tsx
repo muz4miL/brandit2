@@ -74,7 +74,7 @@ export function Leadership() {
     if (index === 0 && founderData) {
       const bioText = [founderData.bioParagraph1, founderData.bioParagraph2]
         .filter(Boolean)
-        .join(" ")
+        .join("\n\n")
         .trim();
 
       return {
@@ -82,7 +82,7 @@ export function Leadership() {
         name: founderData.name?.trim() ? founderData.name : member.name,
         role: founderData.role?.trim() ? founderData.role : member.role,
         image: founderData.image?.trim() ? founderData.image : member.image,
-        bio: bioText || founderData.bio || member.bio,
+        bio: founderData.bio?.trim() || bioText || member.bio,
       };
     }
     return member;
@@ -106,7 +106,8 @@ export function Leadership() {
           <SectionBadge>ABOUT THE CEO</SectionBadge>
 
           <h2 className="mt-5 font-display text-[clamp(36px,5.2vw,72px)] font-extrabold tracking-[-0.03em] text-fg leading-[1.04] max-w-4xl">
-            The system behind <span className="font-serif italic font-normal text-fg">brandit.</span>
+            The system behind{" "}
+            <span className="font-serif italic font-normal text-fg">brandit.</span>
           </h2>
 
           <p className="mt-5 max-w-[760px] font-sans text-[16px] sm:text-[18px] text-muted-foreground leading-relaxed">

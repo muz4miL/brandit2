@@ -19,28 +19,33 @@ export function HeroButton({
     <a
       href={href}
       aria-label={label}
-      className={`group relative inline-flex h-[68px] w-full max-w-[345px] shrink-0 select-none cursor-pointer items-center justify-between rounded-full bg-primary p-[5px] text-primary-foreground shadow-[0_0_28px_rgba(255,255,255,0.12)] transition-all duration-300 hover:scale-[1.02] hover:bg-surface hover:text-fg active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-fg focus-visible:outline-offset-4 sm:h-[74px] ${className}`}
+      className={`group relative inline-flex h-[64px] sm:h-[72px] w-full max-w-[340px] sm:max-w-[360px] shrink-0 select-none cursor-pointer items-center justify-between rounded-full bg-[#0A0A0F]/90 backdrop-blur-xl border border-white/20 px-5 sm:px-6 shadow-[0_0_32px_rgba(255,255,255,0.06)] transition-all duration-300 hover:scale-[1.02] hover:border-white/45 hover:shadow-[0_0_40px_rgba(255,255,255,0.12)] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-white ${className}`}
     >
+      {/* Subtle outer pulsing hairline glow */}
       <span
-        className="pointer-events-none absolute -inset-[2px] animate-hero-border-pulse rounded-full border-2 border-primary/40"
+        className="pointer-events-none absolute -inset-[2px] animate-hero-border-pulse rounded-full border border-white/30 opacity-70 group-hover:opacity-100"
         aria-hidden="true"
       />
-      <div className="relative z-10 flex h-full w-full items-center justify-between rounded-full border border-white/20 px-5 sm:px-6 transition-colors duration-300 group-hover:border-transparent">
-        <span className="whitespace-nowrap text-[15px] font-bold text-primary-foreground transition-colors duration-300 group-hover:text-fg sm:text-[17px]">
-          {leftText}
-        </span>
-        <div className="relative flex items-center justify-center mx-2 shrink-0">
-          <div className="absolute inset-0 rounded-[12px] bg-white blur-[8px] opacity-20 transition-opacity duration-300 group-hover:opacity-40" />
-          <div className="relative grid h-[42px] w-[42px] place-items-center rounded-[12px] bg-surface shadow-[0_0_14px_rgba(255,255,255,0.3)] transition-colors group-hover:bg-primary sm:h-[46px] sm:w-[46px]">
-            <span className="pl-0.5 font-display text-[21px] font-black leading-none text-fg group-hover:text-primary-foreground sm:text-[24px]">
-              b.
-            </span>
-          </div>
+
+      {/* Left Text */}
+      <span className="whitespace-nowrap font-display text-[15px] sm:text-[17px] font-bold tracking-tight text-white transition-colors duration-300">
+        {leftText}
+      </span>
+
+      {/* Center Icon Badge */}
+      <div className="relative flex items-center justify-center mx-2.5 shrink-0">
+        <div className="absolute inset-0 rounded-full bg-white blur-[10px] opacity-25 transition-opacity duration-300 group-hover:opacity-50" />
+        <div className="relative grid h-[42px] w-[42px] sm:h-[46px] sm:w-[46px] place-items-center rounded-full bg-white text-black shadow-[0_0_16px_rgba(255,255,255,0.35)] transition-transform duration-300 group-hover:scale-105">
+          <span className="pl-0.5 font-display text-[20px] sm:text-[23px] font-black leading-none text-black">
+            b.
+          </span>
         </div>
-        <span className="whitespace-nowrap text-[15px] font-bold text-primary-foreground transition-colors duration-300 group-hover:text-fg sm:text-[17px]">
-          {rightText}
-        </span>
       </div>
+
+      {/* Right Text */}
+      <span className="whitespace-nowrap font-display text-[15px] sm:text-[17px] font-bold tracking-tight text-white transition-colors duration-300">
+        {rightText}
+      </span>
     </a>
   );
 }

@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import { getCollections } from "@/server/db";
 
-export const revalidate = 10;
+export const revalidate = 0;
 
 export async function GET() {
   try {
     const { siteSettings } = await getCollections();
-    const settingsDoc = await siteSettings.findOne({ agencyName: "brandit." });
+    const settingsDoc =
+      (await siteSettings.findOne({ agencyName: "brandit." })) || (await siteSettings.findOne({}));
 
     return NextResponse.json({
       settings: settingsDoc

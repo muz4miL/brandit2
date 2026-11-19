@@ -62,7 +62,7 @@ export default function HomePage() {
           <Hero />
         </div>
 
-        {/* Section 2 — Trust Bar (3 years · 14+ businesses · 8 countries) */}
+        {/* Section 2 — As Featured In (Floating Logo Strip matching Defiant) */}
         <LogoMarquee />
 
         {/* Section 3 — Welcome to brandit.® (Defiant Manifesto Section) */}

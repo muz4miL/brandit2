@@ -3,10 +3,13 @@
 import { useState, useRef } from "react";
 import { Save, UploadCloud, RefreshCw, X, Image as ImageIcon } from "lucide-react";
 import { adminUpdateSiteSettingsFn, adminUploadMediaFn } from "@/api/admin";
+import type { SiteSettingsDoc } from "@/server/types";
+
+type EditableSiteSettings = Partial<SiteSettingsDoc> & Record<string, unknown>;
 
 interface SettingsTabProps {
-  siteSettings: any;
-  setSiteSettings: React.Dispatch<React.SetStateAction<any>>;
+  siteSettings: EditableSiteSettings;
+  setSiteSettings: React.Dispatch<React.SetStateAction<EditableSiteSettings>>;
   onNotice: (text: string, type?: "success" | "error") => void;
 }
 
@@ -21,8 +24,9 @@ export function SettingsTab({ siteSettings, setSiteSettings, onNotice }: Setting
     try {
       await adminUpdateSiteSettingsFn({ data: siteSettings });
       onNotice("Agency settings saved successfully.");
-    } catch (err: any) {
-      onNotice(err?.message || "Failed to save settings", "error");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to save settings";
+      onNotice(msg, "error");
     } finally {
       setIsSaving(false);
     }
@@ -36,7 +40,7 @@ export function SettingsTab({ siteSettings, setSiteSettings, onNotice }: Setting
       formData.append("file", file);
       const res = await adminUploadMediaFn(formData);
       if (res.success && res.url) {
-        setSiteSettings((prev: any) => ({
+        setSiteSettings((prev) => ({
           ...prev,
           founder: {
             ...prev.founder,
@@ -45,8 +49,9 @@ export function SettingsTab({ siteSettings, setSiteSettings, onNotice }: Setting
         }));
         onNotice("Founder portrait uploaded successfully!");
       }
-    } catch (err: any) {
-      onNotice(err?.message || "Image upload failed", "error");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Image upload failed";
+      onNotice(msg, "error");
     } finally {
       setIsUploadingImage(false);
     }
@@ -67,7 +72,8 @@ export function SettingsTab({ siteSettings, setSiteSettings, onNotice }: Setting
           Agency Settings &amp; Leadership Bio
         </h2>
         <p className="text-xs text-neutral-400 mt-1">
-          Configure direct inquiry dispatch coordinates, WhatsApp routing, and executive founder positioning.
+          Configure direct inquiry dispatch coordinates, WhatsApp routing, and executive founder
+          positioning.
         </p>
       </div>
 
@@ -83,9 +89,7 @@ export function SettingsTab({ siteSettings, setSiteSettings, onNotice }: Setting
             <input
               type="email"
               value={siteSettings.contactEmail || ""}
-              onChange={(e) =>
-                setSiteSettings({ ...siteSettings, contactEmail: e.target.value })
-              }
+              onChange={(e) => setSiteSettings({ ...siteSettings, contactEmail: e.target.value })}
               placeholder="e.g. contact@yourdomain.com"
               className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white focus:border-white focus:outline-none"
             />
@@ -98,9 +102,7 @@ export function SettingsTab({ siteSettings, setSiteSettings, onNotice }: Setting
             <input
               type="text"
               value={siteSettings.phoneWhatsApp || ""}
-              onChange={(e) =>
-                setSiteSettings({ ...siteSettings, phoneWhatsApp: e.target.value })
-              }
+              onChange={(e) => setSiteSettings({ ...siteSettings, phoneWhatsApp: e.target.value })}
               placeholder="+971 52 534 7120"
               className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white focus:border-white focus:outline-none"
             />
@@ -114,9 +116,7 @@ export function SettingsTab({ siteSettings, setSiteSettings, onNotice }: Setting
           <input
             type="url"
             value={siteSettings.whatsappLink || ""}
-            onChange={(e) =>
-              setSiteSettings({ ...siteSettings, whatsappLink: e.target.value })
-            }
+            onChange={(e) => setSiteSettings({ ...siteSettings, whatsappLink: e.target.value })}
             placeholder="https://wa.me/971525347120"
             className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white focus:border-white focus:outline-none"
           />
@@ -260,6 +260,27 @@ export function SettingsTab({ siteSettings, setSiteSettings, onNotice }: Setting
 
           {/* Bio Textareas */}
           <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-neutral-400 mb-1.5">
+                CEO Bio (Summary or Full Text)
+              </label>
+              <textarea
+                rows={3}
+                value={founder.bio || ""}
+                onChange={(e) =>
+                  setSiteSettings({
+                    ...siteSettings,
+                    founder: {
+                      ...founder,
+                      bio: e.target.value,
+                    },
+                  })
+                }
+                placeholder="Umar Orakzai leads brandit. with a clear focus on building distinctive brands, thoughtful digital experiences, and growth systems that create lasting commercial impact."
+                className="w-full rounded-xl border border-white/10 bg-white/[0.03] p-3 text-xs text-white focus:border-white focus:outline-none leading-relaxed font-sans"
+              />
+            </div>
+
             <div>
               <label className="block text-xs font-semibold text-neutral-400 mb-1.5">
                 Bio Paragraph 1 (Arena &amp; Background)

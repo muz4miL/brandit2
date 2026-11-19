@@ -722,10 +722,10 @@ export interface TeamMember {
 
 export const teamMembers: TeamMember[] = [
   {
-    name: "Umar Farooq",
-    role: "Founder & CEO",
-    initials: "UF",
-    bio: "I sharpened my craft inside the UAE — one of the most competitive marketing arenas on earth. I built the content system for the country’s largest real estate brokerage, turned a property data platform into a trusted authority, and grew a founder’s brand to six figures.\n\nI’ve personally sat in every seat: shooting, editing, designing, buying media, and writing the strategy. That’s why brandit. runs on systems instead of guesswork — I’m not directing work I’ve never done.\n\nToday a trained specialist team executes to those standards, and I stay on every account as the senior strategist. You get senior thinking with full agency capacity, and one person to call.",
+    name: "Umar Orakzai",
+    role: "Chief Executive Officer",
+    initials: "UO",
+    bio: "Umar Orakzai leads brandit. with a clear focus on building distinctive brands, thoughtful digital experiences, and growth systems that create lasting commercial impact.",
     image: "/omar2.jpg",
   },
 ];
