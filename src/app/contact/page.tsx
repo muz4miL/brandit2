@@ -2,17 +2,18 @@ import type { Metadata } from "next";
 import { ContactContent } from "./ContactContent";
 
 export const metadata: Metadata = {
-  title: "Contact & Discovery Call | brandit. — Your Brand, Everywhere. On Purpose.",
+  title: "Contact",
   description:
-    "Good things start with a conversation. Tell us what you’re building, what needs to change, or where you want to go. Free 30-minute strategy call.",
+    "Contact information, enquiry form, WhatsApp link and discovery-call booking destination.",
   keywords: [
     "contact brandit",
-    "book strategy call",
-    "growth audit",
-    "creative performance consultation",
+    "book discovery call",
+    "growth systems enquiry",
+    "UAE marketing agency contact",
+    "brandit",
   ],
-  authors: [{ name: "brandit.", url: "https://brandit.agency/contact" }],
-  publisher: "brandit. Digital Creative Agency",
+  authors: [{ name: "brandit.", url: "/contact" }],
+  publisher: "brandit.",
   robots: {
     index: true,
     follow: true,
@@ -21,11 +22,10 @@ export const metadata: Metadata = {
     canonical: "/contact",
   },
   openGraph: {
-    title: "Contact & Discovery Call | brandit.",
+    title: "Contact | brandit.",
     description:
-      "Good things start with a conversation. Let’s make your next move count.",
+      "Contact information, enquiry form, WhatsApp link and discovery-call booking destination.",
     type: "website",
-    url: "https://brandit.agency/contact",
   },
 };
 

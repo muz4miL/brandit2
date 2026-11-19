@@ -86,7 +86,7 @@ export function SettingsTab({ siteSettings, setSiteSettings, onNotice }: Setting
               onChange={(e) =>
                 setSiteSettings({ ...siteSettings, contactEmail: e.target.value })
               }
-              placeholder="info@brandit.agency"
+              placeholder="e.g. contact@yourdomain.com"
               className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs text-white focus:border-white focus:outline-none"
             />
           </div>

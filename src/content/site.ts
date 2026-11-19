@@ -1,5 +1,6 @@
 // Central authoritative content for brandit.
 // All copy, services, packages, case studies, and team profiles live here.
+import type { StaticImageData } from "next/image";
 import halo from "@/assets/work-identity-halo.jpg";
 import pulse from "@/assets/work-identity-pulse.jpg";
 import zest from "@/assets/work-social-juice.jpg";
@@ -14,12 +15,7 @@ import serviceAds from "@/assets/service-ads.jpg";
 import servicePackages from "@/assets/service-packages.jpg";
 
 export type ServiceCategory =
-  | "consultancy"
-  | "web-dev"
-  | "content"
-  | "social-media"
-  | "seo"
-  | "email-marketing";
+  "consultancy" | "web-dev" | "content" | "social-media" | "seo" | "email-marketing";
 
 export const serviceCategoryLabels: Record<ServiceCategory, string> = {
   consultancy: "Marketing Consultancy",
@@ -30,38 +26,47 @@ export const serviceCategoryLabels: Record<ServiceCategory, string> = {
   "email-marketing": "Email Marketing",
 };
 
+export const BRAND_NAME = "brandit.";
+export const BRAND_TAGLINE =
+  "Marketing systems, content, and performance. UAE-forged. Delivered worldwide.";
+export const BRAND_COPYRIGHT = "© brandit. 2026";
+export const BRAND_WHATSAPP_NUMBER = "+971 52 534 7120";
+export const BRAND_WHATSAPP_LINK = "https://wa.me/971525347120";
+
 export const nav = [
-  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Services & Packages", href: "/services" },
+  { label: "Services", href: "/services" },
+  { label: "Our Work", href: "/our-work" },
   { label: "Case Studies", href: "/case-studies" },
+  { label: "brandit. Studio", href: "/studio" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const siteMeta = {
-  agencyName: "brandit.",
-  tagline: "Your Brand, Everywhere. On Purpose.",
+  agencyName: BRAND_NAME,
+  tagline: BRAND_TAGLINE,
   subHeadline:
-    "We put your business in front of the right customers: on your website, in their feeds, in search results, and in their inbox, with a clear reason behind every appearance.",
-  primaryCTA: "Request a Free Strategy Call",
+    "brandit. is a full-service marketing agency — paid ads, content production, branding, websites, and automation. Forged in the UAE. Delivered worldwide.",
+  primaryCTA: "Book a Discovery Call",
   primaryCTALink: "/contact",
-  microcopy:
-    "Free 30-minute consultation. We review your marketing and share recommendations, whether or not you hire us.",
-  trustNumbers: [
-    { value: "3 Years", label: "Agency Experience" },
-    { value: "14+ Businesses", label: "Supported Globally" },
-    { value: "8 Countries", label: "Client Reach" },
-  ],
-  trustBarSummary: "3 years · 14+ businesses · 8 countries",
+  microcopy: "Direct senior thinking with our founder. Full agency capacity, one person to call.",
+  // Client has not provided public contact email yet (brief: "[Brandit to provide email address]").
+  // Empty email indicates element should be hidden per Rule 1.
   contact: {
-    email: "info@brandit.com",
-    phone: "+92 337 3252840",
-    phoneDisplay: "+92 337 3252840",
-    office:
-      "Arbab Plaza, Taroon Wedding Hall Rd, Canal Town, Peshawar, 25000",
-    responseTime: "We reply within 24 hours.",
-    closingLine:
-      "Attention should never be accidental. Let’s make yours on purpose.",
+    email: "",
+    phone: BRAND_WHATSAPP_NUMBER,
+    phoneDisplay: BRAND_WHATSAPP_NUMBER,
+    whatsapp: BRAND_WHATSAPP_NUMBER,
+    whatsappLink: BRAND_WHATSAPP_LINK,
+    office: "United Arab Emirates",
+    responseTime: "We reply promptly via WhatsApp and enquiry forms.",
+    closingLine: BRAND_TAGLINE,
+  },
+  social: {
+    instagram: "https://instagram.com/brandit.",
+    linkedin: "https://linkedin.com/company/brandit.",
+    whatsapp: BRAND_WHATSAPP_LINK,
   },
 };
 
@@ -98,8 +103,7 @@ export const packages: PackageData[] = [
     ],
     timeline: "2 to 3 weeks",
     payment: "One-time",
-    promise:
-      "Delivered on the agreed date, with revisions until you approve.",
+    promise: "Delivered on the agreed date, with revisions until you approve.",
     investment: "Enquire for pricing",
     ctaText: "Get Started",
   },
@@ -109,8 +113,7 @@ export const packages: PackageData[] = [
     badge: "Most Popular",
     isPopular: true,
     tagline: "“I’m growing, but my marketing is inconsistent.”",
-    heading:
-      "A website that converts and content that brings customers, every month.",
+    heading: "A website that converts and content that brings customers, every month.",
     theProblem:
       "Your online presence is weak or patchy, and enquiries come in waves instead of steadily.",
     deliverables: [
@@ -134,10 +137,8 @@ export const packages: PackageData[] = [
     name: "Authority",
     badge: "Custom-Built",
     tagline: "“I want to lead my market.”",
-    heading:
-      "A growth plan built around your business, your market, and your competitors.",
-    theProblem:
-      "Competitors outrank you, out-post you, and stay in front of your customers.",
+    heading: "A growth plan built around your business, your market, and your competitors.",
+    theProblem: "Competitors outrank you, out-post you, and stay in front of your customers.",
     deliverables: [
       "Everything in Accelerate plus tailored expansions",
       "Deep market, competitor, and audience intelligence",
@@ -241,7 +242,7 @@ export interface ServiceDetail {
   includedIn: string;
   summary: string;
   bullets: string[];
-  image: any;
+  image: StaticImageData | string;
   proofCaseStudyId?: string;
 }
 
@@ -252,7 +253,7 @@ export interface CanonicalService {
   serifLine: string;
   summary: string;
   bullets: string[];
-  image: any;
+  image: StaticImageData | string;
   enquireHref: string;
 }
 
@@ -262,8 +263,14 @@ export const canonicalServices: CanonicalService[] = [
     slug: "meta-ads",
     title: "Meta",
     serifLine: "Ads",
-    summary: "Turn attention into qualified demand with disciplined Meta and Instagram campaigns built around your offer.",
-    bullets: ["Audience and offer research", "Campaign architecture and testing", "Creative direction and iteration", "Plain-language performance reporting"],
+    summary:
+      "Turn attention into qualified demand with disciplined Meta and Instagram campaigns built around your offer.",
+    bullets: [
+      "Audience and offer research",
+      "Campaign architecture and testing",
+      "Creative direction and iteration",
+      "Plain-language performance reporting",
+    ],
     image: serviceAds,
     enquireHref: "/contact?service=meta-ads",
   },
@@ -272,8 +279,14 @@ export const canonicalServices: CanonicalService[] = [
     slug: "google-ads",
     title: "Google & YouTube",
     serifLine: "Ads",
-    summary: "Capture high-intent searches and video demand with campaigns that connect spend to revenue.",
-    bullets: ["Search and YouTube account structure", "Keyword and audience strategy", "Conversion tracking and optimisation", "Weekly priorities tied to performance"],
+    summary:
+      "Capture high-intent searches and video demand with campaigns that connect spend to revenue.",
+    bullets: [
+      "Search and YouTube account structure",
+      "Keyword and audience strategy",
+      "Conversion tracking and optimisation",
+      "Weekly priorities tied to performance",
+    ],
     image: serviceIdentity,
     enquireHref: "/contact?service=google-ads",
   },
@@ -282,8 +295,14 @@ export const canonicalServices: CanonicalService[] = [
     slug: "tiktok-vertical-video",
     title: "TikTok &",
     serifLine: "Vertical Video",
-    summary: "Build a steady stream of platform-native vertical creative that earns attention without feeling like an advert.",
-    bullets: ["Concepts made for the feed", "Hooks, scripts, and shot lists", "Editing for retention and clarity", "Creative testing roadmap"],
+    summary:
+      "Build a steady stream of platform-native vertical creative that earns attention without feeling like an advert.",
+    bullets: [
+      "Concepts made for the feed",
+      "Hooks, scripts, and shot lists",
+      "Editing for retention and clarity",
+      "Creative testing roadmap",
+    ],
     image: serviceSocial,
     enquireHref: "/contact?service=tiktok-vertical-video",
   },
@@ -292,8 +311,14 @@ export const canonicalServices: CanonicalService[] = [
     slug: "performance-creative",
     title: "Performance",
     serifLine: "Creative",
-    summary: "Give every campaign stronger assets with creative designed to make the value obvious and the next step easy.",
-    bullets: ["Ad concepts and visual systems", "Copy and design variations", "Landing-to-ad message alignment", "Iteration based on real results"],
+    summary:
+      "Give every campaign stronger assets with creative designed to make the value obvious and the next step easy.",
+    bullets: [
+      "Ad concepts and visual systems",
+      "Copy and design variations",
+      "Landing-to-ad message alignment",
+      "Iteration based on real results",
+    ],
     image: zest,
     enquireHref: "/contact?service=performance-creative",
   },
@@ -302,8 +327,14 @@ export const canonicalServices: CanonicalService[] = [
     slug: "cro-landing-pages",
     title: "CRO & Landing",
     serifLine: "Pages",
-    summary: "Remove friction from the journey between click and enquiry with focused, measurable conversion improvements.",
-    bullets: ["Conversion audits and prioritisation", "High-intent landing page structure", "Clearer proof, offers, and CTAs", "Testing plan for continuous gains"],
+    summary:
+      "Remove friction from the journey between click and enquiry with focused, measurable conversion improvements.",
+    bullets: [
+      "Conversion audits and prioritisation",
+      "High-intent landing page structure",
+      "Clearer proof, offers, and CTAs",
+      "Testing plan for continuous gains",
+    ],
     image: rise,
     enquireHref: "/contact?service=cro-landing-pages",
   },
@@ -313,7 +344,12 @@ export const canonicalServices: CanonicalService[] = [
     title: "Email & SMS",
     serifLine: "Marketing",
     summary: "Turn owned attention into repeat revenue with useful, timely email and SMS journeys.",
-    bullets: ["Welcome and nurture journeys", "Campaign planning and copy", "Segmentation and personalisation", "Reporting that improves each send"],
+    bullets: [
+      "Welcome and nurture journeys",
+      "Campaign planning and copy",
+      "Segmentation and personalisation",
+      "Reporting that improves each send",
+    ],
     image: servicePackages,
     enquireHref: "/contact?service=email-sms",
   },
@@ -322,8 +358,14 @@ export const canonicalServices: CanonicalService[] = [
     slug: "web-design-development",
     title: "Web Design &",
     serifLine: "Development",
-    summary: "Create a fast, credible digital home that makes your offer clear and guides the right visitors to act.",
-    bullets: ["Conversion-led information architecture", "Responsive visual design", "Fast, accessible implementation", "Analytics and SEO-ready foundations"],
+    summary:
+      "Create a fast, credible digital home that makes your offer clear and guides the right visitors to act.",
+    bullets: [
+      "Conversion-led information architecture",
+      "Responsive visual design",
+      "Fast, accessible implementation",
+      "Analytics and SEO-ready foundations",
+    ],
     image: rise,
     enquireHref: "/contact?service=web-design-development",
   },
@@ -332,8 +374,14 @@ export const canonicalServices: CanonicalService[] = [
     slug: "branding-visual-direction",
     title: "Branding &",
     serifLine: "Visual Direction",
-    summary: "Make the business feel as credible as the ambition with a recognisable visual system built to scale.",
-    bullets: ["Positioning and visual direction", "Identity and design language", "Campaign-ready brand assets", "Practical usage guidance"],
+    summary:
+      "Make the business feel as credible as the ambition with a recognisable visual system built to scale.",
+    bullets: [
+      "Positioning and visual direction",
+      "Identity and design language",
+      "Campaign-ready brand assets",
+      "Practical usage guidance",
+    ],
     image: serviceIdentity,
     enquireHref: "/contact?service=branding-visual-direction",
   },
@@ -445,8 +493,8 @@ export interface CaseStudy {
   client: string;
   industry: string;
   categories: ServiceCategory[];
-  cover: any;
-  gallery: any[];
+  cover: StaticImageData | string;
+  gallery: (StaticImageData | string)[];
   summary: string;
   challenge: string;
   delivered: string[];
@@ -521,8 +569,7 @@ export const caseStudies: CaseStudy[] = [
     gallery: [pulse, zest],
     summary:
       "Prototype case study demonstrating structured content calendar workflows and monthly social publishing.",
-    challenge:
-      "Development placeholder for fitness and wellness publishing cadence.",
+    challenge: "Development placeholder for fitness and wellness publishing cadence.",
     delivered: [
       "Monthly content calendar with weekly themes and hooks",
       "12 monthly carousel posts and 8 short-form vertical reels",
@@ -567,8 +614,7 @@ export const caseStudies: CaseStudy[] = [
     gallery: [zest, skin],
     summary:
       "Prototype case study demonstrating fast-turnaround visual identity rollout under the Kickstart package.",
-    challenge:
-      "Development placeholder detailing 3-week product launch timeline.",
+    challenge: "Development placeholder detailing 3-week product launch timeline.",
     delivered: [
       "Launch visual identity guidelines and social asset kit",
       "Fast product showcase microsite",
@@ -676,10 +722,10 @@ export interface TeamMember {
 
 export const teamMembers: TeamMember[] = [
   {
-    name: "Umar Orakzai",
-    role: "Chief Executive Officer",
-    initials: "U",
-    bio: "Umar Orakzai leads brandit. with a clear focus on building distinctive brands, thoughtful digital experiences, and growth systems that create lasting commercial impact.",
+    name: "Umar Farooq",
+    role: "Founder & CEO",
+    initials: "UF",
+    bio: "I sharpened my craft inside the UAE — one of the most competitive marketing arenas on earth. I built the content system for the country’s largest real estate brokerage, turned a property data platform into a trusted authority, and grew a founder’s brand to six figures.\n\nI’ve personally sat in every seat: shooting, editing, designing, buying media, and writing the strategy. That’s why brandit. runs on systems instead of guesswork — I’m not directing work I’ve never done.\n\nToday a trained specialist team executes to those standards, and I stay on every account as the senior strategist. You get senior thinking with full agency capacity, and one person to call.",
     image: "/omar2.jpg",
   },
 ];
@@ -755,9 +801,7 @@ export const serviceInterestOptions = [
 export const serviceOptions = serviceInterestOptions;
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
-  return caseStudies.find(
-    (cs) => (cs.slug === slug || cs.id === slug) && cs.isPublished === true,
-  );
+  return caseStudies.find((cs) => (cs.slug === slug || cs.id === slug) && cs.isPublished === true);
 }
 
 export const aboutImages: string[] = [

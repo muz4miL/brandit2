@@ -2,15 +2,7 @@
 
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Instrument_Serif } from "next/font/google";
 import { HeroButton } from "./HeroButton";
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["italic"],
-  display: "swap",
-});
 
 export interface CtaBannerProps {
   eyebrow: string;
@@ -43,11 +35,7 @@ export function CtaBanner({
     <div className={`relative w-full ${className}`}>
       {/* Outer entrance reveal wrapper */}
       <motion.div
-        initial={
-          shouldReduceMotion
-            ? { opacity: 1 }
-            : { opacity: 0, y: 16 }
-        }
+        initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
@@ -102,9 +90,7 @@ export function CtaBanner({
 
               <h2 className="font-display text-[clamp(34px,3.6vw,52px)] font-extrabold text-[#F5F2EC] tracking-[-0.035em] leading-[1.08]">
                 {headingPrefix}{" "}
-                <span
-                  className={`${instrumentSerif.className} italic font-normal text-neutral-300 text-[1.12em] block mt-1 tracking-normal`}
-                >
+                <span className="font-serif italic font-normal text-neutral-300 text-[1.12em] block mt-1 tracking-normal">
                   {accentText}
                 </span>
               </h2>
@@ -135,9 +121,7 @@ export function CtaBanner({
 
               <h2 className="font-display text-[27px] sm:text-[34px] font-extrabold text-[#F5F2EC] tracking-[-0.035em] leading-[1.12]">
                 {headingPrefix}{" "}
-                <span
-                  className={`${instrumentSerif.className} italic font-normal text-neutral-300 text-[1.12em] block mt-1 tracking-normal`}
-                >
+                <span className="font-serif italic font-normal text-neutral-300 text-[1.12em] block mt-1 tracking-normal">
                   {accentText}
                 </span>
               </h2>

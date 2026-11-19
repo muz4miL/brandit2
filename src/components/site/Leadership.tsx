@@ -103,11 +103,10 @@ export function Leadership() {
       <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
         {/* Header Block matching Defiant */}
         <div className="flex flex-col items-center text-center">
-          <SectionBadge>LEADERSHIP</SectionBadge>
+          <SectionBadge>ABOUT THE CEO</SectionBadge>
 
           <h2 className="mt-5 font-display text-[clamp(36px,5.2vw,72px)] font-extrabold tracking-[-0.03em] text-fg leading-[1.04] max-w-4xl">
-            The minds behind <br className="hidden sm:inline" />
-            <span className="font-serif italic font-normal text-fg">the machine</span>
+            The system behind <span className="font-serif italic font-normal text-fg">brandit.</span>
           </h2>
 
           <p className="mt-5 max-w-[760px] font-sans text-[16px] sm:text-[18px] text-muted-foreground leading-relaxed">

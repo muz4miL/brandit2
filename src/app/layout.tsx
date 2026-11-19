@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Inter_Tight, Instrument_Serif } from "next/font/google";
+import { Inter, Inter_Tight, Fraunces } from "next/font/google";
 import "../styles.css";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { SmoothScroll } from "@/providers/SmoothScroll";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { CinematicPreloader } from "@/components/site/CinematicPreloader";
+import { getSiteUrl } from "@/lib/site-url";
 import type { ReactNode } from "react";
 
 const inter = Inter({
@@ -21,9 +22,9 @@ const interTight = Inter_Tight({
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-serif",
   display: "swap",
@@ -34,28 +35,30 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+const siteUrl = getSiteUrl();
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env["SITE_URL"] || "https://brandit.agency"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "brandit. | Digital Creative Agency",
+    default: "brandit. — Marketing Agency | Ads, Content, Branding & Web",
     template: "%s | brandit.",
   },
   description:
-    "brandit. is a digital creative agency that puts your brand in front of the right customers, with a purpose behind every move. Book a free strategy call.",
+    "Full-service marketing agency. Meta, Google & TikTok ads, video and photography production, branding, websites, Shopify and AI automation. UAE-forged, delivered worldwide.",
   keywords: [
-    "digital creative agency",
-    "performance marketing agency",
+    "marketing agency",
+    "growth systems",
+    "paid advertising agency",
+    "performance creative",
+    "content production",
     "brand identity",
-    "Meta ads agency",
-    "Google ads agency",
-    "TikTok creative",
-    "CRO landing pages",
-    "creative performance",
-    "growth marketing",
+    "web stores and automation",
+    "influencer marketing",
+    "UAE marketing agency",
     "brandit",
   ],
-  authors: [{ name: "brandit.", url: "https://brandit.agency" }],
-  creator: "brandit. Digital Creative Agency",
+  authors: [{ name: "brandit.", url: siteUrl }],
+  creator: "brandit.",
   publisher: "brandit.",
   robots: {
     index: true,
@@ -72,18 +75,18 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "brandit. | Digital Creative Agency",
+    title: "brandit. — Marketing Agency | Ads, Content, Branding & Web",
     description:
-      "brandit. is a digital creative agency that puts your brand in front of the right customers, with a purpose behind every move. Book a free strategy call.",
+      "Full-service marketing agency. Meta, Google & TikTok ads, video and photography production, branding, websites, Shopify and AI automation. UAE-forged, delivered worldwide.",
     type: "website",
     siteName: "brandit.",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "brandit. | Digital Creative Agency",
+    title: "brandit. — Marketing Agency | Ads, Content, Branding & Web",
     description:
-      "brandit. is a digital creative agency that puts your brand in front of the right customers, with a purpose behind every move. Book a free strategy call.",
+      "Full-service marketing agency. Meta, Google & TikTok ads, video and photography production, branding, websites, Shopify and AI automation. UAE-forged, delivered worldwide.",
   },
   icons: {
     icon: [{ url: "/brandit-favicon.png?v=2", type: "image/png" }],
@@ -96,7 +99,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${interTight.variable} ${instrumentSerif.variable} dark`}
+      className={`${inter.variable} ${interTight.variable} ${fraunces.variable} dark`}
       suppressHydrationWarning
     >
       <head>

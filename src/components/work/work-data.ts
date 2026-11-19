@@ -7,7 +7,7 @@ export interface WorkProject {
   year: string;
   title: string;
   titlePrefix: string;
-  titleAccent: string; // rendered in Instrument Serif italic monochrome
+  titleAccent: string; // rendered in Fraunces italic monochrome
   outcome: string;
   metric: string;
   metricLabel: string;

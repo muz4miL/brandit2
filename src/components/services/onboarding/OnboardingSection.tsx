@@ -2,15 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from "framer-motion";
-import { Instrument_Serif } from "next/font/google";
 import { TimelineStep } from "./TimelineStep";
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["italic"],
-  display: "swap",
-});
 
 const DEFAULT_CHECKLIST_ITEMS = [
   {
@@ -64,8 +56,10 @@ export function OnboardingSection({
   const [activeStep, setActiveStep] = useState<number>(0);
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
-  const displayChecklist = checklistItems && checklistItems.length > 0 ? checklistItems : DEFAULT_CHECKLIST_ITEMS;
-  const displayTimeline = timelineSteps && timelineSteps.length > 0 ? timelineSteps : DEFAULT_TIMELINE_STEPS;
+  const displayChecklist =
+    checklistItems && checklistItems.length > 0 ? checklistItems : DEFAULT_CHECKLIST_ITEMS;
+  const displayTimeline =
+    timelineSteps && timelineSteps.length > 0 ? timelineSteps : DEFAULT_TIMELINE_STEPS;
 
   const { scrollYProgress } = useScroll({
     target: timelineRef,
@@ -79,7 +73,10 @@ export function OnboardingSection({
   });
 
   const progressScaleY = shouldReduceMotion ? scrollYProgress : smoothProgress;
-  const cometTopPercent = useTransform(progressScaleY, (v) => `${Math.max(0, Math.min(100, v * 100))}%`);
+  const cometTopPercent = useTransform(
+    progressScaleY,
+    (v) => `${Math.max(0, Math.min(100, v * 100))}%`,
+  );
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
@@ -92,8 +89,7 @@ export function OnboardingSection({
 
   const currentActiveIndex = hoveredStep !== null ? hoveredStep : activeStep;
 
-  const activeChecklistIndex =
-    currentActiveIndex === 0 ? 0 : currentActiveIndex <= 2 ? 1 : 2;
+  const activeChecklistIndex = currentActiveIndex === 0 ? 0 : currentActiveIndex <= 2 ? 1 : 2;
 
   return (
     <section
@@ -157,7 +153,7 @@ export function OnboardingSection({
               >
                 The first two weeks{" "}
                 <span
-                  className={`${instrumentSerif.className} italic font-normal text-[1.12em] tracking-normal`}
+                  className="font-serif italic font-normal text-[1.12em] tracking-normal"
                   style={{ color: "var(--gold)" }}
                 >
                   set the tone
@@ -180,9 +176,7 @@ export function OnboardingSection({
                   <div
                     key={`${item.title}-${i}`}
                     className={`flex items-start gap-3.5 transition-all duration-300 ease-out ${
-                      isItemActive
-                        ? "opacity-100 translate-x-1"
-                        : "opacity-45 translate-x-0"
+                      isItemActive ? "opacity-100 translate-x-1" : "opacity-45 translate-x-0"
                     }`}
                   >
                     <div
@@ -232,13 +226,20 @@ export function OnboardingSection({
                     <div>
                       <h3
                         className="font-display font-bold text-[14.5px] leading-snug transition-colors duration-300"
-                        style={{ color: isItemActive ? "var(--foreground)" : "var(--muted-foreground)" }}
+                        style={{
+                          color: isItemActive ? "var(--foreground)" : "var(--muted-foreground)",
+                        }}
                       >
                         {item.title}
                       </h3>
                       <p
                         className="mt-0.5 text-[13px] leading-relaxed transition-colors duration-300"
-                        style={{ color: isItemActive ? "var(--muted-foreground)" : "var(--muted-foreground)", opacity: isItemActive ? 1 : 0.6 }}
+                        style={{
+                          color: isItemActive
+                            ? "var(--muted-foreground)"
+                            : "var(--muted-foreground)",
+                          opacity: isItemActive ? 1 : 0.6,
+                        }}
                       >
                         {item.desc}
                       </p>
@@ -294,7 +295,7 @@ export function OnboardingSection({
                 aria-hidden="true"
                 className="absolute left-0 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full border-2 pointer-events-none z-30 transition-transform duration-100"
                 style={{
-                  top: cometTopPercent as any,
+                  top: cometTopPercent,
                   background: "var(--section-surface)",
                   borderColor: "var(--gold)",
                   boxShadow: "0 0 16px var(--gold), 0 0 24px var(--gold-bg)",

@@ -2,16 +2,8 @@
 
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Instrument_Serif } from "next/font/google";
 import { JourneyStep } from "./JourneyStep";
 import { HOW_IT_WORKS_STEPS, HowItWorksStep } from "./types";
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["italic"],
-  display: "swap",
-});
 
 export function HowItWorksSection({ steps }: { steps?: HowItWorksStep[] | undefined } = {}) {
   const shouldReduceMotion = useReducedMotion();
@@ -63,9 +55,7 @@ export function HowItWorksSection({ steps }: { steps?: HowItWorksStep[] | undefi
             style={{ color: "var(--section-text, var(--foreground))" }}
           >
             How it{" "}
-            <span
-              className={`${instrumentSerif.className} italic font-normal text-[1.08em] tracking-normal`}
-            >
+            <span className="font-serif italic font-normal text-[1.08em] tracking-normal">
               works
             </span>
           </h2>
@@ -121,10 +111,7 @@ export function HowItWorksSection({ steps }: { steps?: HowItWorksStep[] | undefi
                 boxShadow: "0 0 10px var(--gold-bg)",
               }}
             />
-            <p
-              className="text-[13.5px] font-mono"
-              style={{ color: "var(--gold-muted)" }}
-            >
+            <p className="text-[13.5px] font-mono" style={{ color: "var(--gold-muted)" }}>
               Clear timelines, guaranteed delivery dates, no guesswork.
             </p>
           </div>
@@ -138,7 +125,16 @@ export function HowItWorksSection({ steps }: { steps?: HowItWorksStep[] | undefi
             }}
           >
             Book a Free Strategy Call
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M7 17L17 7M17 7H7M17 7v10" />
             </svg>
           </a>

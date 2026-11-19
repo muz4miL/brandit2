@@ -1,16 +1,8 @@
 "use client";
 
 import React, { useRef, useState, useCallback } from "react";
-import { Instrument_Serif } from "next/font/google";
 import { TrustStrip } from "./TrustStrip";
 import { FormStepper } from "./FormStepper";
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["italic"],
-  display: "swap",
-});
 
 export function ContactSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,10 +57,8 @@ export function ContactSection() {
               <h1 className="font-display text-[clamp(44px,5.8vw,78px)] font-extrabold tracking-[-0.04em] text-[#F5F2EC] leading-[0.98]">
                 Good things
                 <br />
-                start with
-                <span
-                  className={`${instrumentSerif.className} block text-white text-[1.08em] font-normal italic tracking-normal mt-1 leading-[1.05]`}
-                >
+                start with{" "}
+                <span className="font-serif block sm:inline text-white text-[1.08em] font-normal italic tracking-normal mt-1 sm:mt-0 leading-[1.05]">
                   a conversation.
                 </span>
               </h1>

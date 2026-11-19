@@ -126,7 +126,7 @@ function ContactPage() {
                     Direct Communication
                   </h2>
                   <p className="mt-2 text-sm text-[#52525B]">
-                    Prefer a quick message? Reach our team directly via WhatsApp or email.
+                    Prefer a quick message? Reach our team directly via WhatsApp.
                   </p>
                 </div>
 
@@ -154,42 +154,6 @@ function ContactPage() {
                     </div>
                     <ArrowUpRight size={18} className="text-[#A1A1AA]" />
                   </a>
-
-                  {/* Email */}
-                  <a
-                    href="mailto:info@brandit.agency"
-                    className="flex items-center justify-between rounded-2xl border border-black/[0.08] bg-white p-5 shadow-xs transition-all hover:border-black/30 hover:shadow-sm"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="grid h-11 w-11 place-items-center rounded-xl bg-black text-white">
-                        <Mail size={20} />
-                      </div>
-                      <div>
-                        <div className="text-xs font-bold uppercase tracking-wider text-[#71717A]">
-                          Direct Inquiries
-                        </div>
-                        <div className="font-display text-base font-bold text-[#09090B]">
-                          info@brandit.agency
-                        </div>
-                      </div>
-                    </div>
-                    <ArrowUpRight size={18} className="text-[#A1A1AA]" />
-                  </a>
-
-                  {/* Location */}
-                  <div className="flex items-center gap-4 rounded-2xl border border-black/[0.08] bg-white p-5 shadow-xs">
-                    <div className="grid h-11 w-11 place-items-center rounded-xl bg-black/5 text-[#09090B]">
-                      <MapPin size={20} />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold uppercase tracking-wider text-[#71717A]">
-                        Headquarters
-                      </div>
-                      <div className="font-display text-base font-bold text-[#09090B]">
-                        Dubai, United Arab Emirates
-                      </div>
-                    </div>
-                  </div>
 
                   {/* Operating Hours */}
                   <div className="flex items-center gap-4 rounded-2xl border border-black/[0.08] bg-white p-5 shadow-xs">

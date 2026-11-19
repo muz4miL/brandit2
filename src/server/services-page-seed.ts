@@ -20,9 +20,9 @@ import { canonicalServices } from "@/content/site";
 const NOW = new Date(0); // sentinel — real docs get real dates
 
 export const SEED_SETTINGS: Omit<SpSettingsDoc, "_id"> = {
-  seoTitle: "Services & Packages | brandit. Growth Engine",
+  seoTitle: "Services | brandit.",
   seoDescription:
-    "Start where you are. Grow from there. Dedicated marketing packages for every stage: Kickstart, Accelerate, and Authority.",
+    "Six core marketing and growth systems engineered under one roof. UAE-forged, delivered worldwide.",
   ogImage: "",
   updatedAt: NOW,
 };

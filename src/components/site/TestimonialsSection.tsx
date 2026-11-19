@@ -35,7 +35,7 @@ export function TestimonialsSection() {
           <SectionBadge>CLIENT FEEDBACK</SectionBadge>
 
           <h2 className="mt-5 font-display text-[clamp(36px,5.2vw,72px)] font-extrabold tracking-[-0.03em] text-white leading-[1.04] max-w-4xl">
-            Hear from our <span className="font-serif italic font-normal text-white">Clients</span>
+            Hear from <span className="font-serif italic font-normal text-white">Clients</span>
           </h2>
 
           <p className="mt-5 max-w-[760px] font-sans text-[16px] sm:text-[18px] text-[#A1A1AA] leading-relaxed">

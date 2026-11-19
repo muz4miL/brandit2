@@ -3,13 +3,16 @@ import { CareersContent } from "./CareersContent";
 import { getCollections } from "@/server/db";
 
 export const metadata: Metadata = {
-  title: "Careers — brandit. | Join Our High-Performance Dubai Team",
+  title: "Careers",
   description:
-    "Explore open roles in media buying, video production, brand strategy, and web engineering at brandit. in Dubai.",
+    "Open vacancies and candidate application form at brandit.",
+  alternates: {
+    canonical: "/careers",
+  },
   openGraph: {
-    title: "Careers — brandit. Agency",
+    title: "Careers | brandit.",
     description:
-      "Explore open roles in media buying, video production, brand strategy, and web engineering at brandit. in Dubai.",
+      "Open vacancies and candidate application form at brandit.",
   },
 };
 

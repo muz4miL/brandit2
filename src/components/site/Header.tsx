@@ -343,7 +343,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                   </h3>
 
                   <p className="text-[12.5px] leading-relaxed text-muted-foreground">
-                    {siteMeta.trustBarSummary}
+                    {siteMeta.tagline}
                   </p>
                 </div>
 

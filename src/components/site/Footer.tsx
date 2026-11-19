@@ -1,240 +1,84 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import Link from "next/link";
 import { Wordmark } from "./Wordmark";
-import { ArrowRight, Mail, Phone, MapPin, CheckCircle2, Loader2 } from "lucide-react";
-import { siteMeta, canonicalServices } from "@/content/site";
+import { BRAND_TAGLINE, BRAND_COPYRIGHT, siteMeta } from "@/content/site";
+
+function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" className={className} aria-hidden="true" fill="currentColor">
+      <path
+        fillRule="evenodd"
+        d="M16 3C8.268 3 2 9.268 2 17c0 2.51.661 4.867 1.818 6.905L2 31l7.315-1.696A13.94 13.94 0 0 0 16 31c7.732 0 14-6.268 14-14S23.732 3 16 3Zm0 2.154C9.458 5.154 4.154 10.458 4.154 17c0 2.527.79 4.868 2.138 6.79l-1.061 3.98 4.049-1.013A11.83 11.83 0 0 0 16 28.846c6.542 0 11.846-5.304 11.846-11.846S22.542 5.154 16 5.154Z"
+        clipRule="evenodd"
+      />
+      <path d="M12.5 9.5c-.333-.668-.844-.609-1.36-.609-.922 0-2.36 1.104-2.36 3.159 0 1.684.743 3.528 3.243 6.286 2.414 2.661 5.585 4.038 8.218 3.991 2.633-.046 3.174-2.312 3.174-3.077 0-.339-.21-.508-.355-.554-.897-.43-2.552-1.233-2.929-1.384-.376-.151-.573.053-.695.164-.341.325-1.018 1.284-1.25 1.5-.232.216-.577.107-.721.025-.53-.212-1.965-.85-3.107-1.959-1.415-1.371-1.497-1.842-1.764-2.262-.214-.336-.057-.542.021-.632.305-.352.725-.895.914-1.165.189-.27.039-.679-.051-.934-.387-1.097-.714-2.016-.978-2.55Z" />
+    </svg>
+  );
+}
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!email || isSubmitting) return;
-
-    setIsSubmitting(true);
-    setErrorMessage("");
-
-    try {
-      const res = await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          sourcePage: typeof window !== "undefined" ? window.location.pathname : "/footer",
-        }),
-      });
-
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setIsSubmitted(true);
-        setEmail("");
-        setTimeout(() => {
-          setIsSubmitted(false);
-        }, 5000);
-      } else {
-        setErrorMessage(data.error || "Could not submit. Please try again.");
-      }
-    } catch {
-      setErrorMessage("Network error. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <footer
       aria-label="Site footer"
-      className="relative w-full overflow-hidden bg-bg text-fg pt-20 pb-6 sm:pb-8 select-none border-t border-line"
+      className="relative w-full overflow-hidden bg-bg text-fg pt-16 sm:pt-20 pb-8 sm:pb-10 select-none border-t border-line"
     >
       <div className="mx-auto max-w-[1440px] px-6 sm:px-8 lg:px-12 relative z-10">
-        {/* Top Logo & Statement */}
-        <div className="mb-14 sm:mb-16 max-w-xl">
-          <a href="/" aria-label="brandit. home" className="inline-block mb-5">
-            <Wordmark variant="theme" glow className="text-4xl sm:text-5xl w-auto" />
-          </a>
-          <p className="text-[17px] sm:text-[18px] text-muted-foreground leading-relaxed">
-            brandit. is a high-growth digital creative and performance agency that specializes in
-            creative performance, brand identity, and scalable ad campaigns built to convert.
-          </p>
-        </div>
-
-        {/* 3-Column Defiant-Style Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-14 items-start">
-          {/* Column 1: Primary Navigation (Big Bold Typography) */}
-          <div className="md:col-span-3 flex flex-col gap-3.5 sm:gap-4">
-            <a
-              href="/"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
-            >
-              Home
-            </a>
-            <a
-              href="/about"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
-            >
-              About Us
-            </a>
-            <a
-              href="/case-studies"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
-            >
-              Case Studies
-            </a>
-            <a
-              href="/careers"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
-            >
-              Careers
-            </a>
-            <a
-              href="/studio"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
-            >
-              Studio
-            </a>
-            <a
-              href="/contact"
-              className="font-display text-2xl sm:text-[28px] font-extrabold text-fg hover:text-muted-foreground transition-colors tracking-tight"
-            >
-              Contact
-            </a>
+        {/* Main Footer Block: Brand, Tagline, and Direct Social/WhatsApp Channels */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 pb-12 sm:pb-16 border-b border-line">
+          {/* Left: Brand Wordmark & Official Brief Tagline */}
+          <div className="max-w-xl space-y-4">
+            <Link href="/" aria-label="brandit. home" className="inline-block">
+              <Wordmark variant="theme" glow className="text-4xl sm:text-5xl w-auto" />
+            </Link>
+            <p className="text-[17px] sm:text-[19px] text-muted-foreground leading-relaxed font-normal">
+              {BRAND_TAGLINE}
+            </p>
           </div>
 
-          {/* Column 2: Services with Serif Heading and Subtle Divider Lines */}
-          <div className="md:col-span-4 lg:col-span-4">
-            <h4 className="font-serif italic text-2xl sm:text-[28px] font-normal text-fg mb-5 tracking-tight">
-              Services
-            </h4>
-            <ul className="flex flex-col divide-y divide-line text-[15px] sm:text-[16px]">
-              {canonicalServices.map((svc) => (
-                <li key={svc.slug}>
-                  <a
-                    href={`/services#${svc.slug}`}
-                    className="block py-2.5 text-muted-foreground hover:text-fg transition-colors"
-                  >
-                    {svc.title} {svc.serifLine}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3: The Defiant "Now it's time to scale" Newsletter & Community Card */}
-          <div className="md:col-span-5 lg:col-span-5 flex flex-col gap-6">
-            <div className="rounded-[24px] bg-surface border border-line p-7 sm:p-8 shadow-2xl relative overflow-hidden">
-              <div className="flex items-center justify-between">
-                <h3 className="font-display text-xl sm:text-2xl font-bold text-fg tracking-tight">
-                  Now it&apos;s time to scale.
-                </h3>
-                {/* 3 carousel indicators */}
-                <div className="flex items-center gap-1.5" aria-hidden="true">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                  <span className="h-1.5 w-1.5 rounded-full bg-line" />
-                  <span className="h-1.5 w-1.5 rounded-full bg-line" />
-                </div>
-              </div>
-
-              <p className="mt-1 text-[14px] text-muted-foreground">
-                Join our free community & receive weekly growth strategies.
-              </p>
-
-              <form onSubmit={handleSubmit} className="mt-6 flex flex-col sm:flex-row gap-2.5">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  disabled={isSubmitting || isSubmitted}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email"
-                  className="flex-1 rounded-xl border border-line bg-surface-2 px-4 py-3.5 text-[14px] text-fg placeholder:text-muted-foreground focus:outline-none focus:border-fg transition-colors disabled:opacity-60"
-                />
-                <button
-                  type="submit"
-                  disabled={isSubmitting || isSubmitted}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl btn-shiny px-6 py-3.5 text-[14px] font-bold text-white transition-all shrink-0 cursor-pointer disabled:opacity-80"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 size={16} className="animate-spin text-white" />
-                      <span>Joining...</span>
-                    </>
-                  ) : isSubmitted ? (
-                    <>
-                      <CheckCircle2 size={16} className="text-white" />
-                      <span>Joined!</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Submit</span>
-                      <ArrowRight size={15} />
-                    </>
-                  )}
-                </button>
-              </form>
-
-              {errorMessage && (
-                <p className="mt-2 text-[12px] text-red-500 font-medium">
-                  {errorMessage}
-                </p>
-              )}
-
-              <p className="mt-3 text-[12px] text-muted-foreground">
-                No spam. We respect your privacy.
-              </p>
-            </div>
-
-            {/* Direct Contact Links */}
-            <div className="flex flex-col gap-2.5 text-[14px] text-muted-foreground pt-2">
-              <a
-                href={`mailto:${siteMeta.contact.email}`}
-                className="inline-flex items-center gap-2 hover:text-fg transition-colors"
-              >
-                <Mail size={15} className="text-fg" />
-                <span>{siteMeta.contact.email}</span>
-              </a>
-
-              <a
-                href={`tel:${siteMeta.contact.phone.replace(/\s+/g, "")}`}
-                className="inline-flex items-center gap-2 hover:text-fg transition-colors"
-              >
-                <Phone size={15} className="text-fg" />
-                <span>{siteMeta.contact.phoneDisplay}</span>
-              </a>
-
-              <div className="inline-flex items-start gap-2 text-muted-foreground text-[13px] mt-1">
-                <MapPin size={15} className="text-fg shrink-0 mt-0.5" />
-                <span>{siteMeta.contact.office}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Legal & Copyright Row */}
-        <div className="mt-16 sm:mt-20 pt-8 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-muted-foreground">
-          <p>© {new Date().getFullYear()} brandit. Ventures Pty Ltd. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <a href="/contact" className="hover:text-fg transition-colors">
-              Privacy Policy
+          {/* Right: Direct Social & Communication Channels */}
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-[14px] sm:text-[15px] font-medium text-muted-foreground">
+            <a
+              href={siteMeta.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-fg transition-colors"
+            >
+              Instagram
             </a>
-            <a href="/contact" className="hover:text-fg transition-colors">
-              Terms & Conditions
+            <span className="text-line" aria-hidden="true">
+              ·
+            </span>
+            <a
+              href={siteMeta.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-fg transition-colors"
+            >
+              LinkedIn
             </a>
-            <a href="/contact" className="hover:text-fg transition-colors">
-              Earnings Disclaimer
+            <span className="text-line" aria-hidden="true">
+              ·
+            </span>
+            <a
+              href={siteMeta.contact.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-fg font-semibold hover:opacity-80 transition-opacity"
+            >
+              <WhatsAppIcon className="w-4 h-4" />
+              <span>WhatsApp: {siteMeta.contact.whatsapp}</span>
             </a>
           </div>
         </div>
 
-        {/* ========================================================
-            THE ICONIC DEFIANT WATERMARK (GIANT GHOST WORDMARK)
-            Subtle High-End Luminous Monochrome Aesthetics
-           ======================================================== */}
+        {/* Copyright Row */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-muted-foreground">
+          <p>{BRAND_COPYRIGHT}</p>
+        </div>
+
+        {/* Ambient Ghost Wordmark */}
         <div className="mt-12 sm:mt-16 w-full overflow-hidden select-none pointer-events-none text-center relative">
-          {/* Ambient soft white back-glow to lift the watermark */}
           <div
             aria-hidden="true"
             className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-36 w-2/3 rounded-full bg-white/[0.03] blur-[80px]"

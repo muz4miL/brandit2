@@ -9,7 +9,7 @@
  * along the active client).
  *
  * Needs: next, react, framer-motion, Tailwind.
- * Font: expects Instrument Serif exposed as --font-instrument-serif via next/font
+ * Font: expects Fraunces exposed as --font-serif via next/font
  * (falls back to Georgia). Change SERIF below if your variable is named differently.
  *
  * !! The quotes and names below are PLACEHOLDERS. Replace them with real,
@@ -93,8 +93,7 @@ const TESTIMONIALS: Testimonial[] = [
 const AUTOPLAY_MS = 9000;
 const EASE = [0.22, 1, 0.36, 1] as const;
 const SERIF: CSSProperties = {
-  fontFamily:
-    "var(--font-instrument-serif), var(--font-serif), 'Instrument Serif', Georgia, 'Times New Roman', serif",
+  fontFamily: "var(--font-serif), Georgia, 'Times New Roman', serif",
 };
 const GRAIN =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
@@ -187,9 +186,7 @@ export default function Testimonials() {
         {/* header */}
         <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mb-4 font-mono text-[11px] tracking-[0.22em] text-white">
-              CLIENT WORDS
-            </p>
+            <p className="mb-4 font-mono text-[11px] tracking-[0.22em] text-white">CLIENT WORDS</p>
             <h2
               id="testimonials-heading"
               className="max-w-[16ch] text-[clamp(2.25rem,5vw,3.75rem)] font-bold leading-[1.02] tracking-[-0.04em]"
@@ -204,11 +201,7 @@ export default function Testimonials() {
             className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-white/60 transition-colors hover:border-white/25 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden fill="currentColor">
-              {userPaused ? (
-                <path d="M2 1l7 4-7 4z" />
-              ) : (
-                <path d="M2 1h2v8H2zM6 1h2v8H6z" />
-              )}
+              {userPaused ? <path d="M2 1l7 4-7 4z" /> : <path d="M2 1h2v8H2zM6 1h2v8H6z" />}
             </svg>
             {userPaused ? "Play" : "Pause"}
           </button>
@@ -255,7 +248,11 @@ export default function Testimonials() {
                 <motion.div
                   key={current.id}
                   className="relative flex flex-1 flex-col justify-between gap-12"
-                  exit={reduce ? { opacity: 1, transition: { duration: 0 } } : { opacity: 0, transition: { duration: 0.18 } }}
+                  exit={
+                    reduce
+                      ? { opacity: 1, transition: { duration: 0 } }
+                      : { opacity: 0, transition: { duration: 0.18 } }
+                  }
                 >
                   <div className="pt-12 md:pt-14">
                     <RevealQuote text={current.quote} reduce={reduce} />
@@ -311,9 +308,7 @@ export default function Testimonials() {
                     tabIndex={isActive ? 0 : -1}
                     onClick={() => go(i)}
                     className={`relative flex min-w-[220px] shrink-0 flex-col items-start gap-1 px-7 py-6 text-left transition-[opacity,background-color] duration-500 focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-white lg:min-w-0 lg:flex-1 lg:justify-center lg:border-b lg:border-white/[0.07] lg:last:border-b-0 ${
-                      isActive
-                        ? "bg-white/[0.035] opacity-100"
-                        : "opacity-45 hover:opacity-85"
+                      isActive ? "bg-white/[0.035] opacity-100" : "opacity-45 hover:opacity-85"
                     }`}
                   >
                     <span className="font-semibold tracking-[-0.01em]">{t.company}</span>
@@ -349,7 +344,10 @@ export default function Testimonials() {
             <span className="border-b border-white/20 pb-0.5 transition-colors group-hover:border-white">
               See the work behind these results
             </span>
-            <span aria-hidden className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+            <span
+              aria-hidden
+              className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            >
               ↗
             </span>
           </Link>

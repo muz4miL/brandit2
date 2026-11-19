@@ -13,20 +13,22 @@ import ReadyToScale from "@/components/ReadyToScale";
 import { Footer } from "@/components/site/Footer";
 
 export const metadata: Metadata = {
-  title: "brandit. | Digital Creative Agency",
+  title: "brandit. — Marketing Agency | Ads, Content, Branding & Web",
   description:
-    "brandit. is a digital creative agency that puts your brand in front of the right customers, with a purpose behind every move. Book a free strategy call.",
+    "Full-service marketing agency. Meta, Google & TikTok ads, video and photography production, branding, websites, Shopify and AI automation. UAE-forged, delivered worldwide.",
   keywords: [
-    "digital creative agency",
-    "performance marketing agency",
-    "brand identity",
+    "marketing agency",
     "Meta ads agency",
     "Google ads agency",
-    "CRO landing pages",
-    "growth marketing",
+    "TikTok ads",
+    "content production",
+    "branding and design",
+    "growth systems",
+    "UAE marketing agency",
+    "brandit",
   ],
-  authors: [{ name: "brandit.", url: "https://brandit.agency" }],
-  publisher: "brandit. Digital Creative Agency",
+  authors: [{ name: "brandit.", url: "/" }],
+  publisher: "brandit.",
   robots: {
     index: true,
     follow: true,
@@ -35,13 +37,16 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "brandit. | Digital Creative Agency",
+    title: "brandit. — Marketing Agency | Ads, Content, Branding & Web",
     description:
-      "brandit. is a digital creative agency that puts your brand in front of the right customers, with a purpose behind every move. Book a free strategy call.",
+      "Full-service marketing agency. Meta, Google & TikTok ads, video and photography production, branding, websites, Shopify and AI automation. UAE-forged, delivered worldwide.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
+    title: "brandit. — Marketing Agency | Ads, Content, Branding & Web",
+    description:
+      "Full-service marketing agency. Meta, Google & TikTok ads, video and photography production, branding, websites, Shopify and AI automation. UAE-forged, delivered worldwide.",
   },
 };
 

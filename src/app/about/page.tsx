@@ -5,18 +5,18 @@ import { siteMeta, teamMembers } from "@/content/site";
 import AboutExperience from "./AboutExperience";
 
 export const metadata: Metadata = {
-  title: "About brandit. | Every Move, On Purpose",
+  title: "About",
   description:
-    "Meet the people and thinking behind brandit. Strategy, creative and digital experiences built around your business.",
+    "Agency story, positioning, approach, founder profile and team/process overview. UAE-forged marketing systems agency.",
   keywords: [
     "about brandit",
-    "creative agency team",
-    "digital marketing strategy",
-    "brandit leadership",
-    "performance agency",
+    "marketing systems",
+    "UAE agency leadership",
+    "growth systems",
+    "brandit",
   ],
-  authors: [{ name: "brandit.", url: "https://brandit.agency/about" }],
-  publisher: "brandit. Digital Creative Agency",
+  authors: [{ name: "brandit.", url: "/about" }],
+  publisher: "brandit.",
   robots: {
     index: true,
     follow: true,
@@ -32,9 +32,8 @@ export const metadata: Metadata = {
     canonical: "/about",
   },
   openGraph: {
-    title: "About brandit. | Every Move, On Purpose",
-    description: "The people. The thinking. The purpose behind every appearance.",
-    url: "https://brandit.agency/about",
+    title: "About | brandit.",
+    description: "Agency story, positioning, approach, founder profile and team overview.",
     type: "website",
   },
 };
@@ -43,7 +42,7 @@ export default function AboutPage() {
   return (
     <div style={{ background: "#070709", color: "#f6f6f8", minHeight: "100vh" }}>
       <Header overlay />
-      <AboutExperience stats={siteMeta.trustNumbers} members={teamMembers} />
+      <AboutExperience stats={[]} members={teamMembers} />
       <Footer />
     </div>
   );

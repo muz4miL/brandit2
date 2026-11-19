@@ -31,10 +31,10 @@ export function Wordmark({ className = "", variant = "white", glow = false }: Wo
         className={`relative inline-flex items-baseline font-display font-extrabold tracking-[-0.05em] ${color} ${className}`}
         aria-label="brandit. home"
       >
-        <span className={`mr-1 font-serif text-[0.9em] font-normal italic tracking-normal ${muted}`}>
-          the
+        brandit
+        <span className={isTheme ? "text-fg" : variant === "black" ? "text-black" : "text-white"}>
+          .
         </span>
-        brandit        <span className={isTheme ? "text-fg" : variant === "black" ? "text-black" : "text-white"}>.</span>
       </span>
     </span>
   );

@@ -8,29 +8,31 @@ export async function generateMetadata(): Promise<Metadata> {
   const content = await getServicesPageContent();
   const settings = content.settings;
 
-  const title = settings?.seoTitle || "Services & Packages | brandit. Growth Engine";
+  const rawTitle = settings?.seoTitle?.trim();
+  const title =
+    rawTitle && !rawTitle.includes("Growth Engine") && !rawTitle.includes("Thrides")
+      ? rawTitle
+      : "Services | brandit.";
   const description =
     settings?.seoDescription ||
-    "Start where you are. Grow from there. Dedicated marketing packages for every stage: Kickstart, Accelerate, and Authority.";
+    "Six core marketing and growth systems engineered under one roof. UAE-forged, delivered worldwide.";
   const ogImage = settings?.ogImage;
 
   return {
     title,
     description,
     keywords: [
-      "services and packages",
-      "performance creative",
-      "Meta ads management",
-      "Google ads agency",
-      "TikTok vertical video",
-      "CRO landing pages",
-      "email marketing",
-      "web design development",
-      "branding and visual direction",
-      "brandit packages",
+      "marketing services",
+      "growth systems",
+      "paid advertising",
+      "content production",
+      "branding and design",
+      "web stores and automation",
+      "influencer marketing",
+      "brandit services",
     ],
-    authors: [{ name: "brandit.", url: "https://brandit.agency/services" }],
-    publisher: "brandit. Digital Creative Agency",
+    authors: [{ name: "brandit.", url: "/services" }],
+    publisher: "brandit.",
     robots: {
       index: true,
       follow: true,
@@ -49,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       type: "website",
-      url: "https://brandit.agency/services",
+      url: "/services",
       ...(ogImage ? { images: [{ url: ogImage }] } : {}),
     },
     twitter: {

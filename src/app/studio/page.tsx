@@ -3,13 +3,16 @@ import { StudioContent } from "./StudioContent";
 import { getCollections } from "@/server/db";
 
 export const metadata: Metadata = {
-  title: "brandit. Studio — Premium Production & Podcast Space in Dubai",
+  title: "brandit. Studio",
   description:
-    "Full-service Dubai studio featuring cyclorama wall, acoustic isolation, podcast suite, cinema lighting grid, and top-tier equipment rental.",
+    "Studio overview, gallery, facilities, equipment directory and enquiry form.",
+  alternates: {
+    canonical: "/studio",
+  },
   openGraph: {
-    title: "brandit. Studio — Production & Podcast Space",
+    title: "brandit. Studio | brandit.",
     description:
-      "Full-service Dubai studio featuring cyclorama wall, acoustic isolation, podcast suite, cinema lighting grid, and top-tier equipment rental.",
+      "Studio overview, gallery, facilities, equipment directory and enquiry form.",
   },
 };
 

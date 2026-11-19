@@ -205,26 +205,28 @@ export default function AboutExperience({ stats, members }: Props) {
         <div className={styles.heroFoot}><span>STRATEGY × CREATIVE × DIGITAL</span><a href="#our-story">SCROLL TO DISCOVER <ArrowDown size={13} /></a></div>
       </section>
 
-      {/* ─── STATS ─── */}
-      <section className={styles.stats} aria-label="brandit. in numbers">
-        {stats.map((stat, index) => {
-          const valStr = String(stat.value);
-          const match = valStr.match(/^([0-9+]+)\s*(.*)$/);
-          const num = match ? match[1] : valStr;
-          const unit = match ? match[2] : "";
+      {/* ─── STATS (Hidden when stats are not client-supplied per Rule 1) ─── */}
+      {stats && stats.length > 0 && (
+        <section className={styles.stats} aria-label="brandit. in numbers">
+          {stats.map((stat, index) => {
+            const valStr = String(stat.value);
+            const match = valStr.match(/^([0-9+]+)\s*(.*)$/);
+            const num = match ? match[1] : valStr;
+            const unit = match ? match[2] : "";
 
-          return (
-            <div key={stat.label} className={styles.statCol} data-reveal>
-              <span className={styles.index}>0{index + 1}</span>
-              <div className={styles.statContent}>
-                <strong className={`font-display ${styles.statNumber}`}>{num}</strong>
-                {unit && <span className={styles.statUnit}>{unit}</span>}
+            return (
+              <div key={stat.label} className={styles.statCol} data-reveal>
+                <span className={styles.index}>0{index + 1}</span>
+                <div className={styles.statContent}>
+                  <strong className={`font-display ${styles.statNumber}`}>{num}</strong>
+                  {unit && <span className={styles.statUnit}>{unit}</span>}
+                </div>
+                <span className={styles.statLabel}>{stat.label}</span>
               </div>
-              <span className={styles.statLabel}>{stat.label}</span>
-            </div>
-          );
-        })}
-      </section>
+            );
+          })}
+        </section>
+      )}
 
       {/* ─── STORY ─── */}
       <section id="our-story" className={styles.story}>
@@ -265,7 +267,7 @@ export default function AboutExperience({ stats, members }: Props) {
         </div>
       </div>
 
-      {/* ─── THE EXPERIENCE / THE BRANDIT APPROACH ─── */}
+      {/* ─── THE EXPERIENCE / brandit. APPROACH ─── */}
       <section ref={experienceRef} className={styles.experience}>
         <div className={styles.sectionHead} data-reveal>
           <div>
@@ -344,7 +346,7 @@ export default function AboutExperience({ stats, members }: Props) {
 
           {/* Desktop Preview Panel: Dedicated Sculpture Stage */}
           <div className={styles.strategyVisual} aria-hidden="true">
-            <span className={styles.visualLabel}>THE BRANDIT APPROACH</span>
+            <span className={styles.visualLabel}>brandit. APPROACH</span>
 
             <div className={styles.stage}>
               {/* Separate wrapper for crossfade / enter transition */}

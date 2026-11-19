@@ -41,14 +41,14 @@ export function WhyBrandit() {
           <div className="lg:col-span-5">
             <div className="inline-flex h-[36px] items-center justify-center rounded-full border border-black/10 bg-black/[0.04] px-4">
               <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#3F3F46] uppercase">
-                What We Believe
+                The Difference
               </span>
             </div>
 
             <h2 className="mt-4 font-display text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold leading-[1.02] tracking-tight text-[#09090B]">
-              Attention should never be{" "}
+              Why work with{" "}
               <span className="font-serif italic font-normal text-[#18181B]">
-                accidental
+                brandit.
               </span>
             </h2>
           </div>

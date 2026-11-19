@@ -122,9 +122,9 @@ export function ServicesPageTab({ initialContent, onNotice }: ServicesPageTabPro
   const [settings, setSettings] = useState(
     initialContent.settings || {
       _id: "",
-      seoTitle: "Services & Packages | brandit. Growth Engine",
+      seoTitle: "Services | brandit.",
       seoDescription:
-        "Start where you are. Grow from there. Dedicated marketing packages for every stage: Kickstart, Accelerate, and Authority.",
+        "Six core marketing and growth systems engineered under one roof. UAE-forged, delivered worldwide.",
       ogImage: "",
       updatedAt: new Date(),
     }

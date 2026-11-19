@@ -15,15 +15,13 @@ export default function ReadyToScale() {
 
           <h2 className="mt-5 sm:mt-7 text-center">
             <span className="block font-display text-[36px] sm:text-[54px] lg:text-[72px] font-extrabold leading-[0.98] lg:leading-[0.95] tracking-[-0.04em] text-white">
-              Ready to{" "}
-              <span className="font-serif italic font-normal text-white">
-                Scale?
-              </span>
+              Ready to <span className="font-serif italic font-normal text-white">Grow?</span>
             </span>
           </h2>
 
           <p className="mt-4 sm:mt-5 text-[15px] sm:text-[17px] lg:text-[19px] leading-relaxed text-[#A1A1AA] max-w-[660px]">
-            Whether you’re <strong className="text-white font-semibold">scaling to $1M/month</strong> or heading towards a <strong className="text-white font-semibold">$100M+ valuation</strong>. brandit. becomes your unfair advantage in creative, media, and performance.
+            Whether you’re a founder building authority or a business scaling toward market
+            leadership — you need a system, not just content.
           </p>
         </div>
 
@@ -54,10 +52,10 @@ export default function ReadyToScale() {
             <div className="pointer-events-none absolute right-4 md:right-16 top-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-white/[0.06] blur-[90px]" />
 
             {/* Floating Hero Bouncy Pulsing Button on the Right (Centered on mobile) */}
-            <div className="relative z-20 w-full flex justify-center md:justify-end px-4 sm:px-10 lg:px-16 py-8 md:py-0">
+            <div className="relative z-20 w-full flex flex-col items-center md:items-end justify-center px-4 sm:px-10 lg:px-16 py-8 md:py-0 gap-3">
               <a
                 href="/contact"
-                aria-label="Book a Growth Audit"
+                aria-label="Book a Discovery Call"
                 className="group relative inline-flex h-[68px] sm:h-[78px] w-full max-w-[320px] sm:max-w-[360px] items-center justify-between rounded-full bg-[#000000] p-[5px] transition-all duration-300 hover:bg-white hover:scale-[1.03] active:scale-[0.98] select-none shadow-[0_0_35px_rgba(255,255,255,0.08)]"
               >
                 {/* Animated Outer White Pulse */}
@@ -72,20 +70,30 @@ export default function ReadyToScale() {
                     Book a
                   </span>
 
-                  {/* Central Monochrome Icon Tile with t. */}
+                  {/* Central Monochrome Icon Tile with b. */}
                   <div className="relative flex items-center justify-center">
                     <div className="absolute inset-0 rounded-[12px] bg-white blur-[8px] opacity-20 transition-opacity duration-300 group-hover:opacity-40" />
                     <div className="relative grid h-[42px] w-[42px] sm:h-[46px] sm:w-[46px] place-items-center rounded-[12px] bg-white shadow-[0_0_14px_rgba(255,255,255,0.3)] group-hover:bg-black transition-colors">
                       <span className="font-display text-[22px] sm:text-[24px] font-black text-black group-hover:text-white leading-none pl-0.5 transition-colors">
-                        t.
+                        b.
                       </span>
                     </div>
                   </div>
 
                   <span className="text-[16px] sm:text-[17px] font-medium text-white transition-colors duration-300 group-hover:text-black">
-                    Growth Audit
+                    Discovery Call
                   </span>
                 </div>
+              </a>
+
+              {/* Direct WhatsApp Contact Line per Brief Section 10 & Client Update */}
+              <a
+                href="https://wa.me/971525347120"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[13px] sm:text-[14px] text-[#A1A1AA] hover:text-white transition-colors font-medium"
+              >
+                WhatsApp: +971 52 534 7120
               </a>
             </div>
           </div>

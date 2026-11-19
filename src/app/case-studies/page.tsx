@@ -28,8 +28,8 @@ export async function generateMetadata(): Promise<Metadata> {
       "performance marketing results",
       "e-commerce case studies",
     ],
-    authors: [{ name: "brandit.", url: "https://brandit.agency/case-studies" }],
-    publisher: "brandit. Digital Creative Agency",
+    authors: [{ name: "brandit.", url: "/case-studies" }],
+    publisher: "brandit.",
     robots: {
       index: true,
       follow: true,
@@ -46,8 +46,9 @@ export default async function CaseStudiesPage() {
     "@type": "CollectionPage",
     name: "Case Studies | brandit.",
     description:
-      "Learn more about the tactics that grew our clients' brands. Explore measured client growth engineered by brandit.",
-    url: "https://brandit.com/case-studies",
+      settings?.seo?.description ||
+      "Detailed case studies and measured client growth engineered by brandit.",
+    url: "/case-studies",
     hasPart: projects.map((p) => ({
       "@type": "CreativeWork",
       name: p.title,
@@ -58,7 +59,7 @@ export default async function CaseStudiesPage() {
         name: "brandit.",
       },
       image: p.thumbnailUrl,
-      url: `https://brandit.com/case-studies/${p.slug}`,
+      url: `/case-studies/${p.slug}`,
     })),
   };
 

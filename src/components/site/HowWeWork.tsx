@@ -129,7 +129,7 @@ export function HowWeWork() {
           observer.disconnect();
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.12 },
     );
 
     observer.observe(el);
@@ -184,7 +184,9 @@ export function HowWeWork() {
           </h2>
 
           <p className="mt-3.5 max-w-[700px] font-sans text-[15px] sm:text-[17px] text-[#A1A1AA] leading-relaxed">
-            Real profit-driven scale requires more than disconnected tactics. We align market intelligence, high-converting creative systems, and precision attribution into one unified growth engine.
+            Real profit-driven scale requires more than disconnected tactics. We align market
+            intelligence, high-converting creative systems, and precision attribution into one
+            unified growth system.
           </p>
         </div>
 
@@ -226,11 +228,13 @@ export function HowWeWork() {
                 </div>
 
                 <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
-                  Daily Performance <span className="font-serif italic font-normal text-white">Tracking</span>
+                  Daily Performance{" "}
+                  <span className="font-serif italic font-normal text-white">Tracking</span>
                 </h3>
 
                 <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
-                  We set north-star metrics that drive enterprise revenue and track them daily. Custom views give complete visibility without vanity metrics.
+                  We set north-star metrics that drive enterprise revenue and track them daily.
+                  Custom views give complete visibility without vanity metrics.
                 </p>
               </div>
 
@@ -238,7 +242,11 @@ export function HowWeWork() {
               <div className="mt-5 lg:mt-0 lg:col-span-7 rounded-2xl border border-white/[0.07] bg-[#07070A] p-3.5 sm:p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-white/[0.06]">
                   {/* Channel Selector Buttons */}
-                  <div className="flex flex-wrap items-center gap-1" role="tablist" aria-label="Performance Channels">
+                  <div
+                    className="flex flex-wrap items-center gap-1"
+                    role="tablist"
+                    aria-label="Performance Channels"
+                  >
                     {(["blended", "meta", "google", "retention"] as ChartChannel[]).map((ch) => {
                       const isActive = activeChannel === ch;
                       return (
@@ -285,9 +293,30 @@ export function HowWeWork() {
                     </defs>
 
                     {/* Horizontal grid guide lines */}
-                    <line x1="0" y1="28" x2={svgWidth} y2="28" stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" />
-                    <line x1="0" y1="62" x2={svgWidth} y2="62" stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" />
-                    <line x1="0" y1="96" x2={svgWidth} y2="96" stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" />
+                    <line
+                      x1="0"
+                      y1="28"
+                      x2={svgWidth}
+                      y2="28"
+                      stroke="rgba(255,255,255,0.05)"
+                      strokeDasharray="3 3"
+                    />
+                    <line
+                      x1="0"
+                      y1="62"
+                      x2={svgWidth}
+                      y2="62"
+                      stroke="rgba(255,255,255,0.05)"
+                      strokeDasharray="3 3"
+                    />
+                    <line
+                      x1="0"
+                      y1="96"
+                      x2={svgWidth}
+                      y2="96"
+                      stroke="rgba(255,255,255,0.05)"
+                      strokeDasharray="3 3"
+                    />
 
                     {/* Area fill */}
                     <path d={areaD} fill="url(#chartGradient)" />
@@ -303,7 +332,8 @@ export function HowWeWork() {
                       style={{
                         strokeDasharray: 500,
                         strokeDashoffset: hasEntered ? 0 : 500,
-                        transition: "stroke-dashoffset 900ms cubic-bezier(0.16, 1, 0.3, 1), stroke 300ms ease",
+                        transition:
+                          "stroke-dashoffset 900ms cubic-bezier(0.16, 1, 0.3, 1), stroke 300ms ease",
                       }}
                     />
 
@@ -354,18 +384,22 @@ export function HowWeWork() {
               </span>
 
               <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
-                Full-Funnel <span className="font-serif italic font-normal text-white">Ownership</span>
+                Full-Funnel{" "}
+                <span className="font-serif italic font-normal text-white">Ownership</span>
               </h3>
 
               <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
-                From first touch to checkout, we optimize every stage of your customer journey. Landing pages, conversion rate optimization, and friction-free funnels.
+                From first touch to checkout, we optimize every stage of your customer journey.
+                Landing pages, conversion rate optimization, and friction-free funnels.
               </p>
             </div>
 
             {/* Connected Journey Nodes Visual */}
             <div className="mt-5 rounded-2xl border border-white/[0.07] bg-[#07070A] p-3.5 sm:p-4">
               <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-white/[0.06]">
-                <span className="text-[10.5px] font-mono text-neutral-400">Connected Customer Flow</span>
+                <span className="text-[10.5px] font-mono text-neutral-400">
+                  Connected Customer Flow
+                </span>
                 <span className="text-[10px] font-mono text-white font-semibold">Interactive</span>
               </div>
 
@@ -453,11 +487,13 @@ export function HowWeWork() {
               </span>
 
               <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
-                Creative Volume <span className="font-serif italic font-normal text-white">&amp; diversity</span>
+                Creative Volume{" "}
+                <span className="font-serif italic font-normal text-white">&amp; diversity</span>
               </h3>
 
               <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
-                We engineer dedicated creative systems producing winning ad variations across formats. Every concept starts with audience psychology and scales with data.
+                We engineer dedicated creative systems producing winning ad variations across
+                formats. Every concept starts with audience psychology and scales with data.
               </p>
             </div>
 
@@ -506,11 +542,15 @@ export function HowWeWork() {
                 </div>
 
                 <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
-                  Retention <span className="font-serif italic font-normal text-white">&amp; lifetime value</span>
+                  Retention{" "}
+                  <span className="font-serif italic font-normal text-white">
+                    &amp; lifetime value
+                  </span>
                 </h3>
 
                 <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
-                  We turn first-time buyers into repeat customers through automated messaging. Tailored email and SMS sequences maximize customer lifetime value.
+                  We turn first-time buyers into repeat customers through automated messaging.
+                  Tailored email and SMS sequences maximize customer lifetime value.
                 </p>
               </div>
 
@@ -572,11 +612,13 @@ export function HowWeWork() {
               </span>
 
               <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
-                Blended <span className="font-serif italic font-normal text-white">Attribution</span>
+                Blended{" "}
+                <span className="font-serif italic font-normal text-white">Attribution</span>
               </h3>
 
               <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
-                We unify Meta, Google, and direct channels into a single source of truth. You always know which dollar drives real commercial profit.
+                We unify Meta, Google, and direct channels into a single source of truth. You always
+                know which dollar drives real commercial profit.
               </p>
             </div>
 
@@ -584,7 +626,9 @@ export function HowWeWork() {
             <div className="mt-5 rounded-2xl border border-white/[0.07] bg-[#07070A] p-3.5 sm:p-4 relative overflow-hidden">
               <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-white/[0.06]">
                 <span className="text-[10.5px] font-mono text-neutral-400">Channel Network</span>
-                <span className="text-[10px] font-mono text-emerald-400 font-bold">Unified View</span>
+                <span className="text-[10px] font-mono text-emerald-400 font-bold">
+                  Unified View
+                </span>
               </div>
 
               <div className="grid grid-cols-3 items-center gap-2 relative">
@@ -592,11 +636,15 @@ export function HowWeWork() {
                 <div className="space-y-2">
                   <div className="rounded-xl border border-white/10 bg-white/[0.03] p-2 text-center transition-colors hover:border-white/25">
                     <span className="block text-[11px] font-bold text-white">Meta Ads</span>
-                    <span className="block font-mono text-[9.5px] text-neutral-400">Paid Social</span>
+                    <span className="block font-mono text-[9.5px] text-neutral-400">
+                      Paid Social
+                    </span>
                   </div>
                   <div className="rounded-xl border border-white/10 bg-white/[0.03] p-2 text-center transition-colors hover:border-white/25">
                     <span className="block text-[11px] font-bold text-white">Google Search</span>
-                    <span className="block font-mono text-[9.5px] text-neutral-400">High-Intent</span>
+                    <span className="block font-mono text-[9.5px] text-neutral-400">
+                      High-Intent
+                    </span>
                   </div>
                 </div>
 
@@ -616,7 +664,9 @@ export function HowWeWork() {
                 <div className="space-y-2">
                   <div className="rounded-xl border border-white/10 bg-white/[0.03] p-2 text-center transition-colors hover:border-white/25">
                     <span className="block text-[11px] font-bold text-white">TikTok Creative</span>
-                    <span className="block font-mono text-[9.5px] text-neutral-400">Viral Reach</span>
+                    <span className="block font-mono text-[9.5px] text-neutral-400">
+                      Viral Reach
+                    </span>
                   </div>
                   <div className="rounded-xl border border-white/10 bg-white/[0.03] p-2 text-center transition-colors hover:border-white/25">
                     <span className="block text-[11px] font-bold text-white">Klaviyo / SMS</span>
@@ -655,11 +705,13 @@ export function HowWeWork() {
               </div>
 
               <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
-                Profit-first <span className="font-serif italic font-normal text-white">Strategy</span>
+                Profit-first{" "}
+                <span className="font-serif italic font-normal text-white">Strategy</span>
               </h3>
 
               <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
-                We align ad spend directly to contribution margin and unit economics. Every campaign is engineered around true net profit, not vanity ROAS.
+                We align ad spend directly to contribution margin and unit economics. Every campaign
+                is engineered around true net profit, not vanity ROAS.
               </p>
             </div>
 
