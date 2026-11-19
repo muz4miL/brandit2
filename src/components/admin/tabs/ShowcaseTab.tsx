@@ -39,6 +39,7 @@ import {
 } from "lucide-react";
 import type { ShowcaseItemDoc, ShowcaseSettingsDoc, ShowcaseCategory } from "@/server/types";
 import { ConfirmModal } from "@/components/admin/ConfirmModal";
+import { MediaDropzone } from "@/components/admin/MediaDropzone";
 
 interface ShowcaseTabProps {
   onNotice?: (msg: string, type?: "success" | "error") => void;
@@ -93,6 +94,8 @@ function SortableShowcaseRow({
           <img src={item.posterUrl} alt="" className="h-full w-full object-cover" />
         ) : item.heroImg ? (
           <img src={item.heroImg} alt="" className="h-full w-full object-cover" />
+        ) : item.previewImg ? (
+          <img src={item.previewImg} alt="" className="h-full w-full object-cover" />
         ) : item.videoUrl ? (
           <Video size={18} className="text-white" />
         ) : (
@@ -168,7 +171,7 @@ export function ShowcaseTab({ onNotice }: ShowcaseTabProps) {
     sectionBadge: "OUR WORK",
     headingPrefix: "Creative that",
     headingItalic: "Converts",
-    marqueeSpeedSeconds: 32,
+    marqueeSpeedSeconds: 7,
     sectionEnabled: true,
     updatedAt: new Date().toISOString(),
   });
@@ -332,6 +335,8 @@ export function ShowcaseTab({ onNotice }: ShowcaseTabProps) {
       theme: "dark",
       client: "",
       url: "",
+      projectUrl: "",
+      previewImg: "",
       highlight: "",
       description: "",
       stats: [
@@ -529,8 +534,8 @@ export function ShowcaseTab({ onNotice }: ShowcaseTabProps) {
             </div>
             <input
               type="range"
-              min={15}
-              max={60}
+              min={6}
+              max={36}
               step={1}
               value={settings.marqueeSpeedSeconds}
               onChange={(e) => setSettings((s) => ({ ...s, marqueeSpeedSeconds: Number(e.target.value) }))}
@@ -596,31 +601,33 @@ export function ShowcaseTab({ onNotice }: ShowcaseTabProps) {
               {/* VIDEO FIELDS (Ads & UGC) */}
               {(editingItem.category === "ads" || editingItem.category === "ugc") && (
                 <>
-                  <div>
-                    <label className="block text-neutral-400 font-semibold mb-1.5">
-                      Video MP4 URL (Vertical 9:16)
-                    </label>
-                    <input
-                      type="text"
-                      value={editingItem.videoUrl || ""}
-                      onChange={(e) => setEditingItem({ ...editingItem, videoUrl: e.target.value })}
-                      className="w-full rounded-xl border border-white/10 bg-[#07070A] p-2.5 text-white font-mono focus:outline-none focus:border-white"
-                      placeholder="e.g. /videos/ads/optimized/13014537_2160_3840_24fps.mp4"
-                    />
-                  </div>
+                  <MediaDropzone
+                    label="Phone Video (Vertical 9:16)"
+                    kind="video"
+                    tileClassName="h-24 w-14"
+                    value={editingItem.videoUrl}
+                    poster={editingItem.posterUrl}
+                    onChange={(url) =>
+                      setEditingItem((prev) => (prev ? { ...prev, videoUrl: url } : prev))
+                    }
+                    onAutoPoster={(url) =>
+                      setEditingItem((prev) => (prev ? { ...prev, posterUrl: url } : prev))
+                    }
+                    onNotify={onNotice}
+                    hint="Drag an MP4 to replace the loop — preview frame is captured automatically"
+                  />
 
-                  <div>
-                    <label className="block text-neutral-400 font-semibold mb-1.5">
-                      Poster Image WebP URL (Instant fallback preview)
-                    </label>
-                    <input
-                      type="text"
-                      value={editingItem.posterUrl || ""}
-                      onChange={(e) => setEditingItem({ ...editingItem, posterUrl: e.target.value })}
-                      className="w-full rounded-xl border border-white/10 bg-[#07070A] p-2.5 text-white font-mono focus:outline-none focus:border-white"
-                      placeholder="e.g. /videos/ads/optimized/13014537_2160_3840_24fps.webp"
-                    />
-                  </div>
+                  <MediaDropzone
+                    label="Poster Image (Instant Fallback Preview)"
+                    kind="image"
+                    tileClassName="h-24 w-14"
+                    value={editingItem.posterUrl}
+                    onChange={(url) =>
+                      setEditingItem((prev) => (prev ? { ...prev, posterUrl: url } : prev))
+                    }
+                    onNotify={onNotice}
+                    hint="Shown before the video plays — auto-filled from the video frame"
+                  />
                 </>
               )}
 
@@ -661,16 +668,17 @@ export function ShowcaseTab({ onNotice }: ShowcaseTabProps) {
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-neutral-400 font-semibold mb-1.5">Hero Image URL</label>
-                    <input
-                      type="text"
-                      value={editingItem.heroImg || ""}
-                      onChange={(e) => setEditingItem({ ...editingItem, heroImg: e.target.value })}
-                      className="w-full rounded-xl border border-white/10 bg-[#07070A] p-2.5 text-white font-mono"
-                      placeholder="e.g. /images/case-studies/voltex-thumb.webp"
-                    />
-                  </div>
+                  <MediaDropzone
+                    label="Hero Image"
+                    kind="image"
+                    tileClassName="h-16 w-20"
+                    value={editingItem.heroImg}
+                    onChange={(url) =>
+                      setEditingItem((prev) => (prev ? { ...prev, heroImg: url } : prev))
+                    }
+                    onNotify={onNotice}
+                    hint="Main creative shown inside the email card — landscape works best"
+                  />
 
                   <div>
                     <label className="block text-neutral-400 font-semibold mb-1.5">Email Headline</label>
@@ -735,6 +743,18 @@ export function ShowcaseTab({ onNotice }: ShowcaseTabProps) {
               {/* LANDING PAGE FIELDS */}
               {editingItem.category === "landing" && (
                 <>
+                  <MediaDropzone
+                    label="Funnel Preview Image"
+                    kind="image"
+                    tileClassName="h-16 w-24"
+                    value={editingItem.previewImg}
+                    onChange={(url) =>
+                      setEditingItem((prev) => (prev ? { ...prev, previewImg: url } : prev))
+                    }
+                    onNotify={onNotice}
+                    hint="Screenshot of the built funnel — replaces the gradient placeholder"
+                  />
+
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-neutral-400 font-semibold mb-1.5">Client / Brand Name</label>

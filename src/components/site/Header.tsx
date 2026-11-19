@@ -29,11 +29,17 @@ export const eightServices: MegaServiceItem[] = canonicalServices.map((s) => ({
   image: s.image,
 }));
 
+const mobileNavItems = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Case Studies", href: "/case-studies" },
+  { label: "Contact", href: "/contact" },
+];
+
 export function Header({ overlay = false }: { overlay?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [activePath, setActivePath] = useState("/");
 
   const headerRef = useRef<HTMLElement>(null);
@@ -127,6 +133,22 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isMobileOpen]);
 
+  // Lock page scroll (Lenis + native) while the mobile takeover is open
+  useEffect(() => {
+    if (!isMobileOpen) return;
+
+    const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } })
+      .__lenis;
+    lenis?.stop();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      lenis?.start();
+    };
+  }, [isMobileOpen]);
+
   return (
     <>
       <header
@@ -146,9 +168,16 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
           <a
             href="/"
             aria-label="brandit. home"
-            className="group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-4"
+            className={cn(
+              "group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4",
+              isScrolled || overlay ? "focus-visible:outline-white" : "focus-visible:outline-fg",
+            )}
           >
-            <Wordmark variant="theme" glow className="text-[24px] sm:text-[27px] w-auto" />
+            <Wordmark
+              variant={isScrolled || overlay ? "white" : "theme"}
+              glow
+              className="text-[24px] sm:text-[27px] w-auto"
+            />
           </a>
 
           <div className="flex items-center gap-1">
@@ -182,9 +211,16 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
             <a
               href="/"
               aria-label="brandit. home"
-              className="group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-4"
+              className={cn(
+                "group inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4",
+                isScrolled || overlay ? "focus-visible:outline-white" : "focus-visible:outline-fg",
+              )}
             >
-              <Wordmark variant="theme" glow className="text-[25px] xl:text-[28px] w-auto" />
+              <Wordmark
+                variant={isScrolled || overlay ? "white" : "theme"}
+                glow
+                className="text-[25px] xl:text-[28px] w-auto"
+              />
             </a>
           </div>
 
@@ -437,116 +473,168 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
           )}
         </AnimatePresence>
 
-        {/* Mobile Navigation Drawer */}
+      </header>
+
+      {/* Mobile full-screen navigation takeover */}
+      <AnimatePresence>
         {isMobileOpen && (
-          <nav
+          <motion.div
+            key="mobile-menu"
             id="mobile-navigation-drawer"
+            role="dialog"
+            aria-modal="true"
             aria-label="Mobile navigation"
-            className="mx-3 mt-2 flex flex-col gap-2 rounded-3xl border border-line bg-surface p-3.5 shadow-2xl backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 duration-150 min-[920px]:hidden text-fg"
+            data-lenis-prevent
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain bg-[#050506] text-white [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden min-[920px]:hidden"
           >
-            {/* Home */}
-            <a
-              href="/"
-              onClick={() => setIsMobileOpen(false)}
-              className="flex min-h-[46px] items-center rounded-2xl bg-surface-2 px-4 text-[15px] font-medium text-fg transition-colors hover:bg-primary hover:font-bold hover:text-primary-foreground"
-            >
-              Home
-            </a>
-
-            {/* About */}
-            <a
-              href="/about"
-              onClick={() => setIsMobileOpen(false)}
-              className="flex min-h-[46px] items-center rounded-2xl bg-surface-2 px-4 text-[15px] font-medium text-fg transition-colors hover:bg-primary hover:font-bold hover:text-primary-foreground"
-            >
-              About
-            </a>
-
-            {/* Services & Packages Accordion */}
-            <div className="flex flex-col rounded-2xl bg-surface-2 overflow-hidden">
-              <div className="flex items-center justify-between pr-2">
-                <a
-                  href="/services"
-                  onClick={() => setIsMobileOpen(false)}
-                  className="flex min-h-[46px] flex-1 items-center px-4 text-[15px] font-medium text-fg hover:text-muted-foreground"
-                >
-                  Services & Packages
-                </a>
+            {/* Top bar */}
+            <div className="flex h-[76px] shrink-0 items-center justify-between px-5">
+              <a
+                href="/"
+                aria-label="brandit. home"
+                onClick={() => setIsMobileOpen(false)}
+                className="inline-flex items-center rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              >
+                <Wordmark variant="white" className="w-auto text-[26px]" />
+              </a>
+              <div className="flex items-center gap-1">
                 <button
                   type="button"
-                  className="grid h-10 w-10 place-items-center text-fg"
-                  aria-expanded={isMobileServicesOpen}
-                  onClick={() => setIsMobileServicesOpen((prev) => !prev)}
-                  aria-label="Toggle services list"
+                  onClick={() => setIsMobileOpen(false)}
+                  aria-label="Close navigation menu"
+                  className="grid h-11 w-11 place-items-center rounded-full text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white"
                 >
-                  <ChevronDown
-                    size={16}
-                    className={cn(
-                      "stroke-[2.5] transition-transform duration-200",
-                      isMobileServicesOpen && "rotate-180",
-                    )}
-                    aria-hidden="true"
-                  />
+                  <X size={28} className="stroke-[1.8]" />
                 </button>
               </div>
-              {isMobileServicesOpen && (
-                <div className="grid grid-cols-2 gap-1.5 border-t border-line bg-panel p-2.5">
-                  {eightServices.map((item) => (
-                    <a
-                      key={item.id}
-                      href={`/services#${item.slug}`}
-                      onClick={() => setIsMobileOpen(false)}
-                      className="flex items-center justify-between rounded-xl bg-surface p-3 text-left border border-line hover:border-fg/30 transition-colors"
-                    >
-                      <div>
-                        <div className="text-[14px] font-bold text-fg">
-                          {item.title}{" "}
-                          <span className="font-serif font-normal italic text-muted-foreground">
-                            {item.serifLine}
-                          </span>
-                        </div>
-                        <div className="text-[12px] text-muted-foreground line-clamp-1">
-                          {item.description}
-                        </div>
-                      </div>
-                      <ArrowUpRight size={15} className="text-fg shrink-0 ml-2" />
-                    </a>
-                  ))}
-                </div>
-              )}
             </div>
 
-            {/* Case Studies */}
-            <a
-              href="/case-studies"
-              onClick={() => setIsMobileOpen(false)}
-              className="flex min-h-[46px] items-center rounded-2xl bg-surface-2 px-4 text-[15px] font-medium text-fg transition-colors hover:bg-primary hover:font-bold hover:text-primary-foreground"
-            >
-              Case Studies
-            </a>
+            <div className="flex flex-col px-5 pb-[max(32px,env(safe-area-inset-bottom))]">
+              {/* Conversion row */}
+              <div className="flex items-center justify-between gap-4 border-y border-white/10 py-5">
+                <p className="font-display text-[24px] font-extrabold tracking-tight text-white">
+                  Ready to <span className="font-instrument font-normal italic">chat?</span>
+                </p>
+                <a
+                  href="/contact"
+                  onClick={() => setIsMobileOpen(false)}
+                  className="inline-flex h-[46px] shrink-0 items-center rounded-full border border-white/70 px-6 text-[15px] font-semibold text-white transition-colors hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  Book Now
+                </a>
+              </div>
 
-            {/* Contact */}
-            <a
-              href="/contact"
-              onClick={() => setIsMobileOpen(false)}
-              className="flex min-h-[46px] items-center rounded-2xl bg-surface-2 px-4 text-[15px] font-medium text-fg transition-colors hover:bg-primary hover:font-bold hover:text-primary-foreground"
-            >
-              Contact
-            </a>
+              {/* Services — shown immediately as the menu opens */}
+              <div className="flex flex-col gap-3 pt-5">
+                {eightServices.map((item, index) => (
+                  <motion.a
+                    key={item.id}
+                    href={`/services#${item.slug}`}
+                    onClick={() => setIsMobileOpen(false)}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: 0.04 + index * 0.045,
+                      duration: 0.42,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="group relative flex h-[136px] w-full shrink-0 items-center overflow-hidden rounded-[18px] border border-white/[0.08] bg-[#0D0E14] px-6 focus-visible:outline-2 focus-visible:outline-white"
+                  >
+                    <img
+                      src={typeof item.image === "string" ? item.image : item.image.src}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-500 ease-out group-active:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-black/5" />
+                    <div className="relative z-10">
+                      <span className="block font-display text-[26px] font-extrabold leading-[0.95] tracking-tight text-white">
+                        {item.title}
+                      </span>
+                      <span className="block font-instrument text-[26px] font-normal italic leading-[1.05] text-white">
+                        {item.serifLine}
+                      </span>
+                    </div>
+                  </motion.a>
+                ))}
 
-            {/* Mobile CTA */}
-            <a
-              href="/contact"
-              onClick={() => setIsMobileOpen(false)}
-              className="mt-1 flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-primary px-5 text-[15px] font-bold text-primary-foreground transition-transform active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-            >
-              <span className="font-display font-black text-[16px]">b.</span>
-              <span>Get Started</span>
-              <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />
-            </a>
-          </nav>
+                <motion.a
+                  href="/services"
+                  onClick={() => setIsMobileOpen(false)}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 0.04 + eightServices.length * 0.045,
+                    duration: 0.42,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="mt-2 flex h-14 shrink-0 items-center justify-between rounded-[18px] border border-white/15 px-6 transition-colors hover:border-white/40 focus-visible:outline-2 focus-visible:outline-white"
+                >
+                  <span className="text-[15px] font-semibold text-white/80">
+                    All services & packages
+                  </span>
+                  <ArrowUpRight size={18} className="text-white/50" aria-hidden="true" />
+                </motion.a>
+              </div>
+
+              {/* Nav links — after the services, matching Defiant */}
+              <nav aria-label="Primary" className="mt-9 flex flex-col border-t border-white/10 pt-3">
+                {mobileNavItems.map((item, index) => (
+                  <motion.a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setIsMobileOpen(false)}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: 0.12 + index * 0.05,
+                      duration: 0.4,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="group flex items-center gap-3 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                  >
+                    <ArrowUpRight
+                      size={19}
+                      className="shrink-0 text-white/40 transition-colors group-hover:text-white"
+                      aria-hidden="true"
+                    />
+                    <span className="font-display text-[clamp(23px,6.8vw,31px)] font-extrabold leading-none tracking-[-0.03em] text-white transition-colors group-hover:text-white/70">
+                      {item.label}
+                    </span>
+                  </motion.a>
+                ))}
+              </nav>
+
+              {/* Brand sign-off */}
+              <div className="mt-10 border-t border-white/10 pt-8">
+                <h3 className="font-display text-[clamp(28px,8vw,36px)] font-extrabold leading-[1.02] tracking-[-0.03em] text-white">
+                  All the <span className="font-instrument font-normal italic">services</span>
+                  <span className="block">
+                    you need to{" "}
+                    <span className="font-instrument font-normal italic">scale</span>
+                  </span>
+                </h3>
+                <p className="mt-4 max-w-[300px] text-[14px] leading-relaxed text-white/40">
+                  {siteMeta.tagline}
+                </p>
+                <a
+                  href="/contact"
+                  onClick={() => setIsMobileOpen(false)}
+                  className="mt-6 inline-flex h-[54px] w-full items-center justify-center gap-2 rounded-full bg-white px-6 text-[15px] font-bold text-black transition-transform active:scale-[0.99]"
+                >
+                  <span className="font-display text-[16px] font-black">b.</span>
+                  <span>Get Started</span>
+                  <ArrowUpRight size={17} className="stroke-[2.5]" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+          </motion.div>
         )}
-      </header>
+      </AnimatePresence>
 
       {/* Desktop spacer to prevent page jump when header is fixed */}
       <div

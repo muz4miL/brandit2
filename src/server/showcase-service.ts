@@ -7,7 +7,7 @@ export const DEFAULT_SHOWCASE_SETTINGS: ShowcaseSettingsDoc = {
   sectionBadge: "OUR WORK",
   headingPrefix: "Creative that",
   headingItalic: "Converts",
-  marqueeSpeedSeconds: 32,
+  marqueeSpeedSeconds: 7,
   sectionEnabled: true,
   updatedAt: new Date().toISOString(),
 };

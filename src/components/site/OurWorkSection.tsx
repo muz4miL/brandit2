@@ -288,12 +288,32 @@ interface PhoneCardProps {
 
 function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isOnScreen, setIsOnScreen] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+
+  // Only phones actually in (or near) the viewport decode video, so the fast
+  // marquee stays smooth on mobile instead of decoding 10+ streams at once.
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setIsOnScreen(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsOnScreen(Boolean(entry?.isIntersecting)),
+      { rootMargin: "120px 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    if (isSectionNear) {
+    if (isSectionNear && isOnScreen) {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!prefersReduced) {
         video.muted = true;
@@ -301,11 +321,13 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
         if (playPromise !== undefined) {
           playPromise.catch(() => {});
         }
+      } else {
+        video.pause();
       }
     } else {
       video.pause();
     }
-  }, [isSectionNear]);
+  }, [isSectionNear, isOnScreen]);
 
   const handleLoadedMetadata = () => {
     const video = videoRef.current;
@@ -319,7 +341,10 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
   };
 
   return (
-    <div className="relative h-[260px] w-[136px] shrink-0 select-none sm:h-[310px] sm:w-[162px] md:h-[350px] md:w-[182px] lg:h-[370px] lg:w-[192px] transform-gpu">
+    <div
+      ref={cardRef}
+      className="relative h-[260px] w-[136px] shrink-0 select-none sm:h-[310px] sm:w-[162px] md:h-[350px] md:w-[182px] lg:h-[370px] lg:w-[192px] transform-gpu"
+    >
       {/* Left side volume buttons */}
       <div className="absolute -left-[2.5px] top-[60px] h-[18px] w-[2.5px] rounded-l-sm bg-neutral-600 sm:top-[72px] sm:h-[22px] md:top-[82px] md:h-[24px]" />
       <div className="absolute -left-[2.5px] top-[82px] h-[18px] w-[2.5px] rounded-l-sm bg-neutral-600 sm:top-[98px] sm:h-[22px] md:top-[112px] md:h-[24px]" />
@@ -328,7 +353,7 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
       <div className="absolute -right-[2.5px] top-[65px] h-[28px] w-[2.5px] rounded-r-sm bg-neutral-600 sm:top-[78px] sm:h-[34px] md:top-[90px] md:h-[38px]" />
 
       {/* Phone outer frame: sleek dark titanium chassis matching Defiant */}
-      <div className="relative h-full w-full rounded-[24px] bg-gradient-to-b from-[#3a3a44] via-[#24242c] to-[#141418] p-[2px] shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_20px_50px_rgba(0,0,0,0.7)] sm:rounded-[28px] md:rounded-[32px]">
+      <div className="relative h-full w-full rounded-[24px] bg-gradient-to-b from-[#3a3a44] via-[#24242c] to-[#141418] p-[2px] shadow-[0_0_0_1px_rgba(20,20,20,0.06),0_10px_24px_-10px_rgba(20,20,20,0.22)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_20px_50px_rgba(0,0,0,0.7)] sm:rounded-[28px] md:rounded-[32px]">
         {/* Thin black bezel padding */}
         <div className="relative h-full w-full rounded-[22px] bg-[#0c0c0e] p-[3px] sm:rounded-[26px] sm:p-[4px] md:rounded-[30px] md:p-[4.5px]">
           {/* Inner screen radius with overflow hidden */}
@@ -349,7 +374,8 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
               />
             )}
 
-            {/* Video element with instant poster & faststart */}
+            {/* Video element fades in only once it has frames, so a slow or
+                failed load never paints a black rectangle over the poster */}
             <video
               ref={videoRef}
               src={item.video}
@@ -357,13 +383,16 @@ function PhoneCard({ item, index, isDuplicate, isSectionNear }: PhoneCardProps) 
               muted
               loop
               playsInline
-              autoPlay
-              preload="auto"
+              preload="metadata"
               disablePictureInPicture
               controls={false}
               draggable={false}
               onLoadedMetadata={handleLoadedMetadata}
-              className="relative z-10 h-full w-full object-cover transform-gpu"
+              onLoadedData={() => setIsVideoReady(true)}
+              onCanPlay={() => setIsVideoReady(true)}
+              className={`relative z-10 h-full w-full object-cover transform-gpu transition-opacity duration-500 ${
+                isVideoReady ? "opacity-100" : "opacity-0"
+              }`}
             />
           </div>
         </div>
@@ -730,7 +759,7 @@ export function OurWorkSection() {
   const badgeText = dynamicSettings?.sectionBadge || "CREATIVE LIBRARY";
   const headingPrefix = dynamicSettings?.headingPrefix || "Creative that";
   const headingItalic = dynamicSettings?.headingItalic || "Converts";
-  const durationSec = dynamicSettings?.marqueeSpeedSeconds || 32;
+  const durationSec = dynamicSettings?.marqueeSpeedSeconds || 7;
 
   return (
     <section
@@ -789,110 +818,80 @@ export function OurWorkSection() {
           style={{ animationDuration: `${durationSec}s` }}
         >
           {/* TAB: Ads Creative */}
-          {activeTab === "ads" && (
-            <>
-              {/* Set 1 */}
-              <div className="flex shrink-0 items-center gap-4 sm:gap-6 lg:gap-7 pr-4 sm:pr-6 lg:pr-7">
-                {adsItems.map((item, idx) => (
-                  <PhoneCard
-                    key={`ads-1-${idx}`}
-                    item={item}
-                    index={idx}
-                    isSectionNear={isSectionNear}
-                  />
-                ))}
-              </div>
-              {/* Set 2 (Duplicate for infinite seamless loop) */}
-              <div
-                className="flex shrink-0 items-center gap-4 sm:gap-6 lg:gap-7 pr-4 sm:pr-6 lg:pr-7"
-                aria-hidden="true"
-              >
-                {adsItems.map((item, idx) => (
-                  <PhoneCard
-                    key={`ads-2-${idx}`}
-                    item={item}
-                    index={idx}
-                    isDuplicate
-                    isSectionNear={isSectionNear}
-                  />
-                ))}
-              </div>
-            </>
-          )}
+          {activeTab === "ads" &&
+            [0, 1].map((half) =>
+              [0, 1, 2].map((copy) => (
+                <div
+                  key={`ads-${half}-${copy}`}
+                  aria-hidden={half === 1 || copy > 0 ? true : undefined}
+                  className="flex shrink-0 items-center gap-4 sm:gap-6 lg:gap-7 pr-4 sm:pr-6 lg:pr-7"
+                >
+                  {adsItems.map((item, idx) => (
+                    <PhoneCard
+                      key={`ads-${half}-${copy}-${idx}`}
+                      item={item}
+                      index={idx}
+                      isDuplicate={half === 1 || copy > 0}
+                      isSectionNear={isSectionNear}
+                    />
+                  ))}
+                </div>
+              )),
+            )}
 
           {/* TAB: Emails */}
-          {activeTab === "emails" && (
-            <>
-              {/* Set 1 */}
-              <div className="flex shrink-0 items-center gap-6 sm:gap-8 lg:gap-10 pr-6 sm:pr-8 lg:pr-10">
-                {emailItems.map((item) => (
-                  <EmailCard key={`email-1-${item.id}`} item={item} />
-                ))}
-              </div>
-              {/* Set 2 (Duplicate for infinite seamless loop) */}
-              <div
-                className="flex shrink-0 items-center gap-6 sm:gap-8 lg:gap-10 pr-6 sm:pr-8 lg:pr-10"
-                aria-hidden="true"
-              >
-                {emailItems.map((item) => (
-                  <EmailCard key={`email-2-${item.id}`} item={item} />
-                ))}
-              </div>
-            </>
-          )}
+          {activeTab === "emails" &&
+            [0, 1].map((half) =>
+              [0, 1, 2].map((copy) => (
+                <div
+                  key={`email-${half}-${copy}`}
+                  aria-hidden={half === 1 || copy > 0 ? true : undefined}
+                  className="flex shrink-0 items-center gap-6 sm:gap-8 lg:gap-10 pr-6 sm:pr-8 lg:pr-10"
+                >
+                  {emailItems.map((item) => (
+                    <EmailCard key={`email-${half}-${copy}-${item.id}`} item={item} />
+                  ))}
+                </div>
+              )),
+            )}
 
           {/* TAB: Landing Pages */}
-          {activeTab === "landing" && (
-            <>
-              {/* Set 1 */}
-              <div className="flex shrink-0 items-center gap-6 sm:gap-8 lg:gap-10 pr-6 sm:pr-8 lg:pr-10">
-                {landingItems.map((item) => (
-                  <LandingPageCard key={`landing-1-${item.id}`} item={item} />
-                ))}
-              </div>
-              {/* Set 2 (Duplicate for infinite seamless loop) */}
-              <div
-                className="flex shrink-0 items-center gap-6 sm:gap-8 lg:gap-10 pr-6 sm:pr-8 lg:pr-10"
-                aria-hidden="true"
-              >
-                {landingItems.map((item) => (
-                  <LandingPageCard key={`landing-2-${item.id}`} item={item} />
-                ))}
-              </div>
-            </>
-          )}
+          {activeTab === "landing" &&
+            [0, 1].map((half) =>
+              [0, 1, 2].map((copy) => (
+                <div
+                  key={`landing-${half}-${copy}`}
+                  aria-hidden={half === 1 || copy > 0 ? true : undefined}
+                  className="flex shrink-0 items-center gap-6 sm:gap-8 lg:gap-10 pr-6 sm:pr-8 lg:pr-10"
+                >
+                  {landingItems.map((item) => (
+                    <LandingPageCard key={`landing-${half}-${copy}-${item.id}`} item={item} />
+                  ))}
+                </div>
+              )),
+            )}
 
           {/* TAB: UGC */}
-          {activeTab === "ugc" && (
-            <>
-              {/* Set 1 */}
-              <div className="flex shrink-0 items-center gap-4 sm:gap-6 lg:gap-7 pr-4 sm:pr-6 lg:pr-7">
-                {ugcItems.map((item, idx) => (
-                  <PhoneCard
-                    key={`ugc-1-${idx}`}
-                    item={item}
-                    index={idx}
-                    isSectionNear={isSectionNear}
-                  />
-                ))}
-              </div>
-              {/* Set 2 (Duplicate for infinite seamless loop) */}
-              <div
-                className="flex shrink-0 items-center gap-4 sm:gap-6 lg:gap-7 pr-4 sm:pr-6 lg:pr-7"
-                aria-hidden="true"
-              >
-                {ugcItems.map((item, idx) => (
-                  <PhoneCard
-                    key={`ugc-2-${idx}`}
-                    item={item}
-                    index={idx}
-                    isDuplicate
-                    isSectionNear={isSectionNear}
-                  />
-                ))}
-              </div>
-            </>
-          )}
+          {activeTab === "ugc" &&
+            [0, 1].map((half) =>
+              [0, 1, 2].map((copy) => (
+                <div
+                  key={`ugc-${half}-${copy}`}
+                  aria-hidden={half === 1 || copy > 0 ? true : undefined}
+                  className="flex shrink-0 items-center gap-4 sm:gap-6 lg:gap-7 pr-4 sm:pr-6 lg:pr-7"
+                >
+                  {ugcItems.map((item, idx) => (
+                    <PhoneCard
+                      key={`ugc-${half}-${copy}-${idx}`}
+                      item={item}
+                      index={idx}
+                      isDuplicate={half === 1 || copy > 0}
+                      isSectionNear={isSectionNear}
+                    />
+                  ))}
+                </div>
+              )),
+            )}
         </div>
       </div>
 

@@ -722,7 +722,7 @@ body,
 }
 
 .showcase-track {
-  animation: showcase-left var(--showcase-duration, 32s) linear infinite;
+  animation: showcase-left var(--showcase-duration, 7s) linear infinite;
   contain: layout paint;
   will-change: transform;
   transform: translate3d(0, 0, 0);
@@ -736,7 +736,7 @@ body,
 
 @media (min-width: 768px) {
   .showcase-track {
-    animation-duration: var(--showcase-duration, 32s);
+    animation-duration: var(--showcase-duration, 7s);
   }
 }
 

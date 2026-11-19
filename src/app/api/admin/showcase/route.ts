@@ -57,6 +57,8 @@ export async function POST(req: Request) {
       theme: body.theme === "light" ? "light" : "dark",
       client: body.client?.trim() || "",
       url: body.url?.trim() || "",
+      projectUrl: body.projectUrl?.trim() || "",
+      previewImg: body.previewImg?.trim() || "",
       highlight: body.highlight?.trim() || "",
       description: body.description?.trim() || "",
       stats: Array.isArray(body.stats) ? body.stats : [],

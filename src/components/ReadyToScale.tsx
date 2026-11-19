@@ -34,25 +34,32 @@ export default function ReadyToScale() {
           />
 
           {/* Banner Graphic Layer */}
-          <div className="relative w-full overflow-hidden min-h-[270px] sm:min-h-[340px] lg:min-h-[440px] flex items-center justify-between">
-            <picture className="absolute inset-0 h-full w-full pointer-events-none select-none">
+          <div className="relative flex w-full flex-col md:block md:min-h-[340px] lg:min-h-[440px]">
+            {/* Visual: full-bleed backdrop on desktop, own band on mobile so the CTA never sits on the artwork's baked-in copy */}
+            <div className="relative h-[240px] w-full shrink-0 overflow-hidden sm:h-[290px] md:absolute md:inset-0 md:h-full">
               <img
                 src="/banner/bannerHero.jfif"
                 alt="Ready to scale? Make your next move with brandit."
                 title="Ready to Scale — brandit. Digital Creative Agency"
-                className="h-full w-full object-cover object-left-top sm:object-[center_top] select-none"
+                className="h-full w-full select-none object-cover object-[100%_50%] scale-[1.35] origin-right sm:scale-100 sm:object-center md:object-[center_top]"
                 loading="lazy"
               />
-            </picture>
 
-            {/* Contrast and glow overlays */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/40 md:bg-gradient-to-r md:from-black/40 md:via-transparent md:to-black/50" />
+              {/* Mobile: fade the visual into the CTA panel below */}
+              <div
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#08080C] to-transparent md:hidden"
+                aria-hidden="true"
+              />
 
-            {/* Ambient monochrome glow behind button */}
-            <div className="pointer-events-none absolute right-4 md:right-16 top-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-white/[0.06] blur-[90px]" />
+              {/* Desktop: contrast overlays across the full banner */}
+              <div
+                className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-black/40 via-transparent to-black/50 md:block"
+                aria-hidden="true"
+              />
+            </div>
 
-            {/* Floating Hero Bouncy Pulsing Button on the Right (Centered on mobile) */}
-            <div className="relative z-20 w-full flex flex-col items-center md:items-end justify-center px-4 sm:px-10 lg:px-16 py-8 md:py-0 gap-3">
+            {/* Floating Hero Bouncy Pulsing Button — stacked under the visual on mobile */}
+            <div className="relative z-20 flex w-full flex-col items-center gap-3 px-5 pb-8 pt-5 sm:px-10 sm:pb-10 md:absolute md:right-0 md:top-1/2 md:w-auto md:-translate-y-1/2 md:items-end md:px-16 md:py-0">
               <a
                 href="/contact"
                 aria-label="Book a Discovery Call"

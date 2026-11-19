@@ -96,7 +96,7 @@ export function PartnerStrip({
           priority={index < 2 && !isDuplicate}
           loading={index < 2 && !isDuplicate ? "eager" : "lazy"}
           onError={() => handleImageError(logo.id)}
-          className="h-full w-full object-contain drop-shadow-[0_4px_14px_rgba(0,0,0,0.55)] select-none pointer-events-none"
+          className="h-full w-full object-contain dark:drop-shadow-[0_4px_14px_rgba(0,0,0,0.55)] select-none pointer-events-none"
         />
       </div>
     );
@@ -111,7 +111,7 @@ export function PartnerStrip({
           title={logo.name}
           tabIndex={isDuplicate ? -1 : 0}
           aria-hidden={isDuplicate}
-          className="group inline-flex items-center focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black rounded-md"
+          className="group inline-flex items-center focus:outline-none focus:ring-2 focus:ring-fg focus:ring-offset-2 focus:ring-offset-background rounded-md"
         >
           {logoElement}
         </a>

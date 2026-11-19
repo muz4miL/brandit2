@@ -28,6 +28,7 @@ export type AdminTab =
   | "services"
   | "portfolio"
   | "case-studies"
+  | "testimonials"
   | "careers"
   | "settings";
 
@@ -114,6 +115,11 @@ export function AdminSidebar({
           id: "stats-strip" as AdminTab,
           label: "Stats Strip",
           icon: BarChart3,
+        },
+        {
+          id: "testimonials" as AdminTab,
+          label: "Testimonials",
+          icon: FileText,
         },
       ],
     },

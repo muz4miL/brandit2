@@ -37,6 +37,8 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
       "theme",
       "client",
       "url",
+      "projectUrl",
+      "previewImg",
       "highlight",
       "description",
       "stats",

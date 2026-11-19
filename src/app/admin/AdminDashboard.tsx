@@ -15,6 +15,7 @@ import { PortfolioTab } from "@/components/admin/tabs/PortfolioTab";
 import { CaseStudiesTab } from "@/components/admin/tabs/CaseStudiesTab";
 import { CareersTab } from "@/components/admin/tabs/CareersTab";
 import { SettingsTab } from "@/components/admin/tabs/SettingsTab";
+import { TestimonialsTab } from "@/components/admin/tabs/TestimonialsTab";
 
 export function AdminDashboard({
   initialData,
@@ -217,6 +218,13 @@ export function AdminDashboard({
             <CaseStudiesTab
               caseStudies={caseStudies}
               setCaseStudies={setCaseStudies}
+              onNotice={showNotice}
+            />
+          )}
+
+          {activeTab === "testimonials" && (
+            <TestimonialsTab
+              initialTestimonials={initialData.testimonials ?? []}
               onNotice={showNotice}
             />
           )}

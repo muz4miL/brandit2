@@ -152,6 +152,23 @@ export async function POST(req: Request) {
           return NextResponse.json({ success: false, error: "CV file not found on disk" }, { status: 404 });
         }
       }
+      case "saveTestimonial": {
+        const { _id, ...fields } = data;
+        fields.updatedAt = new Date();
+        if (_id && ObjectId.isValid(_id)) {
+          await collections.testimonials.updateOne({ _id: new ObjectId(_id) }, { $set: fields });
+          return NextResponse.json({ success: true, id: _id });
+        } else {
+          fields.createdAt = new Date();
+          const res = await collections.testimonials.insertOne(fields as any);
+          return NextResponse.json({ success: true, id: res.insertedId.toString() });
+        }
+      }
+      case "deleteTestimonial": {
+        if (!ObjectId.isValid(data.id)) return NextResponse.json({ success: false, error: "Invalid ID" }, { status: 400 });
+        await collections.testimonials.deleteOne({ _id: new ObjectId(data.id) });
+        return NextResponse.json({ success: true });
+      }
       case "saveWorkProject": {
         const { saveAdminWorkProject } = await import("@/server/work-service");
         const res = await saveAdminWorkProject(data);

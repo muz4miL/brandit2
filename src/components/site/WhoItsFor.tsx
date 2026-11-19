@@ -112,7 +112,7 @@ export function WhoItsFor({
           <h2 className="mt-4 text-center">
             <span className="block font-display text-[clamp(36px,4vw,56px)] font-extrabold leading-[1.02] tracking-tight text-white">
               Choose how you{" "}
-              <span className="font-serif italic font-normal text-white">
+              <span className="font-instrument italic font-normal text-white">
                 want to grow
               </span>
             </span>

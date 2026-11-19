@@ -92,7 +92,16 @@ export interface TestimonialDoc {
   clientName: string;
   clientTitle: string;
   companyName: string;
+  companyCategory?: string; // e.g. "E-commerce" / "Health & Fitness"
   companyLogoUrl?: string;
+  clientPhotoUrl?: string; // headshot shown left of quote
+  clientVideoUrl?: string; // optional video story shown left of quote
+  stat1Value?: string; // e.g. "135%"
+  stat1Label?: string; // e.g. "Increase in bookings"
+  stat2Value?: string;
+  stat2Label?: string;
+  stat3Value?: string;
+  stat3Label?: string;
   order: number;
   isPublished: boolean;
 }

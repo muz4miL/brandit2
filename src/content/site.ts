@@ -43,6 +43,39 @@ export const nav = [
   { label: "Contact", href: "/contact" },
 ];
 
+export const footerNav = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Case Studies", href: "/case-studies" },
+  { label: "Careers", href: "/careers" },
+];
+
+export const footerServices = [
+  { label: "Performance Creative", href: "/services#performance-creative" },
+  { label: "Meta Ads", href: "/services#meta-ads" },
+  { label: "Google Ads", href: "/services#google-ads" },
+  { label: "TikTok Ads", href: "/services#tiktok-vertical-video" },
+  { label: "CRO & Landing Pages", href: "/services#cro-landing-pages" },
+  { label: "Email & SMS", href: "/services#email-sms" },
+  { label: "Web Design", href: "/services#web-design-development" },
+  { label: "Branding & Design", href: "/services#branding-visual-direction" },
+];
+
+export const footerNewsletterSlides = [
+  {
+    title: "Now it's time to scale.",
+    subtitle: "Join our free community",
+  },
+  {
+    title: "One email. Every week.",
+    subtitle: "Growth tactics you can actually use",
+  },
+  {
+    title: "Built for founders.",
+    subtitle: "Direct, tested notes from the studio",
+  },
+];
+
 export const siteMeta = {
   agencyName: BRAND_NAME,
   tagline: BRAND_TAGLINE,
