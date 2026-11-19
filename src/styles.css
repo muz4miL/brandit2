@@ -1034,11 +1034,14 @@ body,
 .footer-watermark {
   background-image: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--foreground) 20%, transparent),
-    color-mix(in srgb, var(--foreground) 5%, transparent),
+    color-mix(in srgb, var(--foreground) 14%, transparent),
+    color-mix(in srgb, var(--foreground) 4%, transparent),
     transparent
   );
-  filter: drop-shadow(0 0 45px color-mix(in srgb, var(--foreground) 5%, transparent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: none;
 }
 
 .case-studies-hero {
