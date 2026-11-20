@@ -1,23 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Edit2, Trash2, X, Check, Image as ImageIcon } from "lucide-react";
-import { adminSavePortfolioFn, adminDeletePortfolioFn } from "@/api/admin";
+import { Plus, Edit2, Trash2, X, Check, Image as ImageIcon, Upload, Eye, EyeOff, ArrowUp, ArrowDown } from "lucide-react";
+import { adminSavePortfolioFn, adminDeletePortfolioFn, adminUploadMediaFn, adminSavePortfolioSettingsFn } from "@/api/admin";
 import { ConfirmModal } from "@/components/admin/ConfirmModal";
 
 interface PortfolioTabProps {
   portfolio: any[];
   setPortfolio: React.Dispatch<React.SetStateAction<any[]>>;
+  initialSettings?: { seo: { title: string; description: string; ogImage?: string } };
   onNotice: (text: string, type?: "success" | "error") => void;
 }
 
-export function PortfolioTab({ portfolio, setPortfolio, onNotice }: PortfolioTabProps) {
+export function PortfolioTab({ portfolio, setPortfolio, initialSettings, onNotice }: PortfolioTabProps) {
   const [editingPortfolio, setEditingPortfolio] = useState<any | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+  const [seoSettings, setSeoSettings] = useState(
+    initialSettings?.seo || {
+      title: "Our Work | brandit.",
+      description: "Explore brandit. work across industries.",
+      ogImage: "",
+    },
+  );
 
   const handleSave = async () => {
     if (!editingPortfolio) return;
+    if (!editingPortfolio.slug?.trim() || !editingPortfolio.title?.trim() || !editingPortfolio.outcomeLine?.trim()) {
+      onNotice("Slug, title, and outcome line are required.", "error");
+      return;
+    }
+    if (editingPortfolio.isPublished && editingPortfolio.mediaUrl && !editingPortfolio.altText?.trim()) {
+      onNotice("Alt text is required before publishing an item with media.", "error");
+      return;
+    }
     setIsSaving(true);
     try {
       const res = await adminSavePortfolioFn({ data: editingPortfolio });
@@ -35,6 +52,59 @@ export function PortfolioTab({ portfolio, setPortfolio, onNotice }: PortfolioTab
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleUpload = async (file: File) => {
+    if (!editingPortfolio) return;
+    setIsUploading(true);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("altText", editingPortfolio.altText || "");
+      const res = await adminUploadMediaFn(form);
+      if (!res.success) throw new Error(res.error || "Upload failed");
+      setEditingPortfolio({
+        ...editingPortfolio,
+        mediaType: res.mediaType,
+        mediaUrl: res.url,
+      });
+      onNotice("Media uploaded.");
+    } catch (err: any) {
+      onNotice(err?.message || "Upload failed", "error");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const moveItem = async (item: any, direction: -1 | 1) => {
+    const sorted = [...portfolio].sort((a, b) => (a.order || 1) - (b.order || 1));
+    const index = sorted.findIndex((row) => (row._id || row.slug) === (item._id || item.slug));
+    const swapIndex = index + direction;
+    if (index < 0 || swapIndex < 0 || swapIndex >= sorted.length) return;
+    const a = sorted[index];
+    const b = sorted[swapIndex];
+    if (!a || !b) return;
+    const nextA = { ...a, order: b.order };
+    const nextB = { ...b, order: a.order };
+    setPortfolio(sorted.map((row) => {
+      if ((row._id || row.slug) === (nextA._id || nextA.slug)) return nextA;
+      if ((row._id || row.slug) === (nextB._id || nextB.slug)) return nextB;
+      return row;
+    }));
+    await Promise.all([
+      adminSavePortfolioFn({ data: nextA }),
+      adminSavePortfolioFn({ data: nextB }),
+    ]);
+  };
+
+  const togglePublished = async (item: any) => {
+    if (!item.isPublished && item.mediaUrl && !item.altText?.trim()) {
+      onNotice("Add alt text before publishing this item.", "error");
+      return;
+    }
+    const updated = { ...item, isPublished: !item.isPublished };
+    await adminSavePortfolioFn({ data: updated });
+    setPortfolio((prev) => prev.map((row) => (row._id === item._id ? updated : row)));
   };
 
   const confirmDelete = async () => {
@@ -65,10 +135,10 @@ export function PortfolioTab({ portfolio, setPortfolio, onNotice }: PortfolioTab
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h2 className="font-display text-2xl font-bold tracking-tight text-white">
-            Legacy Portfolio Projects
+            Our Work
           </h2>
           <p className="text-xs text-neutral-400 mt-1">
-            Manage showcase entries, client outcomes, 16:9 imagery, and categorical tags.
+            Manage portfolio cards shown on /our-work.
           </p>
         </div>
         <button
@@ -76,19 +146,57 @@ export function PortfolioTab({ portfolio, setPortfolio, onNotice }: PortfolioTab
           onClick={() =>
             setEditingPortfolio({
               slug: "",
-              client: "",
-              category: "Branding",
               title: "",
-              outcome: "",
+              outcomeLine: "",
               mediaType: "image",
+              mediaUrl: "",
+              posterUrl: "",
+              altText: "",
+              detailUrl: "",
               order: portfolio.length + 1,
-              isPublished: true,
+              isPublished: false,
             })
           }
           className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-bold text-black hover:bg-neutral-200 shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all cursor-pointer"
         >
           <Plus size={15} />
           <span>Add Project</span>
+        </button>
+      </div>
+
+      <div className="rounded-2xl border border-white/[0.08] bg-[#0A0B10] p-5">
+        <h3 className="text-sm font-bold text-white">SEO settings</h3>
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          <label className="text-xs text-neutral-300">
+            Meta title
+            <input
+              value={seoSettings.title}
+              onChange={(e) => setSeoSettings({ ...seoSettings, title: e.target.value })}
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-white"
+            />
+          </label>
+          <label className="text-xs text-neutral-300">
+            Meta description
+            <input
+              value={seoSettings.description}
+              onChange={(e) => setSeoSettings({ ...seoSettings, description: e.target.value })}
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-white"
+            />
+          </label>
+        </div>
+        <button
+          type="button"
+          onClick={async () => {
+            try {
+              await adminSavePortfolioSettingsFn({ data: { seo: seoSettings } });
+              onNotice("SEO settings saved.");
+            } catch (err: any) {
+              onNotice(err?.message || "Could not save SEO settings", "error");
+            }
+          }}
+          className="mt-3 rounded-xl border border-white/10 px-4 py-2 text-xs font-semibold text-white"
+        >
+          Save SEO
         </button>
       </div>
 
@@ -112,14 +220,11 @@ export function PortfolioTab({ portfolio, setPortfolio, onNotice }: PortfolioTab
                     <span>16:9 Showcase Frame</span>
                   </div>
                 )}
-                <span className="absolute top-3 left-3 rounded-md bg-black/80 border border-white/10 px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-white backdrop-blur-md">
-                  {item.category || item.categories?.[0] || "Showcase"}
-                </span>
               </div>
 
               <div className="p-5">
                 <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-white">
-                  {item.client || item.title}
+                  {item.title}
                 </div>
                 <h3 className="mt-1 font-display text-base font-bold text-white tracking-tight">
                   {item.title}
@@ -134,6 +239,11 @@ export function PortfolioTab({ portfolio, setPortfolio, onNotice }: PortfolioTab
             <div className="p-5 pt-0 flex items-center justify-between border-t border-white/[0.06] mt-4">
               <span className="font-mono text-[10px] text-neutral-500">Order: {item.order || 1}</span>
               <div className="flex items-center gap-2">
+                <button type="button" onClick={() => moveItem(item, -1)} className="rounded-lg border border-white/10 p-2 text-neutral-300" title="Move up"><ArrowUp size={13} /></button>
+                <button type="button" onClick={() => moveItem(item, 1)} className="rounded-lg border border-white/10 p-2 text-neutral-300" title="Move down"><ArrowDown size={13} /></button>
+                <button type="button" onClick={() => void togglePublished(item)} className="rounded-lg border border-white/10 p-2 text-neutral-300" title={item.isPublished ? "Unpublish" : "Publish"}>
+                  {item.isPublished ? <EyeOff size={13} /> : <Eye size={13} />}
+                </button>
                 <button
                   type="button"
                   onClick={() => setEditingPortfolio(item)}
@@ -180,32 +290,23 @@ export function PortfolioTab({ portfolio, setPortfolio, onNotice }: PortfolioTab
             <div className="mt-5 space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-neutral-300 mb-1.5">Client Name</label>
+                  <label className="block font-semibold text-neutral-300 mb-1.5">Slug</label>
                   <input
                     type="text"
-                    value={editingPortfolio.client || ""}
-                    onChange={(e) =>
-                      setEditingPortfolio({ ...editingPortfolio, client: e.target.value })
-                    }
+                    value={editingPortfolio.slug || ""}
+                    onChange={(e) => setEditingPortfolio({ ...editingPortfolio, slug: e.target.value })}
                     className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-xs text-white focus:border-white focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-neutral-300 mb-1.5">Category</label>
-                  <select
-                    value={editingPortfolio.category || "Branding"}
-                    onChange={(e) =>
-                      setEditingPortfolio({ ...editingPortfolio, category: e.target.value })
-                    }
+                  <label className="block font-semibold text-neutral-300 mb-1.5">Display order</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={editingPortfolio.order || 1}
+                    onChange={(e) => setEditingPortfolio({ ...editingPortfolio, order: Number(e.target.value) || 1 })}
                     className="w-full rounded-xl border border-white/10 bg-[#0E0F18] px-3.5 py-2.5 text-xs text-white focus:border-white focus:outline-none"
-                  >
-                    <option value="Branding">Branding</option>
-                    <option value="Video & Media">Video & Media</option>
-                    <option value="Paid Ads">Paid Ads</option>
-                    <option value="Web & Stores">Web & Stores</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Strategy">Strategy</option>
-                  </select>
+                  />
                 </div>
               </div>
 
@@ -240,21 +341,66 @@ export function PortfolioTab({ portfolio, setPortfolio, onNotice }: PortfolioTab
               </div>
 
               <div>
-                <label className="block font-semibold text-neutral-300 mb-1.5">Media Image URL</label>
+                <label className="block font-semibold text-neutral-300 mb-1.5">Alt text</label>
                 <input
                   type="text"
-                  value={editingPortfolio.mediaSrc || editingPortfolio.mediaUrl || ""}
-                  onChange={(e) =>
-                    setEditingPortfolio({
-                      ...editingPortfolio,
-                      mediaSrc: e.target.value,
-                      mediaUrl: e.target.value,
-                    })
-                  }
-                  placeholder="/assets/... or https://..."
+                  value={editingPortfolio.altText || ""}
+                  onChange={(e) => setEditingPortfolio({ ...editingPortfolio, altText: e.target.value })}
+                  placeholder={`${editingPortfolio.title || "Item"} — ${editingPortfolio.outcomeLine || "Outcome"}`}
                   className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-xs text-white focus:border-white focus:outline-none"
                 />
               </div>
+
+              <div>
+                <label className="block font-semibold text-neutral-300 mb-1.5">Optional detail link</label>
+                <input
+                  type="text"
+                  value={editingPortfolio.detailUrl || ""}
+                  onChange={(e) => setEditingPortfolio({ ...editingPortfolio, detailUrl: e.target.value })}
+                  placeholder="/case-studies/example"
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-xs text-white focus:border-white focus:outline-none"
+                />
+              </div>
+
+              <div className="rounded-xl border border-white/[0.08] p-3">
+                <label className="inline-flex cursor-pointer items-center gap-2 text-xs font-semibold text-white">
+                  <Upload size={14} />
+                  {isUploading ? "Uploading..." : "Upload image or video"}
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/avif,video/mp4,video/webm,video/quicktime"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) void handleUpload(file);
+                    }}
+                  />
+                </label>
+                {editingPortfolio.mediaUrl && (
+                  <p className="mt-2 truncate text-[10px] text-neutral-500">{editingPortfolio.mediaUrl}</p>
+                )}
+              </div>
+
+              {editingPortfolio.mediaType === "video" && (
+                <div>
+                  <label className="block font-semibold text-neutral-300 mb-1.5">Video poster URL</label>
+                  <input
+                    type="text"
+                    value={editingPortfolio.posterUrl || ""}
+                    onChange={(e) => setEditingPortfolio({ ...editingPortfolio, posterUrl: e.target.value })}
+                    className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-xs text-white focus:border-white focus:outline-none"
+                  />
+                </div>
+              )}
+
+              <label className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
+                <input
+                  type="checkbox"
+                  checked={Boolean(editingPortfolio.isPublished)}
+                  onChange={(e) => setEditingPortfolio({ ...editingPortfolio, isPublished: e.target.checked })}
+                />
+                Publish on /our-work
+              </label>
             </div>
 
             <div className="mt-8 flex justify-end gap-3 pt-4 border-t border-white/[0.08]">

@@ -42,6 +42,8 @@ export const adminSaveServiceFn = ({ data }: { data: any }) => callAdminAction("
 export const adminDeleteServiceFn = ({ data }: { data: { id: string } }) => callAdminAction("deleteService", data);
 export const adminSavePortfolioFn = ({ data }: { data: any }) => callAdminAction("savePortfolio", data);
 export const adminDeletePortfolioFn = ({ data }: { data: { id: string } }) => callAdminAction("deletePortfolio", data);
+export const adminSavePortfolioSettingsFn = ({ data }: { data: any }) =>
+  callAdminAction("savePortfolioSettings", data);
 export const adminSaveCaseStudyFn = ({ data }: { data: any }) => callAdminAction("saveCaseStudy", data);
 export const adminDeleteCaseStudyFn = ({ data }: { data: { id: string } }) => callAdminAction("deleteCaseStudy", data);
 export const adminSaveStudioEquipmentFn = ({ data }: { data: any }) => callAdminAction("saveStudioEquipment", data);

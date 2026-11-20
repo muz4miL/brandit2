@@ -100,6 +100,7 @@ export async function getCollections() {
     spFaqs: db.collection<any>("sp_faqs"),
     workProjects: db.collection<any>("work_projects"),
     workPageSettings: db.collection<any>("work_page_settings"),
+    portfolioPageSettings: db.collection<any>("portfolio_page_settings"),
   };
 }
 
@@ -109,6 +110,13 @@ async function createIndexes(db: Db) {
       db.collection("services").createIndex({ slug: 1 }, { unique: true }),
       db.collection("services").createIndex({ order: 1, isPublished: 1 }),
       db.collection("portfolio").createIndex({ order: 1, isPublished: 1 }),
+      db.collection("portfolio").createIndex(
+        { slug: 1 },
+        {
+          unique: true,
+          partialFilterExpression: { slug: { $type: "string" } },
+        },
+      ),
       db.collection("case_studies").createIndex({ slug: 1 }, { unique: true }),
       db.collection("case_studies").createIndex({ isPublished: 1 }),
       db.collection("studio_categories").createIndex({ slug: 1 }, { unique: true }),

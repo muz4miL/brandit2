@@ -5,6 +5,7 @@ import { getCollections } from "@/server/db";
 import { ObjectId } from "mongodb";
 import path from "path";
 import fs from "fs/promises";
+import { revalidatePath } from "next/cache";
 
 const COOKIE_NAME = "brandit_admin_session";
 
@@ -45,19 +46,23 @@ export async function POST(req: Request) {
         return NextResponse.json({ success: true });
       }
       case "savePortfolio": {
-        const { _id, ...fields } = data;
-        if (_id && ObjectId.isValid(_id)) {
-          await collections.portfolio.updateOne({ _id: new ObjectId(_id) }, { $set: fields });
-          return NextResponse.json({ success: true, id: _id });
-        } else {
-          fields.createdAt = new Date();
-          const res = await collections.portfolio.insertOne(fields as any);
-          return NextResponse.json({ success: true, id: res.insertedId.toString() });
-        }
+        const { saveAdminPortfolioItem } = await import("@/server/portfolio-service");
+        const res = await saveAdminPortfolioItem(data);
+        revalidatePath("/");
+        revalidatePath("/our-work");
+        return NextResponse.json(res);
       }
       case "deletePortfolio": {
-        if (!ObjectId.isValid(data.id)) return NextResponse.json({ success: false, error: "Invalid ID" }, { status: 400 });
-        await collections.portfolio.deleteOne({ _id: new ObjectId(data.id) });
+        const { deleteAdminPortfolioItem } = await import("@/server/portfolio-service");
+        const res = await deleteAdminPortfolioItem(data.id);
+        revalidatePath("/");
+        revalidatePath("/our-work");
+        return NextResponse.json({ success: res });
+      }
+      case "savePortfolioSettings": {
+        const { saveAdminPortfolioSettings } = await import("@/server/portfolio-service");
+        await saveAdminPortfolioSettings(data);
+        revalidatePath("/our-work");
         return NextResponse.json({ success: true });
       }
       case "saveCaseStudy": {

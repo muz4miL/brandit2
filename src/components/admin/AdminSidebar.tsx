@@ -92,7 +92,7 @@ export function AdminSidebar({
       items: [
         {
           id: "our-work" as AdminTab,
-          label: "Case Studies CMS",
+          label: "Our Work CMS",
           icon: Sparkles,
           count: counts.ourWork,
         },

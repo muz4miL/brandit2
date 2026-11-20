@@ -36,6 +36,7 @@ interface CaseStudyClientProps {
   project: WorkProjectDoc;
   nextProject: WorkProjectDoc | null;
   isPreview?: boolean;
+  basePath?: string;
 }
 
 /* ------------------------------------------------------------------ */
@@ -121,12 +122,14 @@ export function CaseStudyDetailClient({
   project,
   nextProject,
   isPreview = false,
+  basePath = "/case-studies",
 }: CaseStudyClientProps) {
   const searchParams = useSearchParams();
   const fromCategory = searchParams.get("fromCategory");
+  const defaultBase = basePath || "/case-studies";
   const backHref = fromCategory
-    ? `/case-studies?category=${encodeURIComponent(fromCategory)}`
-    : "/case-studies";
+    ? `${defaultBase}?category=${encodeURIComponent(fromCategory)}`
+    : defaultBase;
 
   const reduce = useReducedMotion() ?? false;
 

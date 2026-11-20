@@ -1,20 +1,64 @@
 import type { WorkProjectDoc, WorkPageSettingsDoc } from "./types";
 
 export const defaultWorkPageSettings: WorkPageSettingsDoc = {
-  heroEyebrow: "CASE STUDIES",
-  heroHeadingLine1: "Case",
-  heroHeadingLine2: "Studies",
+  heroEyebrow: "SELECTED WORK",
+  heroBadgeText: "brandit.® Selected Work",
+  heroHeadingLine1: "Where top brands",
+  heroHeadingLine2: "come to scale",
   heroSupportingCopy:
-    "Learn more about the tactics that grew our clients' brands.",
+    "Performance marketing, cinematic production, and conversion systems built for high-growth brands.",
+  heroCtaText: "Ready? b. Start Now",
+  heroCtaUrl: "/contact",
   heroMediaUrl: "/images/work/work-identity-halo.jpg",
+  heroVideoUrl: "",
   heroProjectAnnotation: "Apex Strategic Advisory — Digital Experience & Positioning",
   heroProjectSlug: "apex-advisory",
+  quoteText:
+    "Their superpower is combining scale and performance execution, unmatched by any agency I've worked with.",
+  quoteAuthor: "Marcus Sterling",
+  quoteRole: "Senior Managing Partner",
+  quoteCompany: "Apex Strategic Advisory",
+  capabilitiesHeading: "A standard built to inspire.",
+  capabilitiesSubheading:
+    "From high-impact performance ads to full-scale enterprise digital experiences, we engineer every layer in-house.",
+  capabilitiesList: [
+    { title: "Meta & Instagram Direct-Response Ads", category: "Paid Performance" },
+    { title: "Google Search & High-Intent Shopping", category: "Paid Performance" },
+    { title: "Performance Ad Creative & UGC Systems", category: "Creative Strategy" },
+    { title: "Conversion Rate Optimization (CRO)", category: "Growth Systems" },
+    { title: "Bespoke Web Design & Next.js Architecture", category: "Digital Engineering" },
+    { title: "Full-Funnel Lifecycle Email & SMS Marketing", category: "Retention" },
+    { title: "Executive Brand Identity & Design Systems", category: "Branding" },
+    { title: "Enterprise Automation & Lead Pipelines", category: "Automation" },
+  ],
+  faqs: [
+    {
+      question: "How does brandit. structure client engagements?",
+      answer:
+        "We operate as a dedicated growth and creative partner. Every partnership is bespoke—spanning sprint-based positioning transformations, ongoing performance ad management, or full-funnel digital infrastructure builds.",
+    },
+    {
+      question: "What industries do you specialize in?",
+      answer:
+        "We partner primarily with fast-scaling E-Commerce brands, high-ticket Professional Services, SaaS platforms, and enterprise advisories looking for disciplined performance marketing and premium positioning.",
+    },
+    {
+      question: "How quickly do we see measurable results?",
+      answer:
+        "Paid media and ad creative sprints go live within 10–14 days. Strategic positioning and full-scale web platforms typically deploy within 3–4 weeks, with live analytics and attributed pipeline tracking from day one.",
+    },
+    {
+      question: "Do you create all creative and video in-house?",
+      answer:
+        "Yes. Everything from creative strategy, scriptwriting, and production to post-production and motion design is executed in-house by our dedicated creatives and editors.",
+    },
+  ],
   galleryIntro:
     "A curated exhibition of strategic positioning, high-converting platforms, and performance creative engineered across 8 countries.",
-  closingCtaHeadingLine1: "Your brand.",
-  closingCtaHeadingLine2: "Our next masterpiece.",
+  closingCtaHeadingLine1: "Ready to",
+  closingCtaHeadingLine2: "Scale?",
   closingCtaCopy:
-    "Whether scaling to category leadership or expanding across borders, brandit. becomes your strategic partner in creative, digital, and market positioning.",
+    "Partner with a performance creative agency that builds high-converting systems engineered for serious growth.",
   closingCtaButtonText: "Book a Strategy Call",
   closingCtaDestination: "/contact",
   motionPreset: "standard",
@@ -30,9 +74,9 @@ export const defaultWorkPageSettings: WorkPageSettingsDoc = {
     { id: "SaaS", label: "SaaS" },
   ],
   seo: {
-    title: "Case Studies | brandit.",
+    title: "Our Work | brandit.",
     description:
-      "Learn more about the tactics that grew our clients' brands. Explore measured client growth engineered by brandit.",
+      "Where top brands come to scale. Explore measured performance systems, creative strategy, and digital experiences engineered by brandit.",
     ogImage: "/images/work/work-identity-halo.jpg",
   },
   updatedAt: new Date("2026-01-01"),

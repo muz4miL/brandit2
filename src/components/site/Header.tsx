@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
 import { X, ChevronDown, ArrowUpRight, Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { StaticImageData } from "next/image";
@@ -32,6 +33,7 @@ export const eightServices: MegaServiceItem[] = canonicalServices.map((s) => ({
 const mobileNavItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
+  { label: "Our Work", href: "/our-work" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "Contact", href: "/contact" },
 ];
@@ -304,19 +306,33 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                 </div>
               </div>
 
-              {/* 4. Case Studies */}
-              <a
+              {/* 4. Our Work */}
+              <Link
+                href="/our-work"
+                className={cn(
+                  "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
+                  "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
+                  activePath.startsWith("/our-work")
+                    ? "bg-primary font-bold text-primary-foreground shadow-md"
+                    : "bg-transparent font-medium text-muted-foreground hover:bg-surface-2 hover:text-fg",
+                )}
+              >
+                Our Work
+              </Link>
+
+              {/* 5. Case Studies */}
+              <Link
                 href="/case-studies"
                 className={cn(
                   "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
                   "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
-                  activePath.startsWith("/case-studies") || activePath.startsWith("/our-work")
+                  activePath.startsWith("/case-studies")
                     ? "bg-primary font-bold text-primary-foreground shadow-md"
                     : "bg-transparent font-medium text-muted-foreground hover:bg-surface-2 hover:text-fg",
                 )}
               >
                 Case Studies
-              </a>
+              </Link>
 
               {/* 5. Contact */}
               <a
@@ -584,17 +600,10 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
               {/* Nav links — after the services, matching Defiant */}
               <nav aria-label="Primary" className="mt-9 flex flex-col border-t border-white/10 pt-3">
                 {mobileNavItems.map((item, index) => (
-                  <motion.a
+                  <Link
                     key={item.label}
                     href={item.href}
                     onClick={() => setIsMobileOpen(false)}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay: 0.12 + index * 0.05,
-                      duration: 0.4,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
                     className="group flex items-center gap-3 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                   >
                     <ArrowUpRight
@@ -605,7 +614,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                     <span className="font-display text-[clamp(23px,6.8vw,31px)] font-extrabold leading-none tracking-[-0.03em] text-white transition-colors group-hover:text-white/70">
                       {item.label}
                     </span>
-                  </motion.a>
+                  </Link>
                 ))}
               </nav>
 

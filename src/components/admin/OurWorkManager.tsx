@@ -771,21 +771,36 @@ export function OurWorkManager({
       {subTab === "settings" && (
         <div className="rounded-2xl border border-white/[0.08] bg-[#0A0B12]/90 p-6 sm:p-8 space-y-8 max-w-4xl shadow-xl">
           <div>
-            <h3 className="font-display font-bold text-lg text-white">Case Studies Page Hero &amp; Meta</h3>
-            <p className="text-xs text-neutral-400">Configure global hero typography and SEO parameters</p>
+            <h3 className="font-display font-bold text-lg text-white">Our Work &amp; Case Studies Hero &amp; Meta</h3>
+            <p className="text-xs text-neutral-400">Configure global hero typography, Defiant-inspired showcase, and SEO parameters</p>
           </div>
 
           <div className="space-y-4">
-            <div>
-              <label className="font-mono text-[11px] font-bold uppercase text-neutral-400 block mb-1">
-                Hero Eyebrow Pill
-              </label>
-              <input
-                type="text"
-                value={settings.heroEyebrow}
-                onChange={(e) => setSettings({ ...settings, heroEyebrow: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="font-mono text-[11px] font-bold uppercase text-neutral-400 block mb-1">
+                  Hero Eyebrow Pill
+                </label>
+                <input
+                  type="text"
+                  value={settings.heroEyebrow}
+                  onChange={(e) => setSettings({ ...settings, heroEyebrow: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
+                />
+              </div>
+
+              <div>
+                <label className="font-mono text-[11px] font-bold uppercase text-neutral-400 block mb-1">
+                  Hero Badge Text (e.g. brandit.® Selected Work)
+                </label>
+                <input
+                  type="text"
+                  value={settings.heroBadgeText || ""}
+                  placeholder="brandit.® Selected Work"
+                  onChange={(e) => setSettings({ ...settings, heroBadgeText: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
+                />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -824,6 +839,72 @@ export function OurWorkManager({
                 onChange={(e) => setSettings({ ...settings, heroSupportingCopy: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
               />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="font-mono text-[11px] font-bold uppercase text-neutral-400 block mb-1">
+                  Hero CTA Button Text (e.g. Ready? b. Start Now)
+                </label>
+                <input
+                  type="text"
+                  value={settings.heroCtaText || ""}
+                  placeholder="Start Now"
+                  onChange={(e) => setSettings({ ...settings, heroCtaText: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
+                />
+              </div>
+
+              <div>
+                <label className="font-mono text-[11px] font-bold uppercase text-neutral-400 block mb-1">
+                  Hero Video URL (Optional mp4 showcase)
+                </label>
+                <input
+                  type="text"
+                  value={settings.heroVideoUrl || ""}
+                  placeholder="https://.../showreel.mp4"
+                  onChange={(e) => setSettings({ ...settings, heroVideoUrl: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
+                />
+              </div>
+            </div>
+
+            {/* Editorial Quote Section */}
+            <div className="pt-4 border-t border-white/[0.06] space-y-3">
+              <label className="font-mono text-[11px] font-bold uppercase text-amber-300 block">
+                Editorial Manifesto / Client Quote
+              </label>
+              <textarea
+                rows={2}
+                value={settings.quoteText || ""}
+                placeholder="Their superpower is combining scale and performance execution..."
+                onChange={(e) => setSettings({ ...settings, quoteText: e.target.value })}
+                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
+              />
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <input
+                  type="text"
+                  placeholder="Author (e.g. Marcus Sterling)"
+                  value={settings.quoteAuthor || ""}
+                  onChange={(e) => setSettings({ ...settings, quoteAuthor: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
+                />
+                <input
+                  type="text"
+                  placeholder="Role (e.g. Managing Partner)"
+                  value={settings.quoteRole || ""}
+                  onChange={(e) => setSettings({ ...settings, quoteRole: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
+                />
+                <input
+                  type="text"
+                  placeholder="Company (e.g. Apex Strategic Advisory)"
+                  value={settings.quoteCompany || ""}
+                  onChange={(e) => setSettings({ ...settings, quoteCompany: e.target.value })}
+                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs text-white focus:border-white focus:outline-hidden"
+                />
+              </div>
             </div>
           </div>
 

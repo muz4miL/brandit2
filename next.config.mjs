@@ -7,17 +7,25 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  async redirects() {
+  async headers() {
     return [
       {
         source: "/our-work",
-        destination: "/case-studies",
-        permanent: true,
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+          },
+        ],
       },
       {
-        source: "/our-work/:slug",
-        destination: "/case-studies/:slug",
-        permanent: true,
+        source: "/our-work/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+          },
+        ],
       },
     ];
   },

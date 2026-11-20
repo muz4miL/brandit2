@@ -995,6 +995,46 @@ body,
   border-color: var(--color-border) !important;
 }
 
+:root[data-theme="light"] #testimonials [role="tablist"] {
+  border-color: var(--border);
+  background-color: rgba(20, 20, 20, 0.03);
+}
+
+:root[data-theme="light"] #testimonials [role="tab"] {
+  color: var(--muted-foreground);
+}
+
+:root[data-theme="light"] #testimonials [role="tab"][aria-selected="true"] {
+  border-color: rgba(20, 20, 20, 0.25);
+  background-color: rgba(20, 20, 20, 0.08);
+  color: var(--foreground);
+}
+
+:root[data-theme="light"] #testimonials [role="tab"]:not([aria-selected="true"]):hover {
+  border-color: rgba(20, 20, 20, 0.1);
+  color: var(--foreground);
+}
+
+:root[data-theme="light"] #testimonials [role="tablist"] + div button {
+  border-color: rgba(20, 20, 20, 0.18) !important;
+  background-color: rgba(20, 20, 20, 0.03) !important;
+  color: var(--foreground) !important;
+}
+
+:root[data-theme="light"] #testimonials [role="tablist"] + div button:hover {
+  border-color: rgba(20, 20, 20, 0.35) !important;
+  background-color: rgba(20, 20, 20, 0.08) !important;
+}
+
+:root[data-theme="light"] #testimonials [role="tablist"] + div button svg {
+  color: var(--foreground) !important;
+  stroke: currentColor !important;
+}
+
+:root[data-theme="light"] #testimonials [role="tablist"] + div span {
+  color: var(--muted-foreground) !important;
+}
+
 /* Keep the mobile hero mark crisp against the dark background. */
 :root[data-theme="dark"] .hero-brand-badge {
   box-shadow: none;

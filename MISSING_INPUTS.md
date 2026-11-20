@@ -31,6 +31,7 @@ In line with **Rule 1** (*Do NOT invent facts about the client's business*), ele
    - Vector/SVG or clean PNG logos for the trust strip: `fäm Properties`, `DXB Interact`, `fäm Luxe`, `Louis Aesthetic`.
 
 6. **Portfolio Media for the 10 Cards**
+   - `confirmed-not-yet-available`: media for the 10 `/our-work` cards. Until supplied, cards use neutral 16:9 monochrome blocks.
    - High-resolution 16:9 images/videos and descriptive alt text for the 10 homepage/portfolio systems:
      1. fäm Properties
      2. Founder Personal Brand

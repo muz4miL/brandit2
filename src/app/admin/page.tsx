@@ -73,14 +73,15 @@ export default async function AdminPage() {
 
     const { getAdminWorkData } = await import("@/server/work-service");
     const { getAdminServicesPageContent } = await import("@/server/services-page-service");
-    const [workData, spContent] = await Promise.all([
+    const { getAdminPortfolio } = await import("@/server/portfolio-service");
+    const [workData, spContent, portfolioData] = await Promise.all([
       getAdminWorkData(),
       getAdminServicesPageContent(),
+      getAdminPortfolio(),
     ]);
 
     initialData = {
       services: allServices.map((s) => ({ ...s, _id: s._id.toString() })),
-      portfolio: allPortfolio.map((p) => ({ ...p, _id: p._id.toString() })),
       caseStudies: allCaseStudies.map((c) => ({ ...c, _id: c._id.toString() })),
       vacancies: allVacancies.map((v) => ({ ...v, _id: v._id.toString() })),
       submissions: allSubmissions.map((s) => ({ ...s, _id: s._id.toString() })),
@@ -89,6 +90,8 @@ export default async function AdminPage() {
       testimonials: allTestimonials.map((t) => ({ ...t, _id: t._id.toString() })),
       workProjects: workData.projects,
       workPageSettings: workData.settings,
+      portfolio: portfolioData.items,
+      portfolioSettings: portfolioData.settings,
       servicesPageContent: spContent,
     };
   } catch (err) {

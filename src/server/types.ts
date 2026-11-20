@@ -51,17 +51,19 @@ export interface ServiceDoc {
 
 export interface PortfolioDoc {
   _id?: ObjectId | string;
+  slug: string;
   title: string;
   outcomeLine: string;
-  categories: string[];
   mediaType: "image" | "video";
   mediaUrl: string;
   posterUrl?: string;
   altText: string;
-  projectDetailSlug?: string;
+  detailUrl?: string;
   order: number;
   isPublished: boolean;
+  source?: "portfolio";
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface CaseStudyDoc {
@@ -483,12 +485,24 @@ export interface ServicesPageContent {
 export interface WorkPageSettingsDoc {
   _id?: ObjectId | string;
   heroEyebrow: string;
+  heroBadgeText?: string;
   heroHeadingLine1: string;
   heroHeadingLine2: string;
   heroSupportingCopy: string;
+  heroCtaText?: string;
+  heroCtaUrl?: string;
   heroMediaUrl: string;
+  heroVideoUrl?: string;
   heroProjectAnnotation: string;
   heroProjectSlug?: string;
+  quoteText?: string;
+  quoteAuthor?: string;
+  quoteRole?: string;
+  quoteCompany?: string;
+  capabilitiesHeading?: string;
+  capabilitiesSubheading?: string;
+  capabilitiesList?: { title: string; category?: string }[];
+  faqs?: { question: string; answer: string }[];
   galleryIntro: string;
   closingCtaHeadingLine1: string;
   closingCtaHeadingLine2: string;
@@ -498,6 +512,16 @@ export interface WorkPageSettingsDoc {
   motionPreset: "subtle" | "standard" | "reduced";
   categoryOrder: string[];
   managedCategories?: { id: string; label: string }[];
+  seo: {
+    title: string;
+    description: string;
+    ogImage?: string;
+  };
+  updatedAt: Date;
+}
+
+export interface PortfolioPageSettingsDoc {
+  _id?: ObjectId | string;
   seo: {
     title: string;
     description: string;

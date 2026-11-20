@@ -210,6 +210,7 @@ export function AdminDashboard({
             <PortfolioTab
               portfolio={portfolio}
               setPortfolio={setPortfolio}
+              initialSettings={initialData.portfolioSettings}
               onNotice={showNotice}
             />
           )}
