@@ -33,8 +33,11 @@ export const eightServices: MegaServiceItem[] = canonicalServices.map((s) => ({
 const mobileNavItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
   { label: "Our Work", href: "/our-work" },
   { label: "Case Studies", href: "/case-studies" },
+  { label: "Studio", href: "/studio" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -310,7 +313,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
               <Link
                 href="/our-work"
                 className={cn(
-                  "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
+                  "flex h-[44px] items-center justify-center rounded-full px-3 text-[14px] lg:px-3.5 lg:text-[14.5px] transition-colors duration-150",
                   "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
                   activePath.startsWith("/our-work")
                     ? "bg-primary font-bold text-primary-foreground shadow-md"
@@ -324,7 +327,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
               <Link
                 href="/case-studies"
                 className={cn(
-                  "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
+                  "flex h-[44px] items-center justify-center rounded-full px-3 text-[14px] lg:px-3.5 lg:text-[14.5px] transition-colors duration-150",
                   "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
                   activePath.startsWith("/case-studies")
                     ? "bg-primary font-bold text-primary-foreground shadow-md"
@@ -334,11 +337,42 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                 Case Studies
               </Link>
 
-              {/* 5. Contact */}
+              {/* 6. Studio with Defiant-style yellow badge */}
+              <Link
+                href="/studio"
+                className={cn(
+                  "flex h-[44px] items-center justify-center gap-1.5 rounded-full px-3 text-[14px] lg:px-3.5 lg:text-[14.5px] transition-colors duration-150",
+                  "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
+                  activePath.startsWith("/studio")
+                    ? "bg-primary font-bold text-primary-foreground shadow-md"
+                    : "bg-transparent font-medium text-muted-foreground hover:bg-surface-2 hover:text-fg",
+                )}
+              >
+                <span>Studio</span>
+                <span className="rounded-full bg-amber-300 px-1.5 py-0.5 text-[9px] font-black text-black leading-none uppercase tracking-wider">
+                  New
+                </span>
+              </Link>
+
+              {/* 7. Careers */}
+              <Link
+                href="/careers"
+                className={cn(
+                  "flex h-[44px] items-center justify-center rounded-full px-3 text-[14px] lg:px-3.5 lg:text-[14.5px] transition-colors duration-150",
+                  "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
+                  activePath.startsWith("/careers")
+                    ? "bg-primary font-bold text-primary-foreground shadow-md"
+                    : "bg-transparent font-medium text-muted-foreground hover:bg-surface-2 hover:text-fg",
+                )}
+              >
+                Careers
+              </Link>
+
+              {/* 8. Contact */}
               <a
                 href="/contact"
                 className={cn(
-                  "flex h-[44px] items-center justify-center rounded-full px-4 text-[15px] transition-colors duration-150",
+                  "flex h-[44px] items-center justify-center rounded-full px-3 text-[14px] lg:px-3.5 lg:text-[14.5px] transition-colors duration-150",
                   "focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2",
                   activePath.startsWith("/contact")
                     ? "bg-primary font-bold text-primary-foreground shadow-md"

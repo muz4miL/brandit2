@@ -32,22 +32,26 @@ export interface WhoItsForProps {
 const audienceSegments = [
   {
     number: "01",
-    title: "Real Estate — Brokerages & Developers",
+    serif: "Real Estate",
+    sans: "& Developers",
     desc: "Sales content, luxury positioning, off-plan launches, and data-led authority. Our deepest expertise, built inside the UAE’s largest brokerage.",
   },
   {
     number: "02",
-    title: "Clinics, Salons & Local Business",
+    serif: "Clinics &",
+    sans: "Local Business",
     desc: "Aesthetic clinics, dental, beauty, retail. Premium visuals plus lead-gen funnels that fill your calendar instead of your inbox.",
   },
   {
     number: "03",
-    title: "E-commerce & Retail Brands",
+    serif: "E-commerce",
+    sans: "& Retail Brands",
     desc: "Shopify stores, product photography, and paid campaigns built around margin — so growth in revenue is growth in profit.",
   },
   {
     number: "04",
-    title: "Founders & Personal Brands",
+    serif: "Founders &",
+    sans: "Personal Brands",
     desc: "CEOs, agents, and creators who need authority. We built the system behind a six-figure founder brand. We’ll build yours.",
   },
 ];
@@ -124,49 +128,78 @@ export function WhoItsFor({
       className="relative w-full overflow-hidden bg-[#060608] py-16 sm:py-24 select-none border-t border-b border-white/[0.06] scroll-mt-24"
     >
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-        {/* Section 5 Brief: Who It's For */}
+        {/* Section 5 Brief: Who It's For (Defiant-matching layout & typography) */}
         <div
-          className={`flex flex-col items-center text-center max-w-[800px] mx-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`flex flex-col items-center text-center max-w-[920px] mx-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
           <SectionBadge>WHO WE SERVE</SectionBadge>
 
-          <h2 className="mt-4 text-center">
-            <span className="block font-display text-[clamp(36px,4.5vw,64px)] font-extrabold leading-[1.02] tracking-tight text-white">
-              Who this is{" "}
-              <span className="font-instrument italic font-normal text-white">
-                Built for
-              </span>
+          <h2 className="mt-5 text-center">
+            <span className="block font-display text-[clamp(44px,6.2vw,86px)] font-black leading-[0.92] tracking-[-0.04em] text-white">
+              Who we are
+            </span>
+            <span className="block font-instrument text-[clamp(48px,6.8vw,96px)] font-normal italic leading-[0.88] tracking-[-0.02em] text-white mt-1">
+              Built for
             </span>
           </h2>
 
-          <p className="mt-4 text-[15px] sm:text-[17px] text-[#A1A1AA] max-w-[580px] leading-relaxed">
-            Systems-led growth engineered for leaders across category-defining industries.
+          <p className="mt-6 text-[16px] sm:text-[18px] lg:text-[20px] text-[#A1A1AA] max-w-[760px] leading-relaxed font-normal">
+            Whether you&apos;re scaling an enterprise brokerage or building a market-defining authority. brandit. becomes your unfair advantage in systems, creative &amp; performance.
           </p>
         </div>
 
-        {/* 4 Audience Segments Grid per Section 5 Brief */}
-        <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        {/* 4 Audience Segments Grid per Section 5 Brief with Defiant-style silver sheen */}
+        <div className="mt-14 sm:mt-18 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
           {audienceSegments.map((segment) => (
             <div
               key={segment.number}
-              className="relative rounded-[22px] border border-white/[0.08] bg-[#0C0C10] p-6 flex flex-col justify-between transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-xl"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-[30px] sm:rounded-[34px] border border-white/[0.09] bg-[#0A0A0E] p-8 sm:p-9 transition-all duration-500 hover:border-white/40 hover:-translate-y-2 hover:shadow-[0_25px_60px_-15px_rgba(255,255,255,0.12)] min-h-[360px]"
             >
+              {/* Silver specular sheen on top border */}
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 top-0 h-[1px] rounded-t-[22px] bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                className="pointer-events-none absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300"
               />
-              <div>
-                <span className="font-mono text-[10px] font-semibold tracking-[0.18em] text-neutral-500 uppercase">
-                  {segment.number}
-                </span>
-                <h3 className="mt-3 font-display text-[16px] sm:text-[17px] font-bold text-white leading-snug">
-                  {segment.title}
-                </h3>
-                <p className="mt-2.5 text-[13px] leading-relaxed text-[#A1A1AA]">
-                  {segment.desc}
-                </p>
+
+              {/* Silver metallic ambient light layer on hover */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-px rounded-[30px] sm:rounded-[34px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-white/[0.12] via-white/[0.03] to-transparent"
+              />
+
+              {/* Silver subtle radial spotlight in top right */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-20 -top-20 h-44 w-44 rounded-full bg-white/[0.05] blur-2xl group-hover:scale-150 transition-transform duration-700"
+              />
+
+              <div className="relative z-10 flex flex-col flex-1 justify-between">
+                <div>
+                  {/* Top row with category number and pulse indicator */}
+                  <div className="flex items-center justify-between pb-5 border-b border-white/[0.06]">
+                    <span className="font-mono text-[11px] font-bold tracking-[0.2em] text-neutral-400 uppercase">
+                      {segment.number}
+                    </span>
+                    <span className="h-2 w-2 rounded-full bg-white/40 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-300" />
+                  </div>
+
+                  {/* Heading: Italic Serif Line + Bold Sans Line like Defiant */}
+                  <div className="mt-7 flex flex-col">
+                    <span className="font-instrument text-[34px] sm:text-[38px] lg:text-[42px] italic font-normal leading-[0.98] text-white">
+                      {segment.serif}
+                    </span>
+                    <span className="font-display text-[24px] sm:text-[28px] lg:text-[30px] font-extrabold leading-[1.08] tracking-tight text-white mt-1">
+                      {segment.sans}
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  <p className="mt-6 text-[14.5px] sm:text-[15.5px] leading-[1.65] text-[#A1A1AA] font-normal">
+                    {segment.desc}
+                  </p>
+                </div>
               </div>
             </div>
           ))}

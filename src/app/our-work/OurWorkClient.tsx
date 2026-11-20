@@ -5,16 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowUpRight,
-  Play,
-  Pause,
-  Volume2,
-  VolumeX,
   Plus,
   Minus,
 } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { HeroButton } from "@/components/site/HeroButton";
+import { OurWorkSection } from "@/components/site/OurWorkSection";
+import ReadyToScale from "@/components/ReadyToScale";
 import type { PortfolioDoc, PortfolioPageSettingsDoc } from "@/server/types";
 
 interface OurWorkClientProps {
@@ -24,11 +22,6 @@ interface OurWorkClientProps {
 
 export function OurWorkClient({ settings, items }: OurWorkClientProps) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
-
-  // Video chassis play / mute state
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
 
   // FAQ accordion open states
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -65,28 +58,11 @@ export function OurWorkClient({ settings, items }: OurWorkClientProps) {
     return items[0] || null;
   }, [items]);
 
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      void videoRef.current.play();
-      setIsPlaying(true);
-    }
-  };
-
-  const toggleMute = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
-  };
-
-  const faqs = settings.faqs && settings.faqs.length > 0 ? settings.faqs : [
+  const faqs = [
     {
-      question: "How does brandit. structure creative engagements?",
+      question: "How does brandit. structure client engagements?",
       answer:
-        "We operate as a dedicated growth and creative partner. Every partnership is bespoke—spanning sprint-based positioning transformations, ongoing performance ad creative, cinematic production, or full-funnel digital infrastructure builds.",
+        "We operate as a dedicated growth and creative partner. Every partnership is bespoke—spanning sprint-based positioning transformations, ongoing performance ad management, or full-funnel digital infrastructure builds.",
     },
     {
       question: "What industries do you specialize in?",
@@ -99,7 +75,7 @@ export function OurWorkClient({ settings, items }: OurWorkClientProps) {
         "Paid media and ad creative sprints go live within 10–14 days. Strategic positioning and full-scale web platforms typically deploy within 3–4 weeks, with live analytics and attributed pipeline tracking from day one.",
     },
     {
-      question: "Do you produce all video and creative in-house?",
+      question: "Do you create all creative and video in-house?",
       answer:
         "Yes. Everything from creative strategy, scriptwriting, and production to post-production and motion design is executed in-house by our dedicated creatives and editors.",
     },
@@ -168,111 +144,12 @@ export function OurWorkClient({ settings, items }: OurWorkClientProps) {
               className="max-w-[320px] sm:max-w-[360px]"
             />
           </div>
-
-          {/* ========================================================================= */}
-          {/* 2. FEATURED SHOWCASE CHASSIS (Video/Media Player matching Defiant)       */}
-          {/* ========================================================================= */}
-          <div className="mt-14 sm:mt-18 lg:mt-20 w-full">
-            <div className="relative mx-auto w-full max-w-[1440px] xl:max-w-[1660px] overflow-hidden rounded-[28px] sm:rounded-[36px] lg:rounded-[44px] border border-white/10 bg-[#07070B] shadow-[0_40px_140px_rgba(0,0,0,0.85)]">
-              {/* Media viewport */}
-              <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-[#0A0A0E]">
-                {settings.heroVideoUrl ? (
-                  <video
-                    ref={videoRef}
-                    src={settings.heroVideoUrl}
-                    poster={heroItem?.mediaUrl || "/images/work/work-identity-halo.jpg"}
-                    autoPlay
-                    loop
-                    muted={isMuted}
-                    playsInline
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <Image
-                    src={heroItem?.mediaUrl || "/images/work/work-identity-halo.jpg"}
-                    alt={heroItem?.title || "brandit. featured showcase"}
-                    fill
-                    sizes="(max-width: 1440px) 100vw, 1660px"
-                    priority
-                    className="object-cover"
-                  />
-                )}
-
-                {/* Subtle dark vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30 pointer-events-none" />
-
-                {/* Top overlay controls */}
-                <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 flex items-center justify-between pointer-events-auto">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/60 px-3.5 py-1.5 backdrop-blur-md">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-white/90">
-                      SHOWCASE REEL
-                    </span>
-                  </div>
-
-                  {/* Sound / Mute Toggle Button */}
-                  <button
-                    type="button"
-                    onClick={toggleMute}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/60 px-3.5 py-1.5 backdrop-blur-md text-xs font-medium text-white transition-all hover:bg-black/80 hover:border-white/40 cursor-pointer"
-                    aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-                  >
-                    {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
-                    <span>{isMuted ? "Tap for sound" : "Sound on"}</span>
-                  </button>
-                </div>
-
-                {/* Center Play/Pause button */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <button
-                    type="button"
-                    onClick={togglePlay}
-                    className="pointer-events-auto flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-lg shadow-2xl transition-all duration-300 hover:scale-110 hover:bg-white hover:text-black cursor-pointer"
-                    aria-label={isPlaying ? "Pause video" : "Play video"}
-                  >
-                    {isPlaying ? (
-                      <Pause size={24} className="fill-current" />
-                    ) : (
-                      <Play size={24} className="fill-current translate-x-0.5" />
-                    )}
-                  </button>
-                </div>
-
-                {/* Floating Bottom Project Bar */}
-                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4 rounded-2xl border border-white/15 bg-black/70 p-4 sm:p-5 backdrop-blur-xl">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono uppercase tracking-widest text-amber-300 font-bold">
-                        {heroItem?.client || "fäm Properties"}
-                      </span>
-                      <span className="text-white/30">·</span>
-                      <span className="text-xs text-white/60">
-                        {heroItem?.category || "Video & Media"}
-                      </span>
-                    </div>
-                    <h2 className="mt-1 font-display text-lg sm:text-2xl font-bold text-white leading-tight">
-                      {heroItem?.title || "Enterprise Brokerage Content System"}
-                    </h2>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <p className="text-xs font-sans text-white/70 max-w-md hidden md:block">
-                      {heroItem?.outcomeLine ||
-                        "One content system across an entire enterprise brokerage."}
-                    </p>
-                    <Link
-                      href="/contact"
-                      className="inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2.5 text-xs font-bold text-black shadow-lg transition-all hover:bg-white/90 shrink-0"
-                    >
-                      <span>Inquire Project</span>
-                      <ArrowUpRight size={14} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </section>
+
+        {/* ========================================================================= */}
+        {/* 2. CREATIVE THAT CONVERTS (PHONE SHOWCASE COMPONENT)                       */}
+        {/* ========================================================================= */}
+        <OurWorkSection />
 
         {/* ========================================================================= */}
         {/* 3. EDITORIAL MANIFESTO / CLIENT QUOTE                                      */}
@@ -519,45 +396,9 @@ export function OurWorkClient({ settings, items }: OurWorkClientProps) {
         </section>
 
         {/* ========================================================================= */}
-        {/* 7. CLOSING CTA (Ready to Scale?)                                           */}
+        {/* 7. CLOSING CTA (Ready to Scale? - Matches Homepage)                        */}
         {/* ========================================================================= */}
-        <section
-          aria-label="Closing Call to Action"
-          className="mx-auto mb-20 sm:mb-28 w-full max-w-[1440px] px-4 sm:px-6 lg:px-10"
-        >
-          <div className="relative overflow-hidden rounded-[32px] sm:rounded-[44px] border border-white/15 bg-[#08080C] px-6 py-16 sm:py-24 text-center shadow-2xl">
-            {/* Background Glow */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-72 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.05] blur-[100px]"
-            />
-
-            <h2 className="font-display text-[clamp(40px,7vw,86px)] font-black tracking-[-0.03em] text-white leading-none">
-              {settings.closingCtaHeadingLine1 || "Ready to"}{" "}
-              <span className="font-instrument font-normal italic">
-                {settings.closingCtaHeadingLine2 || "Scale?"}
-              </span>
-            </h2>
-
-            <p className="mx-auto mt-6 max-w-xl text-sm sm:text-lg text-white/60 leading-relaxed">
-              {settings.closingCtaCopy ||
-                "Partner with a performance creative agency that builds high-converting systems engineered for serious growth."}
-            </p>
-
-            <div className="mt-8 sm:mt-10 flex justify-center">
-              <Link
-                href={settings.closingCtaDestination || "/contact"}
-                className="group inline-flex items-center gap-3 rounded-full border border-white/25 bg-white px-8 py-4 text-sm font-bold text-black shadow-2xl transition-all duration-300 hover:bg-white/90 hover:scale-[1.02]"
-              >
-                <span>{settings.closingCtaButtonText || "Book a Strategy Call"}</span>
-                <ArrowUpRight
-                  size={16}
-                  className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <ReadyToScale />
       </main>
 
       <Footer />
