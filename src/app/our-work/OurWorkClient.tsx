@@ -11,22 +11,18 @@ import {
   VolumeX,
   Plus,
   Minus,
-  Sparkles,
-  ChevronRight,
-  Star,
 } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { HeroButton } from "@/components/site/HeroButton";
-import type { WorkProjectDoc, WorkPageSettingsDoc } from "@/server/types";
+import type { PortfolioDoc, PortfolioPageSettingsDoc } from "@/server/types";
 
 interface OurWorkClientProps {
-  settings: WorkPageSettingsDoc;
-  projects: WorkProjectDoc[];
+  settings: PortfolioPageSettingsDoc;
+  items: PortfolioDoc[];
 }
 
-export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
-  // Category filter state
+export function OurWorkClient({ settings, items }: OurWorkClientProps) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
   // Video chassis play / mute state
@@ -37,14 +33,14 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
   // FAQ accordion open states
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  // Category list derived from projects and settings
+  // Derive unique categories from items
   const categories = useMemo(() => {
     const set = new Set<string>();
-    projects.forEach((p) => {
-      p.categories?.forEach((c) => set.add(c));
+    items.forEach((p) => {
+      if (p.category) set.add(p.category);
     });
 
-    const preferredOrder = ["Ecom", "Services", "SaaS"];
+    const preferredOrder = ["Branding", "Video & Media", "Paid Ads", "Web & Stores"];
     const ordered: string[] = [];
 
     preferredOrder.forEach((c) => {
@@ -56,18 +52,18 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
 
     set.forEach((c) => ordered.push(c));
     return ["All", ...ordered];
-  }, [projects]);
+  }, [items]);
 
-  // Filtered projects
-  const filteredProjects = useMemo(() => {
-    if (activeCategory === "All") return projects;
-    return projects.filter((p) => p.categories?.includes(activeCategory));
-  }, [projects, activeCategory]);
+  // Filtered portfolio items
+  const filteredItems = useMemo(() => {
+    if (activeCategory === "All") return items;
+    return items.filter((p) => p.category === activeCategory);
+  }, [items, activeCategory]);
 
-  // Featured hero project (first featured or first project)
-  const heroProject = useMemo(() => {
-    return projects.find((p) => p.isFeatured) || projects[0] || null;
-  }, [projects]);
+  // Featured hero item
+  const heroItem = useMemo(() => {
+    return items[0] || null;
+  }, [items]);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -88,14 +84,14 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
 
   const faqs = settings.faqs && settings.faqs.length > 0 ? settings.faqs : [
     {
-      question: "How does brandit. structure client engagements?",
+      question: "How does brandit. structure creative engagements?",
       answer:
-        "We operate as a dedicated growth and creative partner. Every partnership is bespoke—spanning sprint-based positioning transformations, ongoing performance ad management, or full-funnel digital infrastructure builds.",
+        "We operate as a dedicated growth and creative partner. Every partnership is bespoke—spanning sprint-based positioning transformations, ongoing performance ad creative, cinematic production, or full-funnel digital infrastructure builds.",
     },
     {
       question: "What industries do you specialize in?",
       answer:
-        "We partner primarily with fast-scaling E-Commerce brands, high-ticket Professional Services, SaaS platforms, and enterprise advisories looking for disciplined performance marketing and premium positioning.",
+        "We partner primarily with fast-scaling E-Commerce brands, high-ticket Professional Services, SaaS platforms, and luxury real estate / hospitality advisories looking for disciplined performance marketing and premium positioning.",
     },
     {
       question: "How quickly do we see measurable results?",
@@ -103,7 +99,7 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
         "Paid media and ad creative sprints go live within 10–14 days. Strategic positioning and full-scale web platforms typically deploy within 3–4 weeks, with live analytics and attributed pipeline tracking from day one.",
     },
     {
-      question: "Do you create all creative and video in-house?",
+      question: "Do you produce all video and creative in-house?",
       answer:
         "Yes. Everything from creative strategy, scriptwriting, and production to post-production and motion design is executed in-house by our dedicated creatives and editors.",
     },
@@ -134,13 +130,13 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
         />
 
         {/* ========================================================================= */}
-        {/* 1. HERO SECTION (Exactly matches Defiant Studio screenshot)                */}
+        {/* 1. HERO SECTION (Matches Defiant Studio screenshot)                        */}
         {/* ========================================================================= */}
         <section
           aria-label="Our Work Hero"
           className="mx-auto flex w-full max-w-[1440px] flex-col items-center px-4 text-center sm:px-6 lg:px-10"
         >
-          {/* Top Brand Wordmark: brandit.® Work */}
+          {/* Top Brand Tagline: brandit.® Work */}
           <div className="mb-4 sm:mb-6 flex items-center justify-center gap-1 select-none">
             <span className="font-display font-black text-2xl sm:text-3xl text-amber-300">
               brandit.
@@ -168,7 +164,7 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
             <HeroButton
               href={settings.heroCtaUrl || "/contact"}
               leftText="Book a"
-              rightText="Discovery Call"
+              rightText={settings.heroCtaText || "Discovery Call"}
               className="max-w-[320px] sm:max-w-[360px]"
             />
           </div>
@@ -180,11 +176,11 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
             <div className="relative mx-auto w-full max-w-[1440px] xl:max-w-[1660px] overflow-hidden rounded-[28px] sm:rounded-[36px] lg:rounded-[44px] border border-white/10 bg-[#07070B] shadow-[0_40px_140px_rgba(0,0,0,0.85)]">
               {/* Media viewport */}
               <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-[#0A0A0E]">
-                {heroProject?.mediaType === "video" || settings.heroVideoUrl ? (
+                {settings.heroVideoUrl ? (
                   <video
                     ref={videoRef}
-                    src={settings.heroVideoUrl || heroProject?.heroMediaUrl}
-                    poster={heroProject?.thumbnailUrl || "/images/work/work-identity-halo.jpg"}
+                    src={settings.heroVideoUrl}
+                    poster={heroItem?.mediaUrl || "/images/work/work-identity-halo.jpg"}
                     autoPlay
                     loop
                     muted={isMuted}
@@ -193,8 +189,8 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
                   />
                 ) : (
                   <Image
-                    src={heroProject?.heroMediaUrl || "/images/work/work-identity-halo.jpg"}
-                    alt={heroProject?.title || "brandit. featured showcase"}
+                    src={heroItem?.mediaUrl || "/images/work/work-identity-halo.jpg"}
+                    alt={heroItem?.title || "brandit. featured showcase"}
                     fill
                     sizes="(max-width: 1440px) 100vw, 1660px"
                     priority
@@ -210,7 +206,7 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/60 px-3.5 py-1.5 backdrop-blur-md">
                     <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                     <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-white/90">
-                      FEATURED SHOWCASE
+                      SHOWCASE REEL
                     </span>
                   </div>
 
@@ -247,39 +243,30 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono uppercase tracking-widest text-amber-300 font-bold">
-                        {heroProject?.clientName || "Apex Strategic Advisory"}
+                        {heroItem?.client || "fäm Properties"}
                       </span>
                       <span className="text-white/30">·</span>
                       <span className="text-xs text-white/60">
-                        {heroProject?.industry || "Management Consultancy"}
+                        {heroItem?.category || "Video & Media"}
                       </span>
                     </div>
                     <h2 className="mt-1 font-display text-lg sm:text-2xl font-bold text-white leading-tight">
-                      {heroProject?.title ||
-                        "+184% qualified pipeline & $4.2M attributed enterprise revenue in 90 days"}
+                      {heroItem?.title || "Enterprise Brokerage Content System"}
                     </h2>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    {heroProject?.results?.[0] && (
-                      <div className="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-3.5 py-1.5 text-right">
-                        <span className="font-display text-lg sm:text-xl font-black text-emerald-400 block leading-none">
-                          {heroProject.results[0].metric}
-                        </span>
-                        <span className="text-[10px] font-mono font-semibold uppercase text-emerald-300/80 mt-0.5 block">
-                          {heroProject.results[0].label}
-                        </span>
-                      </div>
-                    )}
-                    {heroProject && (
-                      <Link
-                        href={`/our-work/${heroProject.slug}`}
-                        className="inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2.5 text-xs font-bold text-black shadow-lg transition-all hover:bg-white/90 shrink-0"
-                      >
-                        <span>View Project</span>
-                        <ArrowUpRight size={14} />
-                      </Link>
-                    )}
+                    <p className="text-xs font-sans text-white/70 max-w-md hidden md:block">
+                      {heroItem?.outcomeLine ||
+                        "One content system across an entire enterprise brokerage."}
+                    </p>
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2.5 text-xs font-bold text-black shadow-lg transition-all hover:bg-white/90 shrink-0"
+                    >
+                      <span>Inquire Project</span>
+                      <ArrowUpRight size={14} />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -319,11 +306,11 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
         </section>
 
         {/* ========================================================================= */}
-        {/* 4. INTERACTIVE SHOWCASE & CATEGORY FILTERS                                 */}
+        {/* 4. CREATIVE PORTFOLIO SHOWCASE & CATEGORY FILTERS                          */}
         {/* ========================================================================= */}
         <section
           id="showcase-grid"
-          aria-label="Selected Work Systems"
+          aria-label="Selected Creative Projects"
           className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10"
         >
           {/* Section Heading matching Defiant */}
@@ -361,89 +348,70 @@ export function OurWorkClient({ settings, projects }: OurWorkClientProps) {
 
           {/* Cards Grid */}
           <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredProjects.map((project) => (
+            {filteredItems.map((item, _idx) => (
               <article
-                key={project.slug}
+                key={item.slug || String(item._id) || `item-${_idx}`}
                 className="group relative flex flex-col justify-between overflow-hidden rounded-[26px] border border-white/10 bg-[#0B0B10] shadow-xl transition-all duration-300 hover:border-white/30 hover:-translate-y-1.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
               >
                 {/* Media thumbnail */}
-                <Link
-                  href={`/our-work/${project.slug}`}
-                  className="relative aspect-[16/10] w-full overflow-hidden bg-black/60 block"
-                >
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/60 block">
                   <Image
-                    src={project.thumbnailUrl || project.heroMediaUrl}
-                    alt={project.altText || project.title}
+                    src={item.mediaUrl || "/images/work/work-identity-halo.jpg"}
+                    alt={item.altText || item.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
-                  {/* Top badges */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                  {/* Top category badge */}
+                  <div className="absolute top-3 left-3 flex items-center gap-2">
                     <span className="rounded-full border border-white/20 bg-black/60 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md">
-                      {project.categories?.[0] || project.industry}
+                      {item.category || "Creative"}
                     </span>
-
-                    {project.isFeatured && (
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full border border-amber-400/30 bg-black/60 text-amber-300 backdrop-blur-md">
-                        <Star size={12} className="fill-current" />
-                      </span>
-                    )}
                   </div>
-
-                  {/* Result metric pill pinned at bottom of thumbnail */}
-                  {project.results?.[0] && (
-                    <div className="absolute bottom-3 left-3 rounded-lg border border-emerald-400/30 bg-black/80 px-2.5 py-1 backdrop-blur-md">
-                      <span className="font-display text-sm font-black text-emerald-400 leading-none">
-                        {project.results[0].metric}
-                      </span>
-                      <span className="ml-1 text-[10px] font-mono text-white/70">
-                        {project.results[0].label}
-                      </span>
-                    </div>
-                  )}
-                </Link>
+                </div>
 
                 {/* Card Body */}
                 <div className="flex flex-1 flex-col justify-between p-6">
                   <div>
-                    <div className="flex items-center justify-between text-xs text-white/50 mb-1.5 font-mono">
-                      <span>{project.clientName}</span>
-                      <span>{project.year}</span>
-                    </div>
+                    <span className="text-xs text-amber-300 font-mono font-bold block mb-1">
+                      {item.client || item.title}
+                    </span>
 
                     <h3 className="font-display text-lg sm:text-xl font-bold text-white group-hover:text-white/90 leading-snug">
-                      <Link href={`/our-work/${project.slug}`}>
-                        {project.title}
-                      </Link>
+                      {item.title}
                     </h3>
 
                     <p className="mt-2.5 text-xs sm:text-sm text-white/60 line-clamp-2 leading-relaxed">
-                      {project.summary}
+                      {item.outcomeLine}
                     </p>
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between">
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.services?.slice(0, 2).map((srv) => (
-                        <span
-                          key={srv}
-                          className="rounded-md bg-white/[0.04] px-2 py-0.5 text-[10.5px] font-mono text-white/60"
-                        >
-                          {srv}
-                        </span>
-                      ))}
-                    </div>
+                    <span className="text-[11px] font-mono text-white/40">
+                      Standard
+                    </span>
 
-                    <Link
-                      href={`/our-work/${project.slug}`}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all group-hover:bg-white group-hover:text-black"
-                      aria-label={`View ${project.clientName} case study`}
-                    >
-                      <ArrowUpRight size={14} />
-                    </Link>
+                    {item.detailUrl ? (
+                      <a
+                        href={item.detailUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all group-hover:bg-white group-hover:text-black"
+                        aria-label={`View ${item.title}`}
+                      >
+                        <ArrowUpRight size={14} />
+                      </a>
+                    ) : (
+                      <Link
+                        href="/contact"
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-all group-hover:bg-white group-hover:text-black"
+                        aria-label={`Inquire about ${item.title}`}
+                      >
+                        <ArrowUpRight size={14} />
+                      </Link>
+                    )}
                   </div>
                 </div>
               </article>

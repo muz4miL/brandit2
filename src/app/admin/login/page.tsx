@@ -78,7 +78,7 @@ export default function AdminLoginPage() {
 
           <h1 className="mt-5 font-display text-3xl font-extrabold tracking-[-0.03em] text-white">
             Sign in to{" "}
-            <span className="font-serif italic font-normal text-white">Administration</span>
+            <span className="font-instrument italic font-normal text-white">Administration</span>
           </h1>
           <p className="mt-2 text-xs text-neutral-400">
             Authorized personnel only. Sessions are cryptographically verified.

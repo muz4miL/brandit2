@@ -18,28 +18,38 @@ export async function Hero() {
       <div className="hidden lg:grid lg:grid-cols-[48fr_52fr] h-full flex-1 w-full">
         {/* Left: Text, CTA & Partner Logos */}
         <div className="rise-in z-10 flex flex-col justify-center px-10 py-10 lg:px-14 xl:px-16 h-full">
-          {/* Headline: We / Deliver / Growth */}
+          {/* Headline: We Engineer Growth. */}
           <h1 className="select-none text-[clamp(64px,6.8vw,118px)] font-extrabold leading-[0.88] tracking-[-0.055em] text-fg">
             <span className="block font-display">We</span>
             <span className="-ml-1 block font-instrument text-[1.14em] font-normal italic leading-[0.88] tracking-[-0.03em] text-fg">
-              Deliver
+              Engineer
             </span>
-            <span className="block font-display">Growth</span>
+            <span className="block font-display">Growth.</span>
           </h1>
+
+          {/* Subheadline */}
+          <p className="mt-4 max-w-[480px] text-[15px] sm:text-[16px] font-normal leading-relaxed text-muted-foreground">
+            brandit. is a full-service marketing agency — paid ads, content production, branding, websites, and automation. Forged in the UAE. Delivered worldwide.
+          </p>
 
           {/* Button & Partner Logos on the same row directly below headline */}
           <div className="mt-9 flex flex-wrap items-center gap-6 lg:gap-7">
             <HeroButton
               href="/contact"
               leftText="Book a"
-              rightText="Growth Audit"
-              ariaLabel="Book a Growth Audit"
+              rightText="Discovery Call"
+              ariaLabel="Book a Discovery Call"
             />
 
             <div className="flex items-center">
               <PartnerStrip logos={logos} settings={settings} align="left" />
             </div>
           </div>
+
+          {/* Secondary link */}
+          <a href="#our-work" className="text-[14px] font-medium text-fg/60 hover:text-fg transition-colors flex items-center gap-1.5 mt-1">
+            See Our Work <span aria-hidden="true">↓</span>
+          </a>
         </div>
 
         {/* Right: Seamless Floating Artwork (~52%) */}
@@ -66,12 +76,17 @@ export async function Hero() {
               We
             </span>
             <span className="-my-1 block font-instrument text-[1.14em] font-normal italic leading-[0.88] tracking-[-0.03em] text-fg">
-              Deliver
+              Engineer
             </span>
             <span className="block font-display text-[46px] font-extrabold leading-[0.88] tracking-[-0.055em] text-fg sm:text-[56px]">
-              Growth
+              Growth.
             </span>
           </h1>
+
+          {/* Subheadline */}
+          <p className="mt-4 max-w-[480px] text-[15px] sm:text-[16px] font-normal leading-relaxed text-muted-foreground text-center px-2">
+            brandit. is a full-service marketing agency — paid ads, content production, branding, websites, and automation. Forged in the UAE. Delivered worldwide.
+          </p>
 
           {/* Center: Glowing Brand Squircle with Real Marquee Logos Gliding Horizontally */}
           <div className="relative my-7 sm:my-8 flex items-center justify-center w-full max-w-[420px] overflow-hidden">
@@ -129,8 +144,8 @@ export async function Hero() {
             <HeroButton
               href="/contact"
               leftText="Book a"
-              rightText="Growth Audit"
-              ariaLabel="Book a Growth Audit"
+              rightText="Discovery Call"
+              ariaLabel="Book a Discovery Call"
             />
           </div>
 

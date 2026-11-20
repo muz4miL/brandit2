@@ -48,7 +48,7 @@ function AboutPage() {
               </div>
               <h1 className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#09090B] leading-[1.1]">
                 We Engineer Growth. <br />
-                <span className="font-serif italic font-normal text-[#3F3F46]">
+                <span className="font-instrument italic font-normal text-[#3F3F46]">
                   Not Just Noise.
                 </span>
               </h1>
@@ -93,7 +93,7 @@ function AboutPage() {
                 </span>
                 <h2 className="mt-3 font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#09090B]">
                   Creative backed by numbers.{" "}
-                  <span className="font-serif italic font-normal">Built for scale.</span>
+                  <span className="font-instrument italic font-normal">Built for scale.</span>
                 </h2>
                 <p className="mt-5 text-[15px] leading-relaxed text-[#52525B]">
                   Most agencies hand off fragmented pieces: a video team that doesn’t understand ad

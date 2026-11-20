@@ -153,7 +153,7 @@ export function OnboardingSection({
               >
                 The first two weeks{" "}
                 <span
-                  className="font-serif italic font-normal text-[1.12em] tracking-normal"
+                  className="font-instrument italic font-normal text-[1.12em] tracking-normal"
                   style={{ color: "var(--gold)" }}
                 >
                   set the tone

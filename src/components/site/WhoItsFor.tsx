@@ -29,6 +29,29 @@ export interface WhoItsForProps {
   packagesData?: PackageData[] | undefined;
 }
 
+const audienceSegments = [
+  {
+    number: "01",
+    title: "Real Estate — Brokerages & Developers",
+    desc: "Sales content, luxury positioning, off-plan launches, and data-led authority. Our deepest expertise, built inside the UAE’s largest brokerage.",
+  },
+  {
+    number: "02",
+    title: "Clinics, Salons & Local Business",
+    desc: "Aesthetic clinics, dental, beauty, retail. Premium visuals plus lead-gen funnels that fill your calendar instead of your inbox.",
+  },
+  {
+    number: "03",
+    title: "E-commerce & Retail Brands",
+    desc: "Shopify stores, product photography, and paid campaigns built around margin — so growth in revenue is growth in profit.",
+  },
+  {
+    number: "04",
+    title: "Founders & Personal Brands",
+    desc: "CEOs, agents, and creators who need authority. We built the system behind a six-figure founder brand. We’ll build yours.",
+  },
+];
+
 export function WhoItsFor({
   id = "packages-overview",
   onCompareClick,
@@ -97,34 +120,77 @@ export function WhoItsFor({
     <section
       ref={sectionRef}
       id={id}
-      aria-label="Packages Overview"
-      className="relative w-full overflow-hidden bg-[#060608] py-16 sm:py-20 select-none border-t border-b border-white/[0.06] scroll-mt-24"
+      aria-label="Who This Is Built For & Packages"
+      className="relative w-full overflow-hidden bg-[#060608] py-16 sm:py-24 select-none border-t border-b border-white/[0.06] scroll-mt-24"
     >
-      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
-        {/* 1. Header with Eyebrow, Heading and Subtitle */}
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+        {/* Section 5 Brief: Who It's For */}
         <div
           className={`flex flex-col items-center text-center max-w-[800px] mx-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          <SectionBadge>PACKAGES</SectionBadge>
+          <SectionBadge>WHO WE SERVE</SectionBadge>
 
           <h2 className="mt-4 text-center">
-            <span className="block font-display text-[clamp(36px,4vw,56px)] font-extrabold leading-[1.02] tracking-tight text-white">
-              Choose how you{" "}
+            <span className="block font-display text-[clamp(36px,4.5vw,64px)] font-extrabold leading-[1.02] tracking-tight text-white">
+              Who this is{" "}
               <span className="font-instrument italic font-normal text-white">
-                want to grow
+                Built for
               </span>
             </span>
           </h2>
 
           <p className="mt-4 text-[15px] sm:text-[17px] text-[#A1A1AA] max-w-[580px] leading-relaxed">
-            Start with a package, not a guess. We match your marketing to where your business is today.
+            Systems-led growth engineered for leaders across category-defining industries.
           </p>
         </div>
 
-        {/* 2. Three Balanced Cards Grid */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
+        {/* 4 Audience Segments Grid per Section 5 Brief */}
+        <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          {audienceSegments.map((segment) => (
+            <div
+              key={segment.number}
+              className="relative rounded-[22px] border border-white/[0.08] bg-[#0C0C10] p-6 flex flex-col justify-between transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-xl"
+            >
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-[1px] rounded-t-[22px] bg-gradient-to-r from-transparent via-white/10 to-transparent"
+              />
+              <div>
+                <span className="font-mono text-[10px] font-semibold tracking-[0.18em] text-neutral-500 uppercase">
+                  {segment.number}
+                </span>
+                <h3 className="mt-3 font-display text-[16px] sm:text-[17px] font-bold text-white leading-snug">
+                  {segment.title}
+                </h3>
+                <p className="mt-2.5 text-[13px] leading-relaxed text-[#A1A1AA]">
+                  {segment.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Divider before Packages Subsection */}
+        <div className="my-16 sm:my-20 border-t border-white/[0.08] pt-14 sm:pt-16">
+          <div className="flex flex-col items-center text-center max-w-[700px] mx-auto mb-10">
+            <span className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.2em] text-neutral-400">
+              GROWTH TIERS
+            </span>
+            <h3 className="mt-3 font-display text-[28px] sm:text-[38px] font-extrabold text-white tracking-tight">
+              Choose how you{" "}
+              <span className="font-instrument italic font-normal text-white">
+                want to grow
+              </span>
+            </h3>
+            <p className="mt-3 text-[14px] sm:text-[15px] text-[#A1A1AA] leading-relaxed">
+              Start with a package, not a guess. We match your marketing to where your business is today.
+            </p>
+          </div>
+
+          {/* Three Balanced Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
           {displayPackages.map((pkg, idx) => {
             const isAccelerate = pkg.id === "accelerate" || pkg.isPopular;
             const isSelected = activeDetailId === pkg.id;
@@ -398,10 +464,11 @@ export function WhoItsFor({
 
         {/* Optional children (e.g. comparison matrix) */}
         {children}
+        </div>
 
         {/* 4. Bottom Comparison and Strategy Call Actions */}
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 border-t border-white/10 pt-8 text-center sm:text-left">
-          <span className="font-serif text-[22px] sm:text-[26px] italic text-neutral-200">
+          <span className="font-instrument text-[22px] sm:text-[26px] italic text-neutral-200">
             Not sure which fits?
           </span>
 

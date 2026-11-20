@@ -1798,7 +1798,7 @@ export function ServicesPageTab({ initialContent, onNotice }: ServicesPageTabPro
                                 0{idx + 1}
                               </span>
                               <h4 className="font-display font-bold text-white text-sm">
-                                {svc.title} {svc.serifLine && <span className="font-serif font-normal italic text-neutral-300">{svc.serifLine}</span>}
+                                {svc.title} {svc.serifLine && <span className="font-instrument font-normal italic text-neutral-300">{svc.serifLine}</span>}
                               </h4>
                               <span className="text-[10px] font-mono text-neutral-400">
                                 ({svc.includedIn})

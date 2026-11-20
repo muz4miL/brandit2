@@ -58,7 +58,7 @@ export function ContactSection() {
                 Good things
                 <br />
                 start with{" "}
-                <span className="font-serif block sm:inline text-white text-[1.08em] font-normal italic tracking-normal mt-1 sm:mt-0 leading-[1.05]">
+                <span className="font-instrument block sm:inline text-white text-[1.08em] font-normal italic tracking-normal mt-1 sm:mt-0 leading-[1.05]">
                   a conversation.
                 </span>
               </h1>

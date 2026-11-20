@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { getPublicWorkPageData } from "@/server/work-service";
+import { getPublicPortfolio, getPublicPortfolioSettings } from "@/server/portfolio-service";
 import { OurWorkClient } from "./OurWorkClient";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { settings } = await getPublicWorkPageData();
+  const settings = await getPublicPortfolioSettings();
   const title = settings?.seo?.title || "Our Work | brandit.";
   const description =
     settings?.seo?.description ||
-    "Where top brands come to scale. Explore measured performance systems, creative strategy, and digital experiences engineered by brandit.";
+    "Where top brands come to create. Explore selected brand identities, campaigns, video systems, and digital platforms built by brandit.";
 
   return {
     title,
@@ -25,6 +25,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function OurWorkPage() {
-  const { settings, projects } = await getPublicWorkPageData();
-  return <OurWorkClient settings={settings} projects={projects} />;
+  const [items, settings] = await Promise.all([
+    getPublicPortfolio(),
+    getPublicPortfolioSettings(),
+  ]);
+
+  return <OurWorkClient settings={settings} items={items} />;
 }

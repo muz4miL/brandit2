@@ -80,7 +80,7 @@ export default function WhoWeAre() {
           <span className="font-display text-[clamp(48px,7vw,104px)] font-bold tracking-[-0.04em] text-[#d4d4d4] leading-[0.95]">
             Who we are
           </span>
-          <span className="font-serif text-[clamp(48px,7vw,104px)] font-normal italic tracking-[-0.03em] text-[#e5e5e5] leading-[0.95]">
+          <span className="font-instrument text-[clamp(48px,7vw,104px)] font-normal italic tracking-[-0.03em] text-[#e5e5e5] leading-[0.95]">
             Built for
           </span>
         </h2>
@@ -112,7 +112,7 @@ export default function WhoWeAre() {
           >
             {/* Top Block: 2 lines left aligned */}
             <h3 className="flex flex-col text-left select-none">
-              <span className="font-serif text-[40px] font-normal italic tracking-[-0.03em] text-[#d4d4d4] leading-[0.95] min-[900px]:text-[44px] xl:text-[56px]">
+              <span className="font-instrument text-[40px] font-normal italic tracking-[-0.03em] text-[#d4d4d4] leading-[0.95] min-[900px]:text-[44px] xl:text-[56px]">
                 {card.titleSerif}
               </span>
               <span className="font-display text-[40px] font-bold tracking-[-0.04em] text-[#e5e5e5] leading-[0.95] min-[900px]:text-[44px] xl:text-[56px]">

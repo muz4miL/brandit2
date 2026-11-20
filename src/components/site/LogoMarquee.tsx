@@ -45,7 +45,7 @@ export function LogoMarquee() {
       {/* Centered Minimal Monospace Category Header */}
       <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
         <span className="font-mono text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.24em] text-neutral-400 select-none">
-          AS FEATURED IN
+          Trusted by 100+ brands across industries and borders
         </span>
       </div>
 

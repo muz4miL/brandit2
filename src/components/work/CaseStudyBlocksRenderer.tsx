@@ -212,7 +212,7 @@ function renderBlock(block: CaseStudyBlock, accentColor: string) {
             {block.body}
           </p>
           {block.highlight && (
-            <blockquote className="mt-6 font-serif italic text-lg sm:text-xl text-neutral-200 border-t border-white/10 pt-4">
+            <blockquote className="mt-6 font-instrument italic text-lg sm:text-xl text-neutral-200 border-t border-white/10 pt-4">
               "{block.highlight}"
             </blockquote>
           )}
@@ -268,7 +268,7 @@ function renderBlock(block: CaseStudyBlock, accentColor: string) {
             size={48}
             className="absolute top-6 right-6 text-white/5 pointer-events-none"
           />
-          <blockquote className="font-serif italic text-xl sm:text-2xl md:text-3xl text-white leading-relaxed max-w-2xl">
+          <blockquote className="font-instrument italic text-xl sm:text-2xl md:text-3xl text-white leading-relaxed max-w-2xl">
             "{block.quote}"
           </blockquote>
 

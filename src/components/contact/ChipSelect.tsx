@@ -217,7 +217,7 @@ export function ChipSelect({ selected, onChange }: ChipSelectProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="font-serif italic text-[14px] sm:text-[15px] text-neutral-300 leading-relaxed"
+              className="font-instrument italic text-[14px] sm:text-[15px] text-neutral-300 leading-relaxed"
             >
               {feedbackText}
             </motion.p>

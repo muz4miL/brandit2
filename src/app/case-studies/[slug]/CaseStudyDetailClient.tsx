@@ -448,7 +448,7 @@ export function CaseStudyDetailClient({
         {hasTestimonial && (
           <section aria-label="Client testimonial" className={`${WRAP} mt-24 sm:mt-32`}>
             <figure className="max-w-4xl">
-              <blockquote className="font-serif text-[clamp(24px,3.6vw,44px)] italic leading-[1.25] text-fg">
+              <blockquote className="font-instrument text-[clamp(24px,3.6vw,44px)] italic leading-[1.25] text-fg">
                 &ldquo;{project.testimonial!.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-8 border-t border-line pt-5">

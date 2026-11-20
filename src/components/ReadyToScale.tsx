@@ -15,7 +15,7 @@ export default function ReadyToScale() {
 
           <h2 className="mt-5 sm:mt-7 text-center">
             <span className="block font-display text-[36px] sm:text-[54px] lg:text-[72px] font-extrabold leading-[0.98] lg:leading-[0.95] tracking-[-0.04em] text-white">
-              Ready to <span className="font-serif italic font-normal text-white">Grow?</span>
+              Ready to <span className="font-instrument italic font-normal text-white">Grow?</span>
             </span>
           </h2>
 

@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { LogoMarquee } from "@/components/site/LogoMarquee";
-import { BrandIntro } from "@/components/site/BrandIntro";
 import { ServiceCards } from "@/components/site/ServiceCards";
-import { WhoItsFor } from "@/components/site/WhoItsFor";
 import { OurWorkSection } from "@/components/site/OurWorkSection";
+import { WhoItsFor } from "@/components/site/WhoItsFor";
+import { WhyBrandit } from "@/components/site/WhyBrandit";
 import { Leadership } from "@/components/site/Leadership";
 import Testimonials from "@/components/site/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -62,31 +62,31 @@ export default function HomePage() {
           <Hero />
         </div>
 
-        {/* Section 2 — As Featured In (Floating Logo Strip matching Defiant) */}
+        {/* Section 2 — Trust Strip */}
         <LogoMarquee />
 
-        {/* Section 3 — Welcome to brandit.® (Defiant Manifesto Section) */}
-        <BrandIntro />
-
-        {/* Section 4 — Services Overview (6 Services with Proof Previews) */}
+        {/* Section 3 — Services */}
         <ServiceCards />
 
-        {/* Section 5 — Packages (Kickstart, Accelerate, Authority) */}
-        <WhoItsFor />
-
-        {/* Section 6 — Selected Proof / Creative Library */}
+        {/* Section 4 — Our Work */}
         <OurWorkSection />
 
-        {/* Section 7 — Executive Leadership */}
+        {/* Section 5 — Who It’s For */}
+        <WhoItsFor />
+
+        {/* Section 6 — Why brandit. */}
+        <WhyBrandit />
+
+        {/* Section 7 — About the CEO */}
         <Leadership />
 
-        {/* Section 9 — Testimonials */}
+        {/* Section 8 — Testimonials */}
         <Testimonials />
 
-        {/* Section 10 — Questions Before You Book (FAQ) */}
+        {/* Section 9 — FAQ */}
         <FAQ />
 
-        {/* Section 11 — Final CTA: Ready to be chosen, not just seen? */}
+        {/* Section 10 — Final CTA */}
         <ReadyToScale />
       </main>
 

@@ -163,6 +163,17 @@ export function AdminDashboard({
 
           {activeTab === "our-work" && (
             <div className="rounded-2xl border border-white/[0.08] bg-[#0E0F18]/90 p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
+              <PortfolioTab
+                portfolio={portfolio}
+                setPortfolio={setPortfolio}
+                initialSettings={initialData.portfolioSettings}
+                onNotice={showNotice}
+              />
+            </div>
+          )}
+
+          {activeTab === "case-studies" && (
+            <div className="rounded-2xl border border-white/[0.08] bg-[#0E0F18]/90 p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
               <OurWorkManager
                 initialProjects={workProjects}
                 initialSettings={workPageSettings}
@@ -202,23 +213,6 @@ export function AdminDashboard({
             <ServicesTab
               services={services}
               setServices={setServices}
-              onNotice={showNotice}
-            />
-          )}
-
-          {activeTab === "portfolio" && (
-            <PortfolioTab
-              portfolio={portfolio}
-              setPortfolio={setPortfolio}
-              initialSettings={initialData.portfolioSettings}
-              onNotice={showNotice}
-            />
-          )}
-
-          {activeTab === "case-studies" && (
-            <CaseStudiesTab
-              caseStudies={caseStudies}
-              setCaseStudies={setCaseStudies}
               onNotice={showNotice}
             />
           )}

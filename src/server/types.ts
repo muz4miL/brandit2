@@ -52,6 +52,8 @@ export interface ServiceDoc {
 export interface PortfolioDoc {
   _id?: ObjectId | string;
   slug: string;
+  client?: string;
+  category?: string;
   title: string;
   outcomeLine: string;
   mediaType: "image" | "video";
@@ -59,6 +61,7 @@ export interface PortfolioDoc {
   posterUrl?: string;
   altText: string;
   detailUrl?: string;
+  year?: string;
   order: number;
   isPublished: boolean;
   source?: "portfolio";
@@ -522,6 +525,26 @@ export interface WorkPageSettingsDoc {
 
 export interface PortfolioPageSettingsDoc {
   _id?: ObjectId | string;
+  heroBadgeText?: string;
+  heroHeadingLine1?: string;
+  heroHeadingLine2?: string;
+  heroSupportingCopy?: string;
+  heroCtaText?: string;
+  heroCtaUrl?: string;
+  heroVideoUrl?: string;
+  quoteText?: string;
+  quoteAuthor?: string;
+  quoteRole?: string;
+  quoteCompany?: string;
+  capabilitiesHeading?: string;
+  capabilitiesSubheading?: string;
+  capabilitiesList?: { title: string; category?: string }[];
+  faqs?: { question: string; answer: string }[];
+  closingCtaHeadingLine1?: string;
+  closingCtaHeadingLine2?: string;
+  closingCtaCopy?: string;
+  closingCtaButtonText?: string;
+  closingCtaDestination?: string;
   seo: {
     title: string;
     description: string;

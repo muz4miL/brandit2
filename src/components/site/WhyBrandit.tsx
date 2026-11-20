@@ -3,29 +3,19 @@ import { ArrowUpRight } from "lucide-react";
 export function WhyBrandit() {
   const brandPillars = [
     {
-      channel: "Your Website",
-      desc: "The place every visitor decides whether to trust you. Built to turn visits into enquiries.",
+      channel: "Efficient Spend",
+      desc: "Campaigns structured so your budget goes to what actually converts. Consistently strong cost-per-result across markets and industries.",
       number: "01",
     },
     {
-      channel: "Your Social Media",
-      desc: "Content that gets noticed and builds trust before the first conversation.",
+      channel: "Qualified Leads",
+      desc: "Not just clicks. Real conversations and booked customers, from targeting and creative built around how you actually sell.",
       number: "02",
     },
     {
-      channel: "Search Results",
-      desc: "Be the business people find when they search for what you sell.",
+      channel: "Compounding Growth",
+      desc: "Systems that sharpen every month through testing and sales feedback, so results build instead of resetting.",
       number: "03",
-    },
-    {
-      channel: "Their Inbox",
-      desc: "Stay in front of past customers and warm leads, and earn repeat business.",
-      number: "04",
-    },
-    {
-      channel: "Your Strategy",
-      desc: "The research and roadmap behind all of it, so nothing is a guess.",
-      number: "05",
     },
   ];
 
@@ -47,7 +37,7 @@ export function WhyBrandit() {
 
             <h2 className="mt-4 font-display text-[32px] sm:text-[44px] lg:text-[52px] font-extrabold leading-[1.02] tracking-tight text-[#09090B]">
               Why work with{" "}
-              <span className="font-serif italic font-normal text-[#18181B]">
+              <span className="font-instrument italic font-normal text-[#18181B]">
                 brandit.
               </span>
             </h2>
@@ -65,22 +55,7 @@ export function WhyBrandit() {
 
         {/* Part 2: Where Your Brand Shows Up */}
         <div className="mt-16 sm:mt-24 pt-12 border-t border-black/[0.08]">
-          <div className="max-w-[700px]">
-            <div className="inline-flex h-[36px] items-center justify-center rounded-full border border-black/10 bg-black/[0.04] px-4">
-              <span className="font-display text-[12px] font-semibold tracking-[0.16em] text-[#3F3F46] uppercase">
-                Presence With Purpose
-              </span>
-            </div>
-
-            <h3 className="mt-4 font-display text-[28px] sm:text-[38px] lg:text-[46px] font-extrabold leading-[1.05] tracking-tight text-[#09090B]">
-              Be found. Be trusted.{" "}
-              <span className="font-serif italic font-normal text-[#18181B]">
-                Be chosen.
-              </span>
-            </h3>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
             {brandPillars.map((item, idx) => (
               <div
                 key={idx}
@@ -102,28 +77,6 @@ export function WhyBrandit() {
                 </div>
               </div>
             ))}
-
-            {/* Final CTA Card in the grid */}
-            <div className="relative rounded-[26px] border border-black bg-[#09090B] p-7 text-white flex flex-col justify-between shadow-sm">
-              <div>
-                <span className="font-display text-xs font-bold text-neutral-400 uppercase tracking-widest">
-                  Ready?
-                </span>
-                <h4 className="mt-4 font-display text-[21px] font-bold text-white">
-                  Start with a clear roadmap
-                </h4>
-                <p className="mt-2.5 text-[15px] leading-relaxed text-neutral-300">
-                  Book a free 30-minute call. You leave with clear recommendations.
-                </p>
-              </div>
-              <a
-                href="/contact"
-                className="mt-6 inline-flex items-center justify-between rounded-full bg-white px-5 py-3 text-sm font-bold text-[#09090B] transition-colors hover:bg-neutral-200"
-              >
-                <span>Book Free Call</span>
-                <ArrowUpRight size={16} />
-              </a>
-            </div>
           </div>
         </div>
       </div>

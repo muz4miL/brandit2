@@ -93,7 +93,7 @@ export function OurCommitments() {
 
           <h2 className="mt-5 font-display text-[clamp(36px,5.2vw,72px)] font-extrabold tracking-[-0.03em] text-white leading-[1.04] max-w-4xl">
             What you can <br className="hidden sm:inline" />
-            <span className="font-serif italic font-normal text-white">count on</span>
+            <span className="font-instrument italic font-normal text-white">count on</span>
           </h2>
 
           <p className="mt-5 max-w-[760px] font-sans text-[16px] sm:text-[18px] text-[#A1A1AA] leading-relaxed">
@@ -138,7 +138,7 @@ export function OurCommitments() {
                   {/* Title with Italic Serif */}
                   <h3 className="font-display text-[24px] sm:text-[28px] font-bold text-white tracking-tight leading-[1.15]">
                     {item.titleSans} <br />
-                    <span className="font-serif italic font-normal text-white">
+                    <span className="font-instrument italic font-normal text-white">
                       {item.titleSerif}
                     </span>
                   </h3>

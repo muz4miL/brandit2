@@ -190,7 +190,7 @@ export default function CreativeShowcase() {
           <span className="font-display text-[clamp(44px,7vw,96px)] font-bold leading-[0.95] tracking-[-0.04em] text-fg">
             {settings?.headingPrefix ?? "Creative that"}
           </span>
-          <span className="font-serif text-[clamp(48px,7.5vw,104px)] font-normal italic leading-[0.95] tracking-[-0.03em] text-fg">
+          <span className="font-instrument text-[clamp(48px,7.5vw,104px)] font-normal italic leading-[0.95] tracking-[-0.03em] text-fg">
             {settings?.headingItalic ?? "Converts"}
           </span>
         </h2>
@@ -284,7 +284,7 @@ export default function CreativeShowcase() {
       <div className="showcase-cta mx-auto mt-14 flex w-full max-w-[1100px] flex-col items-center justify-between gap-8 px-4 md:mt-20 md:flex-row md:gap-6">
         {/* Left: "Want more inspiration?" */}
         <div className="text-center md:text-right">
-          <p className="font-serif text-[28px] not-italic leading-[1.05] tracking-tight text-fg md:text-[34px]">
+          <p className="font-instrument text-[28px] not-italic leading-[1.05] tracking-tight text-fg md:text-[34px]">
             Want more
             <br />
             <span className="showcase-secondary">inspiration?</span>

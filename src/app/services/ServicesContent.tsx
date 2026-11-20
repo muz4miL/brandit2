@@ -412,7 +412,7 @@ export function ServicesContent({ data }: ServicesContentProps) {
               >
                 <span className="block">{hero.headingLine1}</span>
                 <span
-                  className="mt-1 block font-serif font-normal italic tracking-[-0.025em]"
+                  className="mt-1 block font-instrument font-normal italic tracking-[-0.025em]"
                   style={{ color: "var(--foreground)", opacity: 0.82 }}
                 >
                   {hero.headingLineItalic}
@@ -541,7 +541,7 @@ export function ServicesContent({ data }: ServicesContentProps) {
                 <span className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Capabilities</span>
                 <h2 className="mt-3 font-display text-[clamp(28px,3.8vw,48px)] font-extrabold leading-tight tracking-[-0.04em] text-fg">
                   Everything you need to{" "}
-                  <span className="font-serif font-normal italic text-muted-foreground">move forward.</span>
+                  <span className="font-instrument font-normal italic text-muted-foreground">move forward.</span>
                 </h2>
               </div>
               <p className="max-w-sm text-[14px] leading-relaxed text-muted-foreground sm:text-right">
@@ -577,7 +577,7 @@ export function ServicesContent({ data }: ServicesContentProps) {
                     </span>
                     <h3 className="mt-4 max-w-xl font-display text-[clamp(30px,4vw,48px)] font-extrabold leading-[0.95] tracking-[-0.04em] text-fg">
                       {selectedService.title}{" "}
-                      <span className="font-serif font-normal italic text-muted-foreground">{selectedService.serifLine}</span>
+                      <span className="font-instrument font-normal italic text-muted-foreground">{selectedService.serifLine}</span>
                     </h3>
                     <p className="mt-5 max-w-[480px] text-[16px] leading-relaxed text-muted-foreground">
                       {selectedService.summary}
@@ -638,7 +638,7 @@ export function ServicesContent({ data }: ServicesContentProps) {
               <span className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Why brandit.</span>
               <h2 className="mt-3 font-display text-[clamp(30px,4vw,52px)] font-extrabold leading-tight tracking-[-0.04em] text-fg">
                 A sharper alternative to{" "}
-                <span className="font-serif font-normal italic text-muted-foreground">fragmented growth.</span>
+                <span className="font-instrument font-normal italic text-muted-foreground">fragmented growth.</span>
               </h2>
             </div>
             <div className="overflow-x-auto rounded-[20px] border border-line bg-surface">

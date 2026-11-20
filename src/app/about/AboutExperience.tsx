@@ -194,7 +194,7 @@ export default function AboutExperience({ stats, members }: Props) {
         <div className={styles.heroInner}>
           <p className={styles.eyebrow} data-hero-copy><span /> THE THINKING BEHIND BRANDIT</p>
           <h1 id="about-title" className="font-display" data-hero-copy>
-            Attention.<br />Never<br /><em className="font-serif">accidental.</em>
+            Attention.<br />Never<br /><em className="font-instrument">accidental.</em>
           </h1>
           <p className={styles.heroDescription} data-hero-copy>A digital creative agency connecting strategy, design, and marketing. Every appearance. On purpose.</p>
           <div className={styles.heroActions} data-hero-copy>
@@ -230,7 +230,7 @@ export default function AboutExperience({ stats, members }: Props) {
 
       {/* ─── STORY ─── */}
       <section id="our-story" className={styles.story}>
-        <div data-reveal><p className={styles.eyebrow}>01 / OUR STORY</p><h2 className="font-display">Everywhere.<br /><em className="font-serif">With intention.</em></h2><span className={styles.accentLine} /></div>
+        <div data-reveal><p className={styles.eyebrow}>01 / OUR STORY</p><h2 className="font-display">Everywhere.<br /><em className="font-instrument">With intention.</em></h2><span className={styles.accentLine} /></div>
         <div className={styles.storyCopy} data-reveal>
           <p className={styles.lead}>Good businesses deserve<br />to be <span>impossible to overlook.</span></p>
           <p>Most businesses we meet aren’t bad at marketing. They have a good product and real customers waiting, but their brand isn’t where those customers are looking, or it shows up without a reason to be remembered.</p>
@@ -244,7 +244,7 @@ export default function AboutExperience({ stats, members }: Props) {
         {/* Desktop version: preserved exact layout and parallax */}
         <div className={styles.manifestoDesktop}>
           <p data-manifesto aria-hidden="true">
-            EVERY MOVE. <em className="font-serif">On purpose.</em> EVERY MOVE.
+            EVERY MOVE. <em className="font-instrument">On purpose.</em> EVERY MOVE.
           </p>
         </div>
 
@@ -252,16 +252,16 @@ export default function AboutExperience({ stats, members }: Props) {
         <div className={styles.manifestoMobile} aria-hidden="true">
           <div className={styles.marqueeTrack}>
             <span className={styles.marqueeItem}>
-              EVERY MOVE. <em className="font-serif">On purpose.</em> EVERY MOVE. <span className={styles.marqueeSep}>·</span>
+              EVERY MOVE. <em className="font-instrument">On purpose.</em> EVERY MOVE. <span className={styles.marqueeSep}>·</span>
             </span>
             <span className={styles.marqueeItem}>
-              EVERY MOVE. <em className="font-serif">On purpose.</em> EVERY MOVE. <span className={styles.marqueeSep}>·</span>
+              EVERY MOVE. <em className="font-instrument">On purpose.</em> EVERY MOVE. <span className={styles.marqueeSep}>·</span>
             </span>
             <span className={styles.marqueeItem}>
-              EVERY MOVE. <em className="font-serif">On purpose.</em> EVERY MOVE. <span className={styles.marqueeSep}>·</span>
+              EVERY MOVE. <em className="font-instrument">On purpose.</em> EVERY MOVE. <span className={styles.marqueeSep}>·</span>
             </span>
             <span className={styles.marqueeItem}>
-              EVERY MOVE. <em className="font-serif">On purpose.</em> EVERY MOVE. <span className={styles.marqueeSep}>·</span>
+              EVERY MOVE. <em className="font-instrument">On purpose.</em> EVERY MOVE. <span className={styles.marqueeSep}>·</span>
             </span>
           </div>
         </div>
@@ -273,7 +273,7 @@ export default function AboutExperience({ stats, members }: Props) {
           <div>
             <p className={styles.eyebrow}>02 / THE EXPERIENCE</p>
             <h2 className="font-display">
-              Good work starts with<br /><em className="font-serif">a better partnership.</em>
+              Good work starts with<br /><em className="font-instrument">a better partnership.</em>
             </h2>
           </div>
           <p>Clear thinking. Connected execution.<br />People you can actually talk to.</p>
@@ -329,7 +329,7 @@ export default function AboutExperience({ stats, members }: Props) {
 
                         <div className={styles.visualCopy}>
                           <span className={styles.categoryBadge}>{item.label}</span>
-                          <p className={`font-serif ${styles.captionText}`}>{item.words[2]}</p>
+                          <p className={`font-instrument ${styles.captionText}`}>{item.words[2]}</p>
                           <div className={styles.chipsRow}>
                             {item.words.map((word) => (
                               <span key={word} className={styles.chip}>{word}</span>
@@ -368,7 +368,7 @@ export default function AboutExperience({ stats, members }: Props) {
 
             <div key={selected.label} className={styles.visualCopy}>
               <span className={styles.categoryBadge}>{selected.label}</span>
-              <p className={`font-serif ${styles.captionText}`}>{selected.words[2]}</p>
+              <p className={`font-instrument ${styles.captionText}`}>{selected.words[2]}</p>
               <div className={styles.chipsRow}>
                 {selected.words.map((word) => (
                   <span key={word} className={styles.chip}>{word}</span>
@@ -381,7 +381,7 @@ export default function AboutExperience({ stats, members }: Props) {
 
       {/* ─── TEAM ─── */}
       <section className={styles.team}>
-        <div className={styles.sectionHead} data-reveal><div><p className={styles.eyebrow}>03 / OUR PEOPLE</p><h2 className="font-display">Real people.<br /><em className="font-serif">Shared ambition.</em></h2></div><p>Senior strategists directing every plan<br />with dedicated execution.</p></div>
+        <div className={styles.sectionHead} data-reveal><div><p className={styles.eyebrow}>03 / OUR PEOPLE</p><h2 className="font-display">Real people.<br /><em className="font-instrument">Shared ambition.</em></h2></div><p>Senior strategists directing every plan<br />with dedicated execution.</p></div>
         <div className={styles.teamGrid}>
           {members.map((member, index) => (
             <article className={styles.person} key={member.name} data-reveal>
@@ -420,7 +420,7 @@ export default function AboutExperience({ stats, members }: Props) {
       </section>
 
       {/* ─── OUR STANDARD ─── */}
-      <section className={styles.standard} data-reveal><p className={styles.eyebrow}>OUR STANDARD</p><blockquote className="font-display">Attention should never<br />be accidental.<br /><em className="font-serif">Let’s make yours on purpose.</em></blockquote><p>Every website, post, campaign, and email we produce is backed by research and built to deliver measurable commercial clarity.</p></section>
+      <section className={styles.standard} data-reveal><p className={styles.eyebrow}>OUR STANDARD</p><blockquote className="font-display">Attention should never<br />be accidental.<br /><em className="font-instrument">Let’s make yours on purpose.</em></blockquote><p>Every website, post, campaign, and email we produce is backed by research and built to deliver measurable commercial clarity.</p></section>
 
       {/* ─── CTA ─── */}
       <section className="mx-auto max-w-[1320px] px-4 sm:px-6 md:px-8 py-16 sm:py-24">

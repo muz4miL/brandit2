@@ -86,7 +86,7 @@ export function CaseStudiesPageClient({
             {/* H1: "Case Studies" — "Case" in 800 grotesk, "Studies" in italic serif */}
             <h1 className="font-display text-[clamp(56px,8vw,112px)] leading-[0.92] tracking-[-0.03em] text-fg">
               <span className="font-[800]">Case </span>
-              <span className="font-serif italic font-normal tracking-[-0.01em]">
+              <span className="font-instrument italic font-normal tracking-[-0.01em]">
                 Studies
               </span>
             </h1>

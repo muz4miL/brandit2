@@ -90,7 +90,7 @@ export function CtaBanner({
 
               <h2 className="font-display text-[clamp(34px,3.6vw,52px)] font-extrabold text-[#F5F2EC] tracking-[-0.035em] leading-[1.08]">
                 {headingPrefix}{" "}
-                <span className="font-serif italic font-normal text-neutral-300 text-[1.12em] block mt-1 tracking-normal">
+                <span className="font-instrument italic font-normal text-neutral-300 text-[1.12em] block mt-1 tracking-normal">
                   {accentText}
                 </span>
               </h2>
@@ -121,7 +121,7 @@ export function CtaBanner({
 
               <h2 className="font-display text-[27px] sm:text-[34px] font-extrabold text-[#F5F2EC] tracking-[-0.035em] leading-[1.12]">
                 {headingPrefix}{" "}
-                <span className="font-serif italic font-normal text-neutral-300 text-[1.12em] block mt-1 tracking-normal">
+                <span className="font-instrument italic font-normal text-neutral-300 text-[1.12em] block mt-1 tracking-normal">
                   {accentText}
                 </span>
               </h2>

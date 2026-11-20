@@ -55,7 +55,7 @@ export function HowItWorksSection({ steps }: { steps?: HowItWorksStep[] | undefi
             style={{ color: "var(--section-text, var(--foreground))" }}
           >
             How it{" "}
-            <span className="font-serif italic font-normal text-[1.08em] tracking-normal">
+            <span className="font-instrument italic font-normal text-[1.08em] tracking-normal">
               works
             </span>
           </h2>

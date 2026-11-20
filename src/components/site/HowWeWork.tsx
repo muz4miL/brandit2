@@ -178,7 +178,7 @@ export function HowWeWork() {
 
           <h2 className="mt-4 font-display text-[clamp(36px,4vw,58px)] font-extrabold tracking-[-0.03em] text-white leading-[1.05]">
             Built for growth. <br />
-            <span className="font-serif italic font-normal text-white">
+            <span className="font-instrument italic font-normal text-white">
               Connected at every level.
             </span>
           </h2>
@@ -229,7 +229,7 @@ export function HowWeWork() {
 
                 <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
                   Daily Performance{" "}
-                  <span className="font-serif italic font-normal text-white">Tracking</span>
+                  <span className="font-instrument italic font-normal text-white">Tracking</span>
                 </h3>
 
                 <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
@@ -385,7 +385,7 @@ export function HowWeWork() {
 
               <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
                 Full-Funnel{" "}
-                <span className="font-serif italic font-normal text-white">Ownership</span>
+                <span className="font-instrument italic font-normal text-white">Ownership</span>
               </h3>
 
               <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
@@ -488,7 +488,7 @@ export function HowWeWork() {
 
               <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
                 Creative Volume{" "}
-                <span className="font-serif italic font-normal text-white">&amp; diversity</span>
+                <span className="font-instrument italic font-normal text-white">&amp; diversity</span>
               </h3>
 
               <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
@@ -543,7 +543,7 @@ export function HowWeWork() {
 
                 <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
                   Retention{" "}
-                  <span className="font-serif italic font-normal text-white">
+                  <span className="font-instrument italic font-normal text-white">
                     &amp; lifetime value
                   </span>
                 </h3>
@@ -613,7 +613,7 @@ export function HowWeWork() {
 
               <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
                 Blended{" "}
-                <span className="font-serif italic font-normal text-white">Attribution</span>
+                <span className="font-instrument italic font-normal text-white">Attribution</span>
               </h3>
 
               <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">
@@ -706,7 +706,7 @@ export function HowWeWork() {
 
               <h3 className="mt-2.5 font-display text-[21px] sm:text-[23px] font-bold text-white tracking-tight leading-snug">
                 Profit-first{" "}
-                <span className="font-serif italic font-normal text-white">Strategy</span>
+                <span className="font-instrument italic font-normal text-white">Strategy</span>
               </h3>
 
               <p className="mt-2 text-[13.5px] leading-relaxed text-[#A1A1AA]">

@@ -755,54 +755,46 @@ export interface TeamMember {
 
 export const teamMembers: TeamMember[] = [
   {
-    name: "Umar Orakzai",
-    role: "Chief Executive Officer",
-    initials: "UO",
-    bio: "Umar Orakzai leads brandit. with a clear focus on building distinctive brands, thoughtful digital experiences, and growth systems that create lasting commercial impact.",
+    name: "Umar Farooq",
+    role: "Founder & CEO",
+    initials: "UF",
+    bio: "I sharpened my craft inside the UAE — one of the most competitive marketing arenas on earth. I built the content system for the country's largest real estate brokerage, turned a property data platform into a trusted authority, and grew a founder's brand to six figures.\n\nI've personally sat in every seat: shooting, editing, designing, buying media, and writing the strategy. That's why brandit. runs on systems instead of guesswork — I'm not directing work I've never done.\n\nToday a trained specialist team executes to those standards, and I stay on every account as the senior strategist. You get senior thinking with full agency capacity, and one person to call.",
     image: "/omar2.jpg",
   },
 ];
 
 export const faqs = [
   {
-    q: "What type of brands do you work best with?",
-    a: "We work best with ambitious founders and established businesses who want a unified strategic partner across branding, high-converting web architecture, and organic/paid campaigns—eliminating fragmented freelancers.",
+    q: "Where are you based — do you work internationally?",
+    a: "brandit. was built in the UAE, one of the most competitive markets in the world, and we deliver to clients across industries and borders. Wherever your business is, you get that standard.",
   },
   {
-    q: "What does having a dedicated partner mean?",
-    a: "It means no junior account managers passing notes. Senior strategists personally architect your roadmap, manage delivery milestones, and attend your reviews with agreed SLA commitments.",
+    q: "Are you an agency or a freelancer?",
+    a: "A full agency. You work directly with our founder as senior strategist, and a trained specialist team executes under his systems. Senior thinking, full capacity, one point of contact.",
   },
   {
-    q: "Do I have to choose a package right now?",
-    a: "No. The discovery call is for exactly that. We review your current presence, market opportunity, and unit economics to recommend the right starting stage.",
+    q: "What makes you different?",
+    a: "Systems. Most teams make content. We build the operating system around it — architecture, SOPs, quality gates, and ad spend aligned to real revenue — proven inside the UAE’s largest brokerage.",
   },
   {
-    q: "Can I start small and expand as results compound?",
-    a: "Yes. Most clients start with a targeted Kickstart sprint or Accelerate tier, scaling their engagement as qualified inbound opportunities and revenue grow.",
+    q: "Can you handle everything, or just one service?",
+    a: "Either. Some clients take ads only, or a Shopify build only. Others hand us the whole growth engine — strategy, video, photography, design, media buying, website, and automation. Both work.",
   },
   {
-    q: "What if my requirements don’t fit a fixed package?",
-    a: "That is what the Authority engagement is engineered for. We build a fully bespoke scope around your business objectives, custom integrations, and market competitors.",
+    q: "Do you build websites and online stores too?",
+    a: "Yes. Websites, conversion-built landing pages, and Shopify stores. We also set up AI automation for lead follow-up, booking, and reporting, so leads don’t go cold while you’re busy.",
   },
   {
-    q: "What if we already have an internal marketing team?",
-    a: "We frequently co-pilot with internal marketing leads and founders—handling specialized design, technical SEO, and web engineering while your team stays focused on daily operations.",
+    q: "How does influencer marketing work with you?",
+    a: "We source creators who genuinely match your audience, negotiate and manage the campaign, and fold the resulting content back into your paid ads — so one collaboration works twice.",
   },
   {
-    q: "Do you guarantee rankings or follower counts?",
-    a: "No, algorithms fluctuate and anyone promising instant rankings is guessing. What we guarantee in writing is what we control: strict delivery dates, unlimited revisions until sign-off, and proactive plan reviews.",
+    q: "How soon will I see results?",
+    a: "Brand lift shows in the first month. Paid campaigns typically show early traction in 30–60 days as testing finds winners. Compounding growth comes from the system running month over month.",
   },
   {
-    q: "What exactly happens on the free strategy call?",
-    a: "A practical 30-minute review of your digital presence with actionable takeaways and architectural recommendations, whether you decide to work with us or not.",
-  },
-  {
-    q: "How does onboarding work once we begin?",
-    a: "Within 24 hours of confirmation, you receive a kickoff schedule, dedicated communication channels, and milestone commitments in writing so production begins immediately.",
-  },
-  {
-    q: "How soon do we hear back after submitting an enquiry?",
-    a: "Our strategy team reviews incoming submissions and responds within 24 hours (or same-day during standard business hours).",
+    q: "What does it cost?",
+    a: "Structured by scope — content only, ads only, a website build, or a full growth system. Share your goal on a call and we’ll send a clear plan and price.",
   },
 ];
 

@@ -77,7 +77,7 @@ export default function FAQ() {
       <div className="relative mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col items-center text-center mb-12 sm:mb-16 lg:mb-20">
           <h2 className="font-display text-[clamp(40px,5.8vw,80px)] font-extrabold tracking-[-0.035em] text-white leading-[1.02]">
-            Frequently Asked <span className="font-serif italic font-normal text-white">Questions</span>
+            Frequently Asked <span className="font-instrument italic font-normal text-white">Questions</span>
           </h2>
 
           <p className="mt-4 max-w-[620px] font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed">

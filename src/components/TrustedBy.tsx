@@ -17,7 +17,7 @@ export default function TrustedBy() {
           <span className="font-display text-[clamp(44px,7vw,96px)] font-bold tracking-[-0.04em] text-[#d4d4d4] leading-[0.95]">
             Trusted by
           </span>
-          <span className="font-serif text-[clamp(48px,7.5vw,104px)] font-normal italic tracking-[-0.03em] text-[#e5e5e5] leading-[0.95]">
+          <span className="font-instrument text-[clamp(48px,7.5vw,104px)] font-normal italic tracking-[-0.03em] text-[#e5e5e5] leading-[0.95]">
             300+ Leading Brands
           </span>
         </h2>

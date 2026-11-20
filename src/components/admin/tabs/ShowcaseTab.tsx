@@ -521,7 +521,7 @@ export function ShowcaseTab({ onNotice }: ShowcaseTabProps) {
               value={settings.headingItalic}
               onChange={(e) => setSettings((s) => ({ ...s, headingItalic: e.target.value }))}
               onBlur={() => updateSetting({ headingItalic: settings.headingItalic })}
-              className="w-full rounded-xl border border-white/10 bg-[#0E0F18] px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white font-serif italic"
+              className="w-full rounded-xl border border-white/10 bg-[#0E0F18] px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-white font-instrument italic"
               placeholder="e.g. Converts"
             />
           </div>

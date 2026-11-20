@@ -94,6 +94,12 @@ export function AdminSidebar({
           id: "our-work" as AdminTab,
           label: "Our Work CMS",
           icon: Sparkles,
+          count: counts.portfolio,
+        },
+        {
+          id: "case-studies" as AdminTab,
+          label: "Case Studies CMS",
+          icon: FileText,
           count: counts.ourWork,
         },
         {

@@ -41,7 +41,7 @@ function CaseStudiesPage() {
               </div>
               <h1 className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#09090B] leading-[1.1]">
                 Real Revenue. <br />
-                <span className="font-serif italic font-normal text-[#3F3F46]">
+                <span className="font-instrument italic font-normal text-[#3F3F46]">
                   Documented Proof.
                 </span>
               </h1>
